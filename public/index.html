@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
+    
     <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
@@ -19,6 +20,12 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+
+    <!-- Import Google Icon Font -->
+    <link rel="stylsheet" href="//fonts.googleapis.com/icon?family=Material+Icons" />
+    <!-- Import materialize.css -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css" media="screen,projection" />
+
     <title>React App</title>
   </head>
   <body>
@@ -37,4 +44,20 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdn.pubnub.com/pubnub.min.js"></script>
+  <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+  
+ 
+    <!-- Instantiate PubNub -->
+    <script type="text/javascript">
+ 
+    var PUBNUB_demo = PUBNUB.init({
+      publish_key: 'pub-c-fb92c27e-1e14-4842-8fda-17984b453dae',
+      subscribe_key: 'sub-c-94b0177a-3ffa-11e8-8ce7-1294c71dad07'
+    });
+  
+</script>
 </html>
