@@ -1,17 +1,20 @@
 import React, {Component} from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import AceEditor from "react-ace";
+import questions from "./questions";
 
-import "brace/mode/javascript";
-import "brace/theme/github";
-import "brace/theme/monokai";
+import Editor from "./Editor";
+import Tests from "./Tests";
+
 
 
 class App extends Component {
+
   state = {
-    code: "",
-    output: "output here"
+    questions: questions,
+    currentQuestion: questions[0],
+    output: "output here",
+    testOutcome: "Failed"
   };
 
   sandBoxEval = (strCode, cb, blnExecOnly) => {
@@ -33,7 +36,6 @@ class App extends Component {
       setTimeout(privacy.bind(null), 0); // block 'this' in user-provided code and execute
 
     }
-
     /* end work() */
 
     if (typeof strCode === "function") {
@@ -45,7 +47,6 @@ class App extends Component {
         strCode = "eval(" + JSON.stringify(strCode.trim()) + ")";
       }
     }
-
 
     var code = String(work).trim().split("{").slice(1).join("{").slice(0, -1).trim().replace("/0/", strCode), // inline the user code
       worker = new Worker(URL.createObjectURL(new Blob([code]))); // create a new worker loaded with the user-provided code in the wrapper
@@ -73,28 +74,40 @@ class App extends Component {
   };
 
   onChange = (newValue) => {
+    console.log(newValue);
     this.setState({
       code: newValue
     })
   };
 
   onClickHandler = () => {
-    let code = this.state.code;
-    this.sandBoxEval(code, (result) => {
-        console.log(result);
+    let userCode = this.state.code;
+    this.state.currentQuestion.tests.forEach((t, index) => {
+      let runCode = userCode + " " + t.text;
+      console.log(runCode);
+      this.sandBoxEval(runCode, (result) => {
+          console.log(result);
         if (result.e && result.e.message) {
-          this.setState({
-            output: result.e.message
-          })
-        } else {
-          this.setState({
-            output: result
-          })
+            this.setState({
+              output: result.e.message
+            })
+          } else {
+            let passed = (result) ? "Passed" : "Failed";
+            let copyQuestion = {...this.state.currentQuestion};
+            if(passed) {
+              copyQuestion.tests[index].result = !copyQuestion;
+            }
+            this.setState({
+              currentQuestion: copyQuestion
+            })
+          }
         }
-      }
-    );
+      );
+    });
 
   };
+
+
 
   render() {
     return (
@@ -102,35 +115,14 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo"/>
-          <h1 className="App-title" id="console"
-              onClick={this.onClickHandler}>Welcome to React</h1>
+          <h1 className="App-title" id="console">Welcome to React</h1>
         </header>
         <p>{this.state.output}</p>
-        <AceEditor
-          mode="javascript"
-          theme="monokai"
-          name="blah2"
-          onLoad={this.onLoad}
-          onChange={this.onChange}
-          fontSize={18}
-          showPrintMargin={true}
-          showGutter={true}
-          highlightActiveLine={true}
-          width="1000px"
-          value={this.state.code}
-          setOptions={{
-            enableBasicAutocompletion: true,
-            enableLiveAutocompletion: false,
-            enableSnippets: false,
-            showLineNumbers: true,
-            tabSize: 2,
-          }}/>
-        {/*<iframe id="targetFrame" src="./target.html" width="600px" height="400px" />*/}
-
+        <Tests tests={this.state.currentQuestion.tests}/>
+        <Editor defaultCode={this.state.currentQuestion.defaultCode} change={this.onChange}/>
+        <button style={{clear: 'both'}} onClick={this.onClickHandler}>Submit</button>
       </div>
     );
-
-
   }
 }
 
