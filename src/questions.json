@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "question": "Create a function called concat() that concatenates two strings",
+    "defaultCode": "function concat(str1, str2) {\n\n}",
+    "tests": [
+      {
+        "id":1,
+        "text":"concat('a', 'a') === 'aa'",
+        "result": false
+      },
+      {
+        "id":2,
+        "text":"concat('string1', 'string2') === 'string1string2'",
+        "result": false
+      }
+    ]
+  }
+]
