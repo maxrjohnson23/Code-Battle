@@ -2,7 +2,7 @@
   {
     "id": 1,
     "question": "Create a function called concat() that concatenates two strings",
-    "defaultCode": "function concat(str1, str2) {\n\n}",
+    "code": "function concat(str1, str2) {\n\n}",
     "tests": [
       {
         "id":1,
