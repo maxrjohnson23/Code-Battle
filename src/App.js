@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import sandBoxEval from './Util/SandboxEval';
+import sandBoxEval from "./Util/SandboxEval";
 import questions from "./questions";
 
 import Editor from "./Editor";
@@ -22,39 +22,38 @@ class App extends Component {
     newCode.code = newValue;
     this.setState({
       currentQuestion: newCode
-    })
+    });
   };
 
-  onClickHandler = () => {
+  submitCode = () => {
     let userCode = this.state.currentQuestion.code;
     let codePromises = [];
 
-    this.state.currentQuestion.tests.forEach((t, index) => {
-      let runCode = userCode + " " + t.text;
-      console.log(runCode);
-      codePromises.push(sandBoxEval(runCode, index));
+    // Check user code against each test, create list of promises for evaluation
+    this.state.currentQuestion.tests.forEach((t, testIndex) => {
+      let executableCode = `${userCode} ${t.text}`;
+      codePromises.push(sandBoxEval(executableCode, testIndex));
     });
 
-    Promise.all(codePromises).then((results) => {
-          let copyQuestion = {...this.state.currentQuestion};
+    // Evaluate aggregated test results
+    Promise.all(codePromises).then((testResults) => {
+          let evaluatedQuestion = {...this.state.currentQuestion};
 
-          results.forEach(res => {
-            copyQuestion.tests[res.index].result = res.data;
+          testResults.forEach(res => {
+            evaluatedQuestion.tests[res.index].result = res.data;
           });
-          debugger;
           this.setState({
-            currentQuestion: copyQuestion
-          })
+            currentQuestion: evaluatedQuestion
+          });
         }
     ).catch((err) => {
-      console.log('Error in all' + err.message);
+      const formattedError = `${err.message} at Line:${err.lineno}, Col:${err.colno}`;
+      console.log(formattedError);
       this.setState({
-        output: err.message
+        output: formattedError
       });
-    })
-
+    });
   };
-
 
 
   render() {
@@ -69,7 +68,7 @@ class App extends Component {
           <Tests tests={this.state.currentQuestion.tests}/>
           <Editor code={this.state.currentQuestion.code}
                   change={this.onChange}/>
-          <button style={{clear: 'both'}} onClick={this.onClickHandler}>Submit
+          <button style={{clear: "both"}} onClick={this.submitCode}>Submit
           </button>
         </div>
     );
