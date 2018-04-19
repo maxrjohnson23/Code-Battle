@@ -12,15 +12,30 @@ import 'brace/theme/monokai';
 
 class App extends Component {
 
+  componentDidMount() {
+    this.PubNub = PUBNUB.init({
+      publish_key: 'pub-c-fb92c27e-1e14-4842-8fda-17984b453dae',
+      subscribe_key: 'sub-c-94b0177a-3ffa-11e8-8ce7-1294c71dad07',
+      ssl: (location.protocol.toLowerCase() === 'https:'),
+    });
+    this.PubNub.subscribe({
+      channel: 'ReactChat',
+      message: (message) => this.setState({ 
+        history: this.state.history.concat(message) 
+      }),
+    });
+  }
+
   state = {
     userID: Math.round(Math.random() * 1000000).toString(),
     history: [],
   };
   
   sendMessage = (message) => {
-    // for now this will let us know things work.  `console` will give us a
-    // warning though
-    console.log('sendMessage', message);
+    this.PubNub.publish({
+      channel: 'ReactChat',
+      message: message,
+    });
   }
 
   onChange = (newValue) => {
