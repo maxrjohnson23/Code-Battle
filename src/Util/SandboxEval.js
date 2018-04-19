@@ -9,7 +9,6 @@ const sandBoxEval = (strCode, index, blnExecOnly) => {
       // black-list (potentially) unsafe globals to prevent access from user-provided code via formal parameters on a wrapper function:
       function privacy(self, XMLHttpRequest, importScripts, Function, Worker, WebSocket, MessageChannel, __proto__, __defineGetter__,
                        IDBDatabase, setTimeout, setInterval, EventSource, onmessage, onerror, console) {
-        "use strict"; // makes "eval" keyword even safer by keeping this from execution aliases
 
         postMessage(/0/);
 
