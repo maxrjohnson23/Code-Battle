@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.get("/api", (req, res) => {
-  res.send("TEST");
+  res.json({test: "TEST"});
 } );
 
 // Send every request to the React app
