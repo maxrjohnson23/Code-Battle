@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-app.get("/api", (req, res) => {
+app.get("/api/test", (req, res) => {
   res.json({test: "TEST"});
 } );
 

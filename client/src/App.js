@@ -15,7 +15,10 @@ class App extends Component {
 
   getPasswords = () => {
     // test backend api
-    fetch('/api').then(res => res.json()).
+    fetch('/api/test').then(res => {
+      console.log(res);
+      return res.json();
+    }).
     then(res2 =>  {
       console.log(res2.test);
       this.setState({ test : res2.test })
