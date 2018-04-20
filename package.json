@@ -1,7 +1,7 @@
 {
-  "name": "mern",
+  "name": "code-battle",
   "version": "1.0.0",
-  "description": "Mern Demo",
+  "description": "Code Battle",
   "main": "server.js",
   "scripts": {
     "server": "node server.js",
