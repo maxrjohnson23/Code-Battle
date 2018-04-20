@@ -1,7 +1,8 @@
 {
   "name": "code-battle",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.5",
     "@fortawesome/fontawesome-free-solid": "^5.0.10",
@@ -11,7 +12,6 @@
     "react": "^16.3.1",
     "react-ace": "^6.0.0",
     "react-dom": "^16.3.1",
-    "react-iframe": "^1.1.0",
     "react-scripts": "1.1.4"
   },
   "scripts": {
@@ -19,6 +19,5 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "proxy": "http://localhost:3001"
+  }
 }
