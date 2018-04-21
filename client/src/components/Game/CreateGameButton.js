@@ -14,7 +14,7 @@ class CreateGameButton extends Component {
       <div className="CreateGameButton">
         <a 
             href="#" 
-            class="button slateblue"
+            class="button blue"
             onClick={this.createGame}
          >Create Game
         </a>
