@@ -1,0 +1,65 @@
+.button{
+    position: relative;
+      display:block;
+      background: transparent;
+      width:200px;
+      height:60px;
+      line-height:60px;
+      text-align:center;
+      font-size:15px;
+      text-decoration:none;
+      text-transform:uppercase;
+      margin:40px auto;
+  }
+  .button:before, .button:after {
+      width:200px;
+    left: 0px;
+      height:27px;
+    z-index: -1;
+  }
+  
+
+  .slateblue{ color: #6A5ACD; }
+  .indianred{ color: #cd5c5c; }
+
+ 
+  .slateblue:before,.slateblue:after {
+      border: 3px solid #6A5ACD;
+  }
+ 
+  .indianred:before,.indianred:after {
+      border: 3px solid #cd5c5c;
+  }
+  
+  .button:before{
+    position: absolute;
+    content: '';
+    border-bottom: none;
+    -webkit-transform: perspective(15px) rotateX(5deg);
+    -moz-transform: perspective(15px) rotateX(5deg);
+    transform: perspective(15px) rotateX(5deg);  
+  }
+  .button:after{
+    position: absolute;
+    top: 32px;
+    content: '';
+    border-top: none;
+    -webkit-transform: perspective(15px) rotateX(-5deg);
+    -moz-transform: perspective(15px) rotateX(-5deg);
+    transform: perspective(15px) rotateX(-5deg);
+  }
+  
+  /* Button Hover Style */
+ 
+  .slateblue:hover:before, .slateblue:hover:after, .slateblue:focus:before, .slateblue:focus::after{
+      background: #6A5ACD;
+  }
+
+  .indianred:hover:before, .indianred:hover:after {
+	background: #cd5c5c;
+}
+  
+  
+  .button:hover, .button:focus{
+      color:#fff;
+  }
