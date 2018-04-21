@@ -13,59 +13,53 @@ import 'brace/theme/monokai';
 
 class App extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.pubnub = new PubNubReact({ publishKey: 'pub-c-fb92c27e-1e14-4842-8fda-17984b453dae', subscribeKey: 'sub-c-94b0177a-3ffa-11e8-8ce7-1294c71dad07' });
+    this.pubnub = new PubNubReact({
+        publishKey: 'pub-c-f890eb61-09b5-49e5-bed1-274a32208c3b',
+        subscribeKey: 'sub-c-c6147708-458f-11e8-9967-869954283fb4'
+    });
     this.pubnub.init(this);
+}
 
-  }
-
-  componentWillMount() {
-
-    this.pubnub.subscribe({ 
-      channels: ['channel1'], 
-      withPresence: true, 
-      message: (message) => this.setState({ 
-      history: this.state.history.concat(message)}) 
+componentWillMount() {
+  console.log(this.pubnub)
+    this.pubnub.subscribe({
+        channels: ['channel1'],
+        withPresence: true       
     });
 
-    //this.pubnub.getStatus();
-    //this.pubnub.getMessage('channel1');
-    this.pubnub.getPresence('channel1');
-    this.pubnub.getMessage('channel1');
-
-    /*this.pubnub.subscribe({
-      channel: 'channel1',
-      withPrescence: true,
-      message: (message) => this.setState({ 
-        history: this.state.history.concat(message) 
-      }),
-    });*/
-     
-    this.pubnub.getMessage('channel1', (message) => {
-      console.log("hello");
-      console.log(message);
+    this.pubnub.getMessage('channel1', (msg) => {
+        console.log(msg);
     });
-  }
+};
 
+componentWillUnmount() {
+    this.pubnub.unsubscribe({
+        channels: ['channel1']
+    });
+};
+
+sendMessage = (message) => {
+  this.pubnub.publish({
+    channel: 'channel1',
+    message: message,
+    });
+    console.log(message);
+};
+  
   state = {
     userID: Math.round(Math.random() * 1000000).toString(),
-    history: [],
+    messages: [],
   };
-  
-  sendMessage = (message) => {
-    this.pubnub.publish({
-      channel: 'channel1',
-      message: message,
-      });
-      console.log(message);
-  }
 
   onChange = (newValue) => {
     console.log("change", newValue);
   };
 
   render() {
+    const messages = this.pubnub.getMessage('channel1');
+    console.log(messages)
     const { sendMessage, state } = this;
     return (
       <div className="App">
@@ -94,7 +88,7 @@ class App extends Component {
             showLineNumbers: true,
             tabSize: 2,
           }}/>
-          <ChatHistory history={ state.history } />
+          <ChatHistory history={ messages } />
           <LiveChat userID={ state.userID } sendMessage={ sendMessage } />
       </div>
     );
