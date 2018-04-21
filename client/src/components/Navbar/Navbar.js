@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import "../../App.css";
+import "./Navbar.css";
 import axios from "axios";
 
 class Navbar extends Component {
@@ -23,38 +24,40 @@ class Navbar extends Component {
 
   render() {
     return (
-        <div>
-
-          <header className="navbar App-header" id="nav-container">
-            <div className="col-4">
-              {this.props.loggedIn ? (
-                  <section className="navbar-section">
-                    <h4>Welcome {this.props.username}</h4>
-                    <Link to="#" className="btn btn-link text-secondary"
-                          onClick={this.logout}>
-                      <span className="text-secondary">logout</span></Link>
-                  </section>
-              ) : (
-                  <section className="navbar-section">
-                    <Link to="/" className="btn btn-link text-secondary">
-                      <span className="text-secondary">home</span>
-                    </Link>
-                    <Link to="/login" className="btn btn-link text-secondary">
-                      <span className="text-secondary">login</span>
-                    </Link>
-                    <Link to="/signup" className="btn btn-link">
-                      <span className="text-secondary">sign up</span>
-                    </Link>
-                  </section>
-              )}
-            </div>
-            <div className="col-4 col-mr-auto">
-              <div id="top-filler"></div>
-              <h1 className="App-title">Code Battle</h1>
-            </div>
-          </header>
-        </div>
-
+        <nav className="navbar">
+          <section className="navbar-section">
+            <Link to="/" className="logo btn btn-link">
+              <p className="text-secondary">Code Battle</p>
+            </Link>
+          </section>
+          <section className="navbar-section">
+            {this.props.loggedIn ? (
+                [
+                  <Link key="username" to="#" className="btn btn-link"
+                        onClick={this.logout}>
+                    <span
+                        className="text-secondary">Welcome {this.props.username}</span>
+                  </Link>,
+                  <Link key="logout" to="#" className="btn btn-link"
+                        onClick={this.logout}>
+                    <span className="text-secondary">Logout</span>
+                  </Link>
+                ]
+            ) : (
+                [
+                  <Link key="home" to="/" className="btn btn-link">
+                    <span className="text-secondary">Home</span>
+                  </Link>,
+                  <Link key="login" to="/login" className="btn btn-link">
+                    <span className="text-secondary">Login</span>
+                  </Link>,
+                  <Link key="signup" to="/signup" className="btn btn-link">
+                    <span className="text-secondary">Sign Up</span>
+                  </Link>
+                ]
+            )}
+          </section>
+        </nav>
     );
 
   }

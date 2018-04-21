@@ -29,23 +29,18 @@ class SignUp extends Component {
         .then(response => {
           console.log(response);
           if (!response.data.error) {
-            debugger;
             console.log("successful signup");
-            this.setState({ //redirect to login page
+            this.setState({
               redirectTo: "/login"
             });
           } else {
-            console.log("username already taken");
             this.setState({
               message: "Username already taken",
               hasError: true
             });
-
           }
-        }).catch(error => {
-      console.log("signup error: ");
-      console.log(error);
-
+        }).catch(err => {
+      console.log(err);
     });
   };
 
