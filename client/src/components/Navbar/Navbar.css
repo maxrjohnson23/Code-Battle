@@ -1,0 +1,28 @@
+.navbar {
+    display: flex;
+    align-items: right;
+    padding: 0 20px;
+    background: #222;
+    color: #fff !important;
+    font-size: 0.9em;
+    margin-bottom: 50px;
+}
+
+.navbar a:hover:not(.logo) {
+    background-color: #1eaa90;
+    color: #fff;
+}
+
+.navbar a {
+    outline: none;
+    line-height: 80px;
+    height: 100px;
+}
+
+.logo {
+    font-size: 1.4rem;
+}
+
+
+
+
