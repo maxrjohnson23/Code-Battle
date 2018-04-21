@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../db/models/user");
+const UserRoute = require("../models/user");
 const passport = require("../passport");
 
 router.post("/", (req, res) => {
@@ -8,16 +8,16 @@ router.post("/", (req, res) => {
 
   const {username, password} = req.body;
   // ADD VALIDATION
-  User.findOne({username: username}, (err, user) => {
+  UserRoute.findOne({username: username}, (err, user) => {
     if (err) {
-      console.log("User.js post error: ", err);
+      console.log("UserRoute.js post error: ", err);
     } else if (user) {
       res.json({
         error: `Sorry, already a user with the username: ${username}`
       });
     }
     else {
-      const newUser = new User({
+      const newUser = new UserRoute({
         username: username,
         password: password
       });
@@ -32,7 +32,7 @@ router.post("/", (req, res) => {
 router.post(
     "/login",
     function (req, res, next) {
-      console.log("routes/user.js, login, req.body: ");
+      console.log("routes/userRoute.js, login, req.body: ");
       console.log(req.body);
       next();
     },

@@ -6,7 +6,10 @@ const session = require("express-session");
 const dbConnection = require("./db");
 const MongoStore = require("connect-mongo")(session);
 const passport = require("./passport");
-const user = require("./routes/user");
+
+const userRoute = require("./routes/userRoute");
+const questionRoute = require("./routes/questionRoute");
+
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -40,11 +43,9 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Routes
-app.use("/user", user);
+app.use("/user", userRoute);
+app.use("/api/question", questionRoute);
 
-app.get("/api/test", (req, res) => {
-  res.json({test: "TEST"});
-});
 
 // Send every request to the React app
 // Define any API routes before this runs
