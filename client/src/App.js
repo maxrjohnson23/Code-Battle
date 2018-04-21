@@ -15,7 +15,9 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.getUser();
+    if (!this.state.loggedIn) {
+      this.getUser();
+    }
   }
 
   getUser = () => {
@@ -30,7 +32,6 @@ class App extends Component {
           username: response.data.user.username
         });
       } else {
-        console.log("Get user: no user");
         this.setState({
           loggedIn: false,
           username: null
@@ -49,8 +50,6 @@ class App extends Component {
         <div className="App">
           <Navbar updateUser={this.updateUser} loggedIn={this.state.loggedIn}
                   username={this.state.username}/>
-
-
           <Route exact path="/" component={CodeSpace}/>
           <Route path="/login"
                  render={() => <LoginForm updateUser={this.updateUser}/>}/>
