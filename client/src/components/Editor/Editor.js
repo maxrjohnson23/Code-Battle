@@ -1,6 +1,5 @@
 import React from "react";
 import AceEditor from "react-ace";
-import Wrapper from "../Wrapper/Wrapper";
 import "./Editor.css";
 
 import "brace/mode/javascript";
@@ -8,9 +7,8 @@ import "brace/theme/github";
 import "brace/theme/monokai";
 
 
-
 const Editor = (props) => (
-    <div className="editorWrapper">
+    <div className="editorWrapper" onKeyDown={props.keySubmit}>
       <AceEditor
           mode="javascript"
           theme="monokai"
@@ -31,7 +29,9 @@ const Editor = (props) => (
             showLineNumbers: true,
             tabSize: 2,
           }}/>
-      <button className="submitCode" onClick={props.submit}>Submit</button>
+      <button className="submitCode" onClick={props.submit}>Submit (ctrl +
+        enter)
+      </button>
     </div>
 );
 

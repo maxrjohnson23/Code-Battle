@@ -27,7 +27,7 @@ class Navbar extends Component {
         <nav className="navbar">
           <section className="navbar-section">
             <Link to="/" className="logo btn btn-link">
-              <p className="text-secondary">Code Battle</p>
+              <h2 className="text-secondary">Code Battle</h2>
             </Link>
           </section>
           <section className="navbar-section">

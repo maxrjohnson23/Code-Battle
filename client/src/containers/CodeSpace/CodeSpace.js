@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import sandBoxEval from "../../Util/SandboxEval";
-import questions from "../../questions"
-
+import axios from "axios";
 import Editor from "../../components/Editor/Editor";
 import CodeTests from "../../components/CodeTests/CodeTests";
 import Output from "../../components/Output/Output";
@@ -22,13 +21,20 @@ class CodeSpace extends Component {
     });
   };
 
+  keySubmit = (event) => {
+    if ((event.keyCode === 10 || event.keyCode === 13) && event.ctrlKey) {
+      console.log("Submit!");
+      this.submitCode();
+    }
+  };
+
   submitCode = () => {
     let userCode = this.state.currentQuestion.code;
     let codePromises = [];
 
     // Check user code against each test, create list of promises for evaluation
     this.state.currentQuestion.tests.forEach((t, testIndex) => {
-      let executableCode = `${userCode} ${t.text}`;
+      let executableCode = `${userCode} ${t.testCode}`;
       codePromises.push(sandBoxEval(executableCode, testIndex));
     });
 
@@ -66,7 +72,8 @@ class CodeSpace extends Component {
           <CodeTests tests={this.state.currentQuestion.tests}/>
           <Editor code={this.state.currentQuestion.code}
                   change={this.onChange}
-                  submit={this.submitCode}/>
+                  submit={this.submitCode}
+                  keySubmit={this.keySubmit}/>
         </div>
   )
   }
