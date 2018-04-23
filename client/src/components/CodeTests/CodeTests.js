@@ -15,7 +15,7 @@ const CodeTests = (props) => (
         <tbody>
         {
           props.tests.map(t => (
-              <CodeTest key={t.id} text={t.text} result={t.result}/>
+              <CodeTest key={t._id} text={t.testCode} result={t.result}/>
           ))
         }
         </tbody>

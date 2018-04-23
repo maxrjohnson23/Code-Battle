@@ -12,12 +12,6 @@ import PubNubReact from "pubnub-react";
 
 
 class App extends Component {
-  state = {
-    loggedIn: false,
-    username: null,
-    userID: Math.round(Math.random() * 1000000).toString(),
-    messages: []
-  };
 
   constructor(props) {
     super(props);
@@ -25,6 +19,12 @@ class App extends Component {
       publishKey: "pub-c-f890eb61-09b5-49e5-bed1-274a32208c3b",
       subscribeKey: "sub-c-c6147708-458f-11e8-9967-869954283fb4"
     });
+    this.state = {
+      loggedIn: false,
+      username: null,
+      userID: Math.round(Math.random() * 1000000).toString(),
+      messages: []
+    };
     this.pubnub.init(this);
   }
 
@@ -53,7 +53,6 @@ class App extends Component {
     });
     console.log(message);
   };
-
 
 
   componentDidMount() {
