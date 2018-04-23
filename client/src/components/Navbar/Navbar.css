@@ -4,6 +4,7 @@
     padding: 0 20px;
     background: #222;
     color: #fff !important;
+    border-radius: 0 !important;
     font-size: 0.9em;
     margin-bottom: 50px;
 }
@@ -11,6 +12,10 @@
 .navbar a:hover:not(.logo) {
     background-color: #1eaa90;
     color: #fff;
+}
+
+.navbar a:hover {
+    text-decoration: none;
 }
 
 .navbar a {
