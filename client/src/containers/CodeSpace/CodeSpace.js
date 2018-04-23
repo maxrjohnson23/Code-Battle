@@ -7,11 +7,37 @@ import Output from "../../components/Output/Output";
 
 class CodeSpace extends Component {
   state = {
-    questions: questions,
-    currentQuestion: questions[0],
+    questions: null,
+    currentQuestion: null,
     output: ""
   };
 
+  componentDidMount() {
+    this.getQuestionList();
+  }
+
+  getQuestionList = () => {
+    axios.get("/api/question").then(response => {
+      console.log("Get question response: ");
+      console.log(response.data);
+      let questions = response.data.questions;
+
+      if (questions) {
+
+        const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+
+        questions = questions.map(q => {
+          q.result = false;
+          return q;
+        });
+
+        this.setState({
+          questions: questions,
+          currentQuestion: randomQuestion
+        });
+      }
+    });
+  };
 
   onChange = (newValue) => {
     let newCode = {...this.state.currentQuestion};
@@ -45,7 +71,7 @@ class CodeSpace extends Component {
           let allPassed = true;
           testResults.forEach(res => {
             evaluatedQuestion.tests[res.index].result = res.data;
-            if(!res.data) {
+            if (!res.data) {
               allPassed = false;
             }
           });
@@ -66,16 +92,17 @@ class CodeSpace extends Component {
   };
 
   render() {
-    return (
+    return this.state.questions ? (
         <div>
-          <Output message={this.state.output} />
+
+          <Output message={this.state.output}/>
           <CodeTests tests={this.state.currentQuestion.tests}/>
           <Editor code={this.state.currentQuestion.code}
                   change={this.onChange}
                   submit={this.submitCode}
                   keySubmit={this.keySubmit}/>
         </div>
-  )
+    ) : (<div/>);
   }
 }
 
