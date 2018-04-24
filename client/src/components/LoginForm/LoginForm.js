@@ -1,12 +1,15 @@
 import React, {Component} from "react";
 import {Redirect} from "react-router-dom";
+import Modal from "../UI/Modal/Modal";
 import axios from "axios";
+import "./LoginForm.css";
 
 class LoginForm extends Component {
   state = {
     username: "",
     password: "",
     redirectTo: null,
+    loginPhase: true,
     message: ""
   };
 
@@ -36,7 +39,8 @@ class LoginForm extends Component {
             });
             // update the state to redirect to home
             this.setState({
-              redirectTo: "/"
+              redirectTo: "/",
+              loginPhase: false
             });
           }
         }).catch(error => {
@@ -53,53 +57,49 @@ class LoginForm extends Component {
       return <Redirect to={{pathname: this.state.redirectTo}}/>;
     } else {
       return (
-          <div>
-            <h4>Login</h4>
-            <h5 style={{color: "red"}}>{this.state.message}</h5>
-            <form className="form-horizontal">
-              <div className="form-group">
-                <div className="col-1 col-ml-auto">
-                  <label className="form-label"
-                         htmlFor="username">Username</label>
-                </div>
-                <div className="col-3 col-mr-auto">
-                  <input className="form-input"
-                         type="text"
-                         id="username"
-                         name="username"
-                         placeholder="Username"
-                         value={this.state.username}
-                         onChange={this.handleChange}
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="col-1 col-ml-auto">
-                  <label className="form-label"
-                         htmlFor="password">Password: </label>
-                </div>
-                <div className="col-3 col-mr-auto">
-                  <input className="form-input"
-                         placeholder="password"
-                         type="password"
-                         name="password"
-                         value={this.state.password}
-                         onChange={this.handleChange}
-                  />
-                </div>
-              </div>
-              <div className="form-group ">
-                <div className="col-7"></div>
-                <button
-                    className="btn btn-primary col-1 col-mr-auto"
+          <Modal show={this.state.loginPhase}
+                 modalClosed={() => this.setState({
+                   loginPhase: false,
+                   redirectTo: "/"
+                 })}>
 
-                    onClick={this.handleSubmit}
-                    type="submit">Login
-                </button>
+            <div className="loginContainer">
+              <h4>Login</h4>
+              <h5 style={{color: "red"}}>{this.state.message}</h5>
+              <div className="login-item">
+                <form action="" method="post" className="form form-login">
+                  <div className="form-field">
+                    <label className="user" htmlFor="login-username"><span
+                        className="hidden">Username</span></label>
+                    <input id="login-username" type="text"
+                           className="form-input" placeholder="Username"
+                           required
+                           name="username"
+                           value={this.state.username}
+                           onChange={this.handleChange}/>
+                  </div>
+
+                  <div className="form-field">
+                    <label className="lock" htmlFor="login-password"><span
+                        className="hidden">Password</span></label>
+                    <input id="login-password" type="password"
+                           className="form-input" placeholder="Password"
+                           required
+                           name="password"
+                           value={this.state.password}
+                           onChange={this.handleChange}/>
+                  </div>
+
+                  <div className="form-field">
+                    <input type="submit" value="Log in"
+                           onClick={this.handleSubmit}
+                    />
+                  </div>
+                </form>
+
               </div>
-            </form>
-          </div>
-      );
+            </div>
+          </Modal>);
     }
   }
 }
