@@ -1,23 +1,24 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 
 class CreateGameButton extends Component {
   //determine if signed in
 
-//   createGame () => {
+  createGame = (event) => {
+    event.preventDefault();
     
-//   }
+  }
 
   render() {
 
     return (
       <div className="CreateGameButton">
-        <a 
+        <div 
             href="#" 
-            class="button blue"
+            className="button blue"
             onClick={this.createGame}
          >Create Game
-        </a>
+        </div>
       </div>
     )
   }

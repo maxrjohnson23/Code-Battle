@@ -9,10 +9,16 @@ class Game extends Component {
         active: false
     }
 
-    startGame = () => {
-        this.state.active = true;
-        
+    startGame = (players) => {
+        this.setState({
 
+        })
+        this.state.active = true;   
+        this.state.players.push(players);
+    }
+
+    render() {
+        
     }
 
 
