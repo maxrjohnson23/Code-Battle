@@ -6,8 +6,8 @@ const userList = (props) => (
       <ul>
         <h2>Current Users</h2>
         {
-          props.users.map(u => {
-            return <User username={u}/>
+          props.users.map(username => {
+            return <User key={username} username={username}/>
           })
         }
       </ul>

@@ -111,7 +111,10 @@ class App extends Component {
     });
 
     this.pubnub.getMessage(this.state.defaultChannel, (msg) => {
-      console.log(msg);
+      const updatedMessages = this.state.messages.concat(msg);
+      this.setState({
+        messages: updatedMessages
+      })
     });
 
     this.pubnub.getPresence(this.state.defaultChannel, (event) => this.pubNubPresenceHandler(event));
@@ -153,9 +156,6 @@ class App extends Component {
 
 
   render() {
-    const messages = this.pubnub.getMessage(this.state.defaultChannel);
-    const {sendMessage, state} = this;
-
 
     return (
         <div className="App">
@@ -171,8 +171,9 @@ class App extends Component {
                      loginHandler={this.loginUserHandler}/>}/>
           <Route path="/signup"
                  render={() => <SignUp/>}/>
-          <ChatHistory history={messages}/>
-          <LiveChat userID={state.userID} sendMessage={sendMessage}/>
+          <ChatHistory history={this.state.messages}/>
+          <LiveChat userID={this.state.username}
+                    sendMessage={this.sendMessage}/>
           <UserList users={this.state.presentUsers}/>
         </div>
     );
