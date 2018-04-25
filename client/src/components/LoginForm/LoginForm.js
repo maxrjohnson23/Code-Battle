@@ -33,7 +33,7 @@ class LoginForm extends Component {
           console.log(response);
           if (response.status === 200) {
             // update App.js state
-            this.props.updateUser({
+            this.props.loginHandler({
               loggedIn: true,
               username: response.data.username
             });

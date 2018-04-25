@@ -18,8 +18,6 @@ class CodeSpace extends Component {
 
   getQuestionList = () => {
     axios.get("/api/question").then(response => {
-      console.log("Get question response: ");
-      console.log(response.data);
       let questions = response.data.questions;
 
       if (questions) {

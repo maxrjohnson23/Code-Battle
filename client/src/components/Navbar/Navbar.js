@@ -12,7 +12,7 @@ class Navbar extends Component {
     axios.post("/user/logout").then(response => {
       console.log(response.data);
       if (response.status === 200) {
-        this.props.updateUser({
+        this.props.loginHandler({
           loggedIn: false,
           username: null
         });
