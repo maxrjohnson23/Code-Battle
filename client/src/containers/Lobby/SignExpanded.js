@@ -19,7 +19,6 @@ class SignExpanded extends Component {
      	this.setState({flexState: !this.state.flexState});  
   	}
 
-
 	isFinished = () => {
 		this.setState({animIsFinished: true});
 	}

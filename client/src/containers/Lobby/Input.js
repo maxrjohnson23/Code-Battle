@@ -7,12 +7,6 @@ const Input = (props) => {
 
 	let iconVisibility = null;
 
-	// if (props.type == 'password') {
-	// 	iconVisibility = (
-	// 		<MdVisibility className='iconVisibility'/>
-	// 	);
-	// }
-
 	return (
 		<div className="Input">
 			<input 

@@ -3,6 +3,7 @@
 html {
   font-family: "Roboto Condensed", sans-serif;
 }
+
 body {
   /* background-image: url('../winter_mountains.jpg'); */
   background-position: center;
@@ -25,12 +26,14 @@ body {
   top: 0;
   left: 0;
 }
+
 .App_test {
   display: flex;
   flex-direction: row-reverse;
   box-shadow: 0 6px 10px 0px rgba(0, 0, 0, 0.5);
   justify-content: flex-start;
 }
+
 .Modal {
   width: 700px;
   height: 500px;
@@ -39,6 +42,7 @@ body {
   box-shadow: 0 6px 10px 0px rgba(0, 0, 0, 0.5);
   flex-grow: 5;
 }
+
 .NavigationPanel {
   background-color: rgba(244, 246, 248, 0.98);
   width: 80px;
@@ -177,10 +181,12 @@ body {
   height: 100%;
   width: 60%;
 }
+
 .logForm h2 {
   margin-top: 50px;
   margin-bottom: 100px;
 }
+
 .Input {
   display: flex;
   flex-direction: row;
@@ -340,6 +346,7 @@ background: #cd5c5c;
   margin-top: 0px;
   opacity: 1;
 }
+
 .example-leave.example-leave-active {
   margin-top: -30px;
   opacity: .01;
