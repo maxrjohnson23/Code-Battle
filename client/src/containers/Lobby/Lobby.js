@@ -5,7 +5,7 @@ import Sign from './Sign';
 import SignExpanded from './SignExpanded';
 import SignCollapsed from './SignCollapsed';
 
-class Modal extends Component {
+class Lobby extends Component {
 
 	constructor(props) {
 		super(props);
@@ -40,25 +40,25 @@ class Modal extends Component {
 	}
 
 	render () {
-		let modalContent = null;
+		let lobbyContent = null;
 		 
 		if (this.state.wasClickedLeft === false && this.state.wasClickedRight === false) {
-			modalContent = (
-				<div className='Modal'>
+			lobbyContent = (
+				<div className='Lobby'>
 					<Sign type='create' onChange={this.onClickLeft}></Sign>
 					<Sign type='join' onChange={this.onClickRight}></Sign>
 				</div>
 			);
 		} else if (this.state.wasClickedLeft === false && this.state.wasClickedRight === true) {
-			modalContent = (
-				<div className='Modal'>
+			lobbyContent = (
+				<div className='Lobby'>
 					<SignCollapsed type='create' onChange={this.onClickLeft}></SignCollapsed>
 					<SignExpanded type='join' ></SignExpanded>
 				</div>
 			);
 		} else if (this.state.wasClickedLeft === true && this.state.wasClickedRight === false) {
-			modalContent = (
-				<div className='Modal'>
+			lobbyContent = (
+				<div className='Lobby'>
 					<SignExpanded type='create' ></SignExpanded>
 					<SignCollapsed type='join' onChange={this.onClickRight}></SignCollapsed>
 				</div>
@@ -66,16 +66,16 @@ class Modal extends Component {
 		}
 		
 		return (
-			<div className="Modal">
-				{modalContent}
+			<div className="Lobby">
+				{lobbyContent}
 			</div>
 		);
 	}
 
 }
 
-Modal.propTypes = {
+Lobby.propTypes = {
 	onSubmit: PropTypes.func
 };
 
-export default Modal;
+export default Lobby;
