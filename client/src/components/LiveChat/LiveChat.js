@@ -42,7 +42,7 @@ export default class LiveChat extends Component {
                    placeholder="Type your message"/>
             <span className="chip left">
           <img src={imgURL}/>
-          <span>Anonymous robot #{props.userID}</span>
+          <span>{props.userID}</span>
         </span>
           </div>
           <div className="input-field col s2">
