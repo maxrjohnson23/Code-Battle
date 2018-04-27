@@ -20,7 +20,7 @@ export default class ChatHistory extends React.Component {
                     key={messageObj.message.When}>
                   <img src={imgURL} alt={messageObj.Who} className="circle"/>
                   <span
-                      className="title">Anonymous robot #{messageObj.message.Who}</span>
+                      className="title">{messageObj.message.Who}</span>
                   <p>
                     <i className="prefix mdi-action-alarm"/>
                     <span className="message-date">{messageDateTime}</span>
