@@ -11,6 +11,7 @@ class SignExpanded extends Component {
 		this.state = {
 			flexState: false,
 			animIsFinished: false,
+			games = []
 		};
 	}
 
@@ -61,7 +62,9 @@ class SignExpanded extends Component {
 												<Input id="players" type="text" placeholder="Enter number of players" />
 											</div>
 										) : (
-											<ol>List of Games</ol>
+											<ol>List of Games
+												{this.state.games.map(game => <li>{game.name}</li>)}
+											</ol>
 										)}
 									</div>
 									<SubmitButton type={this.props.type} />
