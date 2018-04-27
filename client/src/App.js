@@ -1,14 +1,13 @@
 import React, {Component} from "react";
-import {Redirect, Route} from "react-router-dom";
+import {Route} from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 import CodeSpace from "./containers/CodeSpace/CodeSpace";
-import SignUp from "./components/SignUp/SignUp";
-import LoginForm from "./components/LoginForm/LoginForm";
+import LoginPopup from "./components/LoginPopup/LoginPopup";
 import Navbar from "./components/Navbar/Navbar";
 import UserList from "./components/UserList/UserList";
-import ChatHistory from "./components/ChatHistory/ChatHistory"
-import LiveChat from "./components/LiveChat/LiveChat"
+import ChatHistory from "./components/ChatHistory/ChatHistory";
+import LiveChat from "./components/LiveChat/LiveChat";
 import PubNubReact from "pubnub-react";
 
 
@@ -19,11 +18,12 @@ class App extends Component {
     this.pubnub = new PubNubReact({
       publishKey: "pub-c-f890eb61-09b5-49e5-bed1-274a32208c3b",
       subscribeKey: "sub-c-c6147708-458f-11e8-9967-869954283fb4",
-
+      presenceTimeout: 30
     });
     this.state = {
       loggedIn: false,
       username: null,
+      showLogin: false,
       messages: [],
       pubnubJoined: false,
       defaultChannel: "Channel-main",
@@ -55,7 +55,6 @@ class App extends Component {
 
   getUser = () => {
     axios.get("/user/").then(response => {
-      console.log("Get User");
       if (response.data.user) {
         this.setState({
           loggedIn: true,
@@ -70,7 +69,7 @@ class App extends Component {
           username: null
         });
       }
-    })
+    });
   };
 
   loginUserHandler = (userObj) => {
@@ -78,15 +77,33 @@ class App extends Component {
     if (userObj.loggedIn) {
       // Connect to PubNub with newly logged in user
       this.initPubnub(userObj.username);
+      this.setState({
+        showLogin: false
+      });
     } else {
-      console.log('Unsubscribing');
+      console.log("Unsubscribing");
       this.pubnub.unsubscribe({
         channels: [this.state.defaultChannel]
       });
       this.setState({
-        pubnubJoined: false
+        pubnubJoined: false,
+        showLogin: false
       });
     }
+  };
+
+  hideLoginHandler = () => {
+    console.log("Setting false login");
+    this.setState({
+      showLogin: false
+    });
+  };
+
+  showLoginHandler = () => {
+    console.log("Setting show login");
+    this.setState({
+      showLogin: true
+    });
   };
 
   initPubnub = (username) => {
@@ -101,7 +118,7 @@ class App extends Component {
       const updatedMessages = this.state.messages.concat(msg);
       this.setState({
         messages: updatedMessages
-      })
+      });
     });
 
     this.pubnub.getPresence(this.state.defaultChannel, (event) => this.pubNubPresenceHandler(event));
@@ -132,7 +149,7 @@ class App extends Component {
     console.log("Presence change: ", event);
     let updatedUserList = [...this.state.presentUsers];
     if (event.action === "join") {
-      updatedUserList.push(event.uuid)
+      updatedUserList.push(event.uuid);
     } else if (event.action === "leave") {
       updatedUserList = updatedUserList.filter(u => u !== event.uuid);
     }
@@ -147,16 +164,15 @@ class App extends Component {
     return (
         <div className="App">
           <Navbar loginHandler={this.loginUserHandler}
+                  showLoginHandler={this.showLoginHandler}
                   loggedIn={this.state.loggedIn}
                   username={this.state.username}/>
+          <LoginPopup
+              loginHandler={this.loginUserHandler}
+              showLogin={this.state.showLogin}
+              hideLoginHandler={this.hideLoginHandler}/>
           <Route exact path="/"
-                 render={() => this.state.loggedIn ? <CodeSpace/> :
-                     <Redirect to="/login"/>}/>
-          <Route path="/login"
-                 render={() => <LoginForm
-                     loginHandler={this.loginUserHandler}/>}/>
-          <Route path="/signup"
-                 render={() => <SignUp/>}/>
+                 render={() => <CodeSpace/>}/>
           <ChatHistory history={this.state.messages}/>
           <LiveChat userID={this.state.username}
                     sendMessage={this.sendMessage}/>

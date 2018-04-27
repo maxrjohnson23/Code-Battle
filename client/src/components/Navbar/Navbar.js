@@ -48,11 +48,9 @@ class Navbar extends Component {
                   <Link key="home" to="/" className="btn btn-link">
                     <span className="text-secondary">Home</span>
                   </Link>,
-                  <Link key="login" to="/login" className="btn btn-link">
+                  <Link key="login" to="/" className="btn btn-link"
+                        onClick={this.props.showLoginHandler}>
                     <span className="text-secondary">Login</span>
-                  </Link>,
-                  <Link key="signup" to="/signup" className="btn btn-link">
-                    <span className="text-secondary">Sign Up</span>
                   </Link>
                 ]
             )}
