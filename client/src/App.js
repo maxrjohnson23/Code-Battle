@@ -149,18 +149,29 @@ class App extends Component {
           <Navbar loginHandler={this.loginUserHandler}
                   loggedIn={this.state.loggedIn}
                   username={this.state.username}/>
-          <Route exact path="/"
-                 render={() => this.state.loggedIn ? <CodeSpace/> :
-                     <Redirect to="/login"/>}/>
-          <Route path="/login"
-                 render={() => <LoginForm
-                     loginHandler={this.loginUserHandler}/>}/>
-          <Route path="/signup"
-                 render={() => <SignUp/>}/>
-          <ChatHistory history={this.state.messages}/>
-          <LiveChat userID={this.state.username}
-                    sendMessage={this.sendMessage}/>
-          <UserList users={this.state.presentUsers}/>
+            <Route path="/login"
+                  render={() => <LoginForm
+                    loginHandler={this.loginUserHandler}/>}/>
+            <Route path="/signup"
+                  render={() => <SignUp/>}/>
+                  
+          <div className="hcontainer">
+            <div className="code-space">
+              <Route exact path="/"
+                    render={() => this.state.loggedIn ? <CodeSpace/> :
+                        <Redirect to="/login"/>}/>
+            </div>
+            <div className="user-list">
+              <UserList users={this.state.presentUsers}/>
+            </div>
+          </div>
+            <div className="chat-history">
+              <ChatHistory history={this.state.messages}/>
+            </div>
+            <div className="live-chat">
+              <LiveChat userID={this.state.username}
+                        sendMessage={this.sendMessage}/>
+            </div>
         </div>
     );
   }

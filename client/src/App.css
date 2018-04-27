@@ -22,3 +22,30 @@
     font-size: large;
 }
 
+.hcontainer {
+    display:flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: stretch;
+}
+
+.code-space {
+    order:1;
+    border: 3px solid #73AD21;
+}
+
+/* .chat-history {
+    order:2;
+    border: 3px solid #73AD21;
+} */
+
+/* .live-chat {
+    order:3;
+    border: 3px solid #73AD21;
+} */
+.user-list {
+    order:2;
+    border: 3px solid #73AD21;
+    flex-grow: 1
+}
+
