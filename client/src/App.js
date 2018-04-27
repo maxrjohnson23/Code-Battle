@@ -18,7 +18,8 @@ class App extends Component {
     super(props);
     this.pubnub = new PubNubReact({
       publishKey: "pub-c-f890eb61-09b5-49e5-bed1-274a32208c3b",
-      subscribeKey: "sub-c-c6147708-458f-11e8-9967-869954283fb4"
+      subscribeKey: "sub-c-c6147708-458f-11e8-9967-869954283fb4",
+
     });
     this.state = {
       loggedIn: false,
@@ -51,20 +52,6 @@ class App extends Component {
       this.getUser();
     }
   }
-
-  hereNow = () => {
-    this.pubnub.hereNow(
-        {
-          channels: [this.state.defaultChannel],
-          includeUUIDs: true,
-          includeState: true
-        },
-        (status, response) => {
-          console.log(status);
-          console.log(response);
-        }
-    );
-  };
 
   getUser = () => {
     axios.get("/user/").then(response => {
@@ -162,7 +149,6 @@ class App extends Component {
           <Navbar loginHandler={this.loginUserHandler}
                   loggedIn={this.state.loggedIn}
                   username={this.state.username}/>
-          <button onClick={this.hereNow}>Here now</button>
           <Route exact path="/"
                  render={() => this.state.loggedIn ? <CodeSpace/> :
                      <Redirect to="/login"/>}/>
@@ -179,5 +165,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;
