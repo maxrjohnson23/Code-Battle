@@ -11,7 +11,7 @@ class SignExpanded extends Component {
 		this.state = {
 			flexState: false,
 			animIsFinished: false,
-			games = []
+			game: []
 		};
 	}
 
@@ -63,7 +63,7 @@ class SignExpanded extends Component {
 											</div>
 										) : (
 											<ol>List of Games
-												{this.state.games.map(game => <li>{game.name}</li>)}
+												{/* {this.state.games.map(game => <li>{game.name}</li>)} */}
 											</ol>
 										)}
 									</div>

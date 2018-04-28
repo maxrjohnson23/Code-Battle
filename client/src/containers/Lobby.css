@@ -4,7 +4,7 @@
   font-family: "Roboto Condensed", sans-serif;
 }
 
-body {
+.App {
   background-position: center;
   background-repeat: no-repeat;
   background-color: gray;
@@ -12,7 +12,7 @@ body {
   color: #3E363F;
   font-family: "Roboto Condensed", sans-serif;
   height: 100vh;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .Lobby {
@@ -219,20 +219,22 @@ body {
   cursor: pointer;
 }
 
-.slateblue{
+.slateblue, .gray {
   position: relative;
     display:block;
     background: transparent;
     width:200px;
     height:60px;
-    line-height:60px;
+    line-height:54px;
     text-align:center;
     font-size:15px;
     text-decoration:none;
     text-transform:uppercase;
     margin:40px auto;
+    border: none;
 }
-.slateblue:before, .slateblue:after {
+
+.slateblue:before, .slateblue:after, .gray:before, .gray:after {
     width:200px;
   left: 0px;
     height:27px;
@@ -241,6 +243,7 @@ body {
 
 
 .slateblue{ color: #6A5ACD; }
+.gray{ color: rgba(64, 70, 86, 0.98); }
 .indianred{ color: #cd5c5c; }
 
 
@@ -248,11 +251,15 @@ body {
     border: 3px solid #6A5ACD;
 }
 
+.gray:before,.gray:after {
+    border: 3px solid rgba(64, 70, 86, 0.98);
+}
+
 .indianred:before,.indianred:after {
     border: 3px solid #cd5c5c;
 }
 
-.slateblue:before{
+.slateblue:before, .gray:before{
   position: absolute;
   content: '';
   border-bottom: none;
@@ -260,7 +267,7 @@ body {
   -moz-transform: perspective(15px) rotateX(5deg);
   transform: perspective(15px) rotateX(5deg);  
 }
-.slateblue:after{
+.slateblue:after, .gray:after{
   position: absolute;
   top: 32px;
   content: '';
@@ -276,12 +283,16 @@ body {
     background: #6A5ACD;
 }
 
+.gray:hover:before, .gray:hover:after, .gray:focus:before, .gray:focus::after{
+    background: rgba(64, 70, 86, 0.98);
+}
+
 .indianred:hover:before, .indianred:hover:after {
 background: #cd5c5c;
 }
 
 
-.slateblue:hover, .slateblue:focus{
+.slateblue:hover, .slateblue:focus, .gray:hover, .gray:focus{
     color:#fff;
 }
 
