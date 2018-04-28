@@ -32,27 +32,40 @@ export default class LiveChat extends Component {
 
     const imgURL = "//robohash.org/" + props.userID + "?set=set2&bgset=bg2&size=70x70";
 
-    return (<footer className="teal">
+    return (
+    <section className="chatEntry">
+      <header className="top-bar">
+        <h1 className="chatHeader">Channel Chat</h1>
+      </header>
+
+        <ol className="collection">
+          {props.history.map((messageObj) => {
+
+            const imgURL = "//robohash.org/" + messageObj.message.Who + "?set=set2&bgset=bg2&size=70x70";
+            const messageDate = new Date(messageObj.message.When);
+            const messageDateTime = /*messageDate.toLocaleDateString() + " at " +*/ messageDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+            return (
+                <li className="collection-item" key={messageObj.message.When}>
+                <div className="avatar">
+                  <img src={imgURL} alt={messageObj.Who}/>
+                </div>
+                  <div className="messageContainer">
+                    <p className="messageText">
+                      {messageObj.message.What}
+                    </p>
+                    <span className="title">{messageObj.message.Who} {messageDateTime}</span>
+                    </div>
+                </li>
+            );
+          })}
+        </ol>
 
       <form className="container" onSubmit={onSubmit}>
-        <div className="row">
-          <div className="input-field col s10">
-            <i className="prefix mdi-communication-chat"/>
-            <input ref="txtMessage" type="text"
+        <img className="avatar" src={imgURL}/>
+          <input className="chatInput" ref="txtMessage" type="text"
                    placeholder="Type your message"/>
-            <span className="chip left">
-          <img src={imgURL}/>
-          <span>{props.userID}</span>
-        </span>
-          </div>
-          <div className="input-field col s2">
-            <button type="submit"
-                    className="waves-effect waves-light btn-floating btn-large">
-              <i className="mdi-content-send"/>
-            </button>
-          </div>
-        </div>
       </form>
-    </footer>);
+    </section>);
   }
 };
