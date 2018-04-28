@@ -33,8 +33,7 @@ class Navbar extends Component {
           <section className="navbar-section">
             {this.props.loggedIn ? (
                 [
-                  <Link key="username" to="#" className="btn btn-link"
-                        onClick={this.logout}>
+                  <Link key="username" to="#" className="btn btn-link">
                     <span
                         className="text-secondary">Welcome {this.props.username}</span>
                   </Link>,
