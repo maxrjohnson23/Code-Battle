@@ -171,9 +171,9 @@ class App extends Component {
                      loginHandler={this.loginUserHandler}/>}/>
           <Route path="/signup"
                  render={() => <SignUp/>}/>
-          <ChatHistory history={this.state.messages}/>
           <LiveChat userID={this.state.username}
-                    sendMessage={this.sendMessage}/>
+                    sendMessage={this.sendMessage}
+                    history={this.state.messages}/>
           <UserList users={this.state.presentUsers}/>
         </div>
     );

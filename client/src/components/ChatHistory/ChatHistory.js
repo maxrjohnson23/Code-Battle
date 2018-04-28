@@ -8,6 +8,7 @@ export default class ChatHistory extends React.Component {
     const {props} = this; // same as `const props = this.props;`
 
     return (
+      <div className="chatbox">
         <ul className="collection">
           {props.history.map((messageObj) => {
 
@@ -21,16 +22,14 @@ export default class ChatHistory extends React.Component {
                   <img src={imgURL} alt={messageObj.Who} className="circle"/>
                   <span
                       className="title">{messageObj.message.Who}</span>
-                  <p>
                     <i className="prefix mdi-action-alarm"/>
                     <span className="message-date">{messageDateTime}</span>
-                    <br/>
-                    <span>{messageObj.message.What}</span>
-                  </p>
+                    <span className="messageText">{messageObj.message.What}</span>
                 </li>
             );
           })}
         </ul>
+      </div>
     );
   }
 }
