@@ -173,10 +173,22 @@ class App extends Component {
               hideLoginHandler={this.hideLoginHandler}/>
           <Route exact path="/"
                  render={() => <CodeSpace/>}/>
-          <LiveChat userID={this.state.username}
-                    sendMessage={this.sendMessage}
-                    history={this.state.messages}/>
-          <UserList users={this.state.presentUsers}/>
+                  
+          <div className="hcontainer">
+            <div className="code-space">
+              <Route exact path="/"
+                    render={() => this.state.loggedIn ? <CodeSpace/> :
+                        <Redirect to="/login"/>}/>
+            </div>
+            <div className="user-list">
+              <UserList users={this.state.presentUsers}/>
+            </div>
+          </div>
+            <div className="live-chat">
+              <LiveChat userID={this.state.username}
+                        sendMessage={this.sendMessage}
+                        history={this.state.messages}/>
+            </div>
         </div>
     );
   }
