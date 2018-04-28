@@ -7,7 +7,6 @@ import LoginPopup from "./components/LoginPopup/LoginPopup";
 import Navbar from "./components/Navbar/Navbar";
 import UserList from "./components/UserList/UserList";
 import LiveChat from "./components/LiveChat/LiveChat";
-import Lobby from './containers/Lobby/Lobby';
 import PubNubReact from "pubnub-react";
 
 
@@ -171,11 +170,6 @@ class App extends Component {
               loginHandler={this.loginUserHandler}
               showLogin={this.state.showLogin}
               hideLoginHandler={this.hideLoginHandler}/>
-          <Route path="/lobby"
-                 render={() => <Lobby/>}/>
-          <LiveChat userID={this.state.username}
-                    sendMessage={this.sendMessage}/>
-          <UserList users={this.state.presentUsers}/>
           <div className="vcontainer">      
             <div className="hcontainer">
               <div className="code-space">
