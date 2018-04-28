@@ -92,13 +92,20 @@ class CodeSpace extends Component {
   render() {
     return this.state.questions ? (
         <div>
-
-          <Output message={this.state.output}/>
-          <CodeTests tests={this.state.currentQuestion.tests}/>
-          <Editor code={this.state.currentQuestion.code}
-                  change={this.onChange}
-                  submit={this.submitCode}
-                  keySubmit={this.keySubmit}/>
+          <div className="output">
+            <Output message={this.state.output}/>
+          </div>
+          <div className="hcontainer">
+            <div className="code-tests">
+              <CodeTests tests={this.state.currentQuestion.tests}/>
+            </div>
+            <div className="editor">
+              <Editor code={this.state.currentQuestion.code}
+                      change={this.onChange}
+                      submit={this.submitCode}
+                      keySubmit={this.keySubmit}/>
+            </div>
+          </div>
         </div>
     ) : (<div/>);
   }

@@ -170,22 +170,23 @@ class App extends Component {
               loginHandler={this.loginUserHandler}
               showLogin={this.state.showLogin}
               hideLoginHandler={this.hideLoginHandler}/>
-                  
-          <div className="hcontainer">
-            <div className="code-space">
-              <Route exact path="/"
-                    render={() => <CodeSpace/>}/>
+          <div className="vcontainer">      
+            <div className="hcontainer">
+              <div className="code-space">
+                <Route exact path="/"
+                      render={() => <CodeSpace/>}/>
+              </div>
+              <div className="user-list">
+                <UserList users={this.state.presentUsers}/>
+              </div>
             </div>
-            <div className="user-list">
-              <UserList users={this.state.presentUsers}/>
-            </div>
-          </div>
             <div className="live-chat">
               <LiveChat userID={this.state.username}
                         sendMessage={this.sendMessage}
                         history={this.state.messages}/>
             </div>
         </div>
+      </div>
     );
   }
 }
