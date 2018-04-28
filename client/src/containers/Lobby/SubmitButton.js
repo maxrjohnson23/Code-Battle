@@ -6,25 +6,25 @@ import {Motion, spring} from 'react-motion';
 import axios from 'axios';
 
 const SubmitButton = (props) => {
+	
+	// handleSubmit = (event) => {
+	// 	event.preventDefault();
+	// 	console.log('handleSubmit');
 
-	handleSubmit = (event) => {
-		event.preventDefault();
-		console.log('handleSubmit');
+	// 	if (this.prop.type === 'create') {
+	// 		// axios 
+	// 		//method to create game
+	// 	} 
+	// 	else {
+	// 		//join selected game
+	// 	}
 
-		if (this.prop.type === 'create') {
-			axios 
-			//method to create game
-		} 
-		else {
-			//join selected game
-		}
-
-	}
+	// }
 
 	return (
 		<div className={'submitButton'}>
 			<button 
-			className='slateblue'
+			className={props.type==='create' ? 'gray' : 'slateblue'}
 			onClick={this.handleSubmit}
 			type='submit'><MdArrowForward/></button>
 		</div>
