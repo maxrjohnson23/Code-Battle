@@ -1,0 +1,19 @@
+.game-container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.game-container * {
+    margin: auto;
+}
+
+.codespace {
+    width: 100%
+}
+
+.game-chat {
+    align-self: end;
+    width: 80%;
+}

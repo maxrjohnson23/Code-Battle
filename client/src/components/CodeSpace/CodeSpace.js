@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import sandBoxEval from "../../Util/SandboxEval";
 import axios from "axios";
-import Editor from "../../components/Editor/Editor";
-import CodeTests from "../../components/CodeTests/CodeTests";
-import Output from "../../components/Output/Output";
+import Editor from "../Editor/Editor";
+import CodeTests from "../CodeTests/CodeTests";
+import Output from "../Output/Output";
 
 class CodeSpace extends Component {
   state = {

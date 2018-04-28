@@ -2,12 +2,10 @@ import React, {Component} from "react";
 import {Route} from "react-router-dom";
 import axios from "axios";
 import "./App.css";
-import CodeSpace from "./containers/CodeSpace/CodeSpace";
 import LoginPopup from "./components/LoginPopup/LoginPopup";
 import Navbar from "./components/Navbar/Navbar";
-import UserList from "./components/UserList/UserList";
-import LiveChat from "./components/LiveChat/LiveChat";
-import Lobby from './containers/Lobby/Lobby';
+import Game from "./containers/Game/Game";
+import LobbyContainer from "./containers/LobbyContainer/LobbyContainer";
 import PubNubReact from "pubnub-react";
 
 
@@ -172,27 +170,17 @@ class App extends Component {
               showLogin={this.state.showLogin}
               hideLoginHandler={this.hideLoginHandler}/>
           <Route path="/lobby"
-                 render={() => <Lobby/>}/>
-          <LiveChat userID={this.state.username}
-                    sendMessage={this.sendMessage}/>
-          <UserList users={this.state.presentUsers}/>
-          <div className="vcontainer">      
-            <div className="hcontainer">
-              <div className="code-space">
-                <Route exact path="/"
-                      render={() => <CodeSpace/>}/>
-              </div>
-              <div className="user-list">
-                <UserList users={this.state.presentUsers}/>
-              </div>
-            </div>
-            <div className="live-chat">
-              <LiveChat userID={this.state.username}
-                        sendMessage={this.sendMessage}
-                        history={this.state.messages}/>
-            </div>
+                 render={() => <LobbyContainer
+                     username={this.state.username}
+                     sendMessage={this.sendMessage}
+                     history={this.state.messages}
+                     users={this.state.presentUsers}/>}/>
+          <Route path="/game"
+                 render={() => <Game
+                     username={this.state.username}
+                     sendMessage={this.sendMessage}
+                     history={this.state.messages}/>}/>
         </div>
-      </div>
     );
   }
 }

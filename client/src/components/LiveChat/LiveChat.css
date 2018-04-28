@@ -1,9 +1,6 @@
 .chatEntry {
-    position: absolute;
-    bottom: 0;
-    left: 0;
     background: radial-gradient(circle, #666, #999);
-    width: 280px;
+    width: 100%;
 }
 
 .collection{
