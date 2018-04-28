@@ -6,7 +6,6 @@ import CodeSpace from "./containers/CodeSpace/CodeSpace";
 import LoginPopup from "./components/LoginPopup/LoginPopup";
 import Navbar from "./components/Navbar/Navbar";
 import UserList from "./components/UserList/UserList";
-import ChatHistory from "./components/ChatHistory/ChatHistory";
 import LiveChat from "./components/LiveChat/LiveChat";
 import PubNubReact from "pubnub-react";
 
@@ -171,14 +170,11 @@ class App extends Component {
               loginHandler={this.loginUserHandler}
               showLogin={this.state.showLogin}
               hideLoginHandler={this.hideLoginHandler}/>
-          <Route exact path="/"
-                 render={() => <CodeSpace/>}/>
                   
           <div className="hcontainer">
             <div className="code-space">
               <Route exact path="/"
-                    render={() => this.state.loggedIn ? <CodeSpace/> :
-                        <Redirect to="/login"/>}/>
+                    render={() => <CodeSpace/>}/>
             </div>
             <div className="user-list">
               <UserList users={this.state.presentUsers}/>
