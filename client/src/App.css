@@ -22,3 +22,41 @@
     font-size: large;
 }
 
+.vcontainer {
+    display:flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: stretch;
+    border: 3px solid #73AD21;
+}
+
+.hcontainer {
+    display:flex;
+    flex-direction: row;
+    align-items: stretch;
+    border: 3px solid #73AD21;
+    order:1;
+}
+
+.code-space {
+    order:1;
+    flex-grow: 1;
+    border: 3px solid #73AD21;
+}
+
+/* .chat-history {
+    order:2;
+    border: 3px solid #73AD21;
+} */
+
+.live-chat {
+    order:2;
+    border: 3px solid #73AD21;
+    flex-grow: 1
+}
+
+.user-list {
+    order:2;
+    border: 3px solid #73AD21;
+    flex-grow: 1
+}

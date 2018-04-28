@@ -1,0 +1,22 @@
+.output {
+
+}
+
+.code-tests {
+    order:1;
+    flex-grow: 1;
+    border: 3px solid #73AD21;
+}
+
+.editor {
+    order:2;
+    flex-grow: 1;
+    border: 3px solid #73AD21;
+}
+
+.hcontainer {
+    display:flex;
+    flex-direction: row;
+    align-items: stretch;
+    border: 3px solid #73AD21;   
+}
