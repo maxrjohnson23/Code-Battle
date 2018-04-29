@@ -62,7 +62,6 @@ class LobbyContainer extends Component {
               defaultChannel={"Channel-main"}
               username={this.props.username}
               pubnub={this.props.pubnub}/>
-          <button onClick={this.getHistory}>History</button>
         </div>
     )
   }
