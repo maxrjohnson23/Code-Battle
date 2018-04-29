@@ -34,6 +34,12 @@ class UserList extends Component {
 
   }
 
+  componentWillUnmount() {
+    this.props.pubnub.unsubscribe({
+      channels: [this.props.defaultChannel]
+    });
+  };
+
   pubNubPresenceHandler = (event) => {
     console.log("Presence change: ", event);
     let updatedUserList = [...this.state.presentUsers];

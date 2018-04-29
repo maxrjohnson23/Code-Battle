@@ -21,7 +21,7 @@ export default class LiveChat extends Component {
   }
 
   componentWillUnmount() {
-    this.pubnub.unsubscribe({
+    this.props.pubnub.unsubscribe({
       channels: [this.props.defaultChannel]
     });
   };
