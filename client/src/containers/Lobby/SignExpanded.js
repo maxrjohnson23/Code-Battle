@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import '../Lobby.css';
-import { Motion, spring } from 'react-motion';
+import {Motion, spring} from 'react-motion';
 import Input from './Input';
 import SubmitButton from './SubmitButton';
 
@@ -11,7 +11,8 @@ class SignExpanded extends Component {
 		this.state = {
 			flexState: false,
 			animIsFinished: false,
-			game: []
+			newGameName: "",
+			newGamePlayers: ""
 		};
 	}
 
@@ -21,6 +22,27 @@ class SignExpanded extends Component {
 
 	isFinished = () => {
 		this.setState({ animIsFinished: true });
+	};
+
+	inputHandler = (event) => {
+		if(event.target.name === "game-name") {
+			this.setState({
+				newGameName: event.target.value
+			})
+		} else if (event.target.name === "players") {
+      this.setState({
+        newGamePlayers: event.target.value
+      })
+		}
+	};
+
+	createGame = (event) => {
+		event.preventDefault();
+		const game = {
+			name: this.state.newGameName,
+			players: this.state.newGamePlayers
+		};
+		this.props.createGame(game);
 	};
 
 	render() {
@@ -58,16 +80,16 @@ class SignExpanded extends Component {
 									<div>
 										{this.props.type === 'create' ? (
 											<div>
-												<Input id="game-name" type="text" placeholder="Enter Name of Game" />
-												<Input id="players" type="text" placeholder="Enter number of players" />
+												<Input name="game-name" type="text" placeholder="Enter Name of Game" value={this.state.newGameName} change={this.inputHandler}/>
+												<Input name="players" type="text" placeholder="Enter number of players" value={this.state.newGamePlayers} change={this.inputHandler}/>
 											</div>
 										) : (
 											<ol>List of Games
-												{/* {this.state.games.map(game => <li>{game.name}</li>)} */}
+												 {this.props.gameList.map(game => <li key={game.name}>{game.name} - Players: {game.players}</li>)}
 											</ol>
 										)}
 									</div>
-									<SubmitButton type={this.props.type} />
+									<SubmitButton type={this.props.type} createGame={this.createGame} />
 								</form>
 							)}
 						</Motion>

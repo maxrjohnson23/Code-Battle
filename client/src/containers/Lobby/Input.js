@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../Lobby.css';
-import {MdVisibility} from 'react-icons/lib/md';
 
 const Input = (props) => {
 
@@ -11,10 +10,13 @@ const Input = (props) => {
 		<div className="Input">
 			<input 
 				id={props.name}
+				name={props.name}
 				autoComplete="false"
 				required
 				type={props.type}
 				placeholder={props.placeholder}
+				value={props.value}
+				onChange={props.change}
 			/>
 			{iconVisibility}
 		</div>

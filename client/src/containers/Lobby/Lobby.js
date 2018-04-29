@@ -53,13 +53,13 @@ class Lobby extends Component {
 			lobbyContent = (
 				<div className='Lobby'>
 					<SignCollapsed type='create' onChange={this.onClickLeft}></SignCollapsed>
-					<SignExpanded type='join' ></SignExpanded>
+					<SignExpanded type='join' gameList={this.props.gameList}></SignExpanded>
 				</div>
 			);
 		} else if (this.state.wasClickedLeft === true && this.state.wasClickedRight === false) {
 			lobbyContent = (
 				<div className='Lobby'>
-					<SignExpanded type='create' ></SignExpanded>
+					<SignExpanded type='create' createGame={this.props.createGame}></SignExpanded>
 					<SignCollapsed type='join' onChange={this.onClickRight}></SignCollapsed>
 				</div>
 			);
