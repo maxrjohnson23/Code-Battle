@@ -1,17 +1,66 @@
-import React from 'react';
+import React, {Component} from 'react';
 import User from "./User/User";
 
-const userList = (props) => (
-    <div>
-      <ul>
-        <h2>Current Users</h2>
-        {
-          props.users.map(username => {
-            return <User key={username} username={username}/>
-          })
-        }
-      </ul>
-    </div>
-);
+class UserList extends Component {
+  state = {
+    presentUsers: []
+  };
 
-export default userList;
+  componentDidMount() {
+
+    this.props.pubnub.subscribe({
+      channels: [this.props.defaultChannel],
+      withPresence: true,
+    });
+
+    this.props.pubnub.getPresence(this.props.defaultChannel, (event) => this.pubNubPresenceHandler(event));
+
+    // Get current user list
+    this.props.pubnub.hereNow(
+        {
+          channels: [this.props.defaultChannel],
+          includeUUIDs: true
+        },
+        (status, response) => {
+          if (status.statusCode === 200) {
+            console.log("Channel users: ", response);
+            let channelUsers = response.channels[this.props.defaultChannel].occupants.map(p => p.uuid);
+            this.setState({
+              presentUsers: channelUsers
+            });
+          }
+        }
+    );
+
+  }
+
+  pubNubPresenceHandler = (event) => {
+    console.log("Presence change: ", event);
+    let updatedUserList = [...this.state.presentUsers];
+    if (event.action === "join") {
+      updatedUserList.push(event.uuid);
+    } else if (event.action === "leave" || event.action === "timeout") {
+      updatedUserList = updatedUserList.filter(u => u !== event.uuid);
+    }
+    this.setState({
+      presentUsers: updatedUserList
+    });
+  };
+
+  render() {
+    return (
+        <div>
+          <ul>
+            <h2>Current Users</h2>
+            {
+              this.state.presentUsers.map(username => {
+                return <User key={username} username={username}/>
+              })
+            }
+          </ul>
+        </div>
+    );
+  }
+}
+
+export default UserList;

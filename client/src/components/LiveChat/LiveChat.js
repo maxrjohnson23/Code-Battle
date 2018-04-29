@@ -2,10 +2,29 @@ import React, {Component} from "react";
 import "./LiveChat.css";
 
 export default class LiveChat extends Component {
-//this sets the users curser into the chat -- we can remove this to change that feature
+  state = {
+    messages: []
+  };
+
   componentDidMount() {
-    this.refs.txtMessage.focus();
+    this.props.pubnub.subscribe({
+      channels: [this.props.defaultChannel],
+      withPresence: true,
+    });
+
+    this.props.pubnub.getMessage(this.props.defaultChannel, (msg) => {
+      const updatedMessages = this.state.messages.concat(msg);
+      this.setState({
+        messages: updatedMessages
+      });
+    });
   }
+
+  componentWillUnmount() {
+    this.pubnub.unsubscribe({
+      channels: [this.props.defaultChannel]
+    });
+  };
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -16,14 +35,22 @@ export default class LiveChat extends Component {
     }
     // Build a message object and send it
     const messageObj = {
-      Who: this.props.userID,
+      Who: this.props.username,
       What: message,
       When: new Date().valueOf(),
     };
-    this.props.sendMessage(messageObj);
+    this.sendMessage(messageObj);
     // Clear the input field and set focus
     this.refs.txtMessage.value = "";
     this.refs.txtMessage.focus();
+  };
+
+  sendMessage = (message) => {
+    this.props.pubnub.publish({
+      channel: this.props.defaultChannel,
+      message: message,
+    });
+    console.log(message);
   };
 
   render() {
@@ -39,7 +66,7 @@ export default class LiveChat extends Component {
       </header>
 
         <ol className="collection">
-          {props.history.map((messageObj) => {
+          {this.state.messages.map((messageObj) => {
 
             const imgURL = "//robohash.org/" + messageObj.message.Who + "?set=set2&bgset=bg2&size=70x70";
             const messageDate = new Date(messageObj.message.When);

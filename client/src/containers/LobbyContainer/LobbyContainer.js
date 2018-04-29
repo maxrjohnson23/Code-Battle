@@ -7,12 +7,12 @@ import LiveChat from "../../components/LiveChat/LiveChat";
 const lobbyContainer = (props) => {
   return (
       <div>
-        <UserList users={props.users}/>
+        <UserList pubnub={props.pubnub} defaultChannel={"Channel-main"}/>
         <Lobby/>
         <LiveChat
+            defaultChannel={"Channel-main"}
             username={props.username}
-            sendMessage={props.sendMessage}
-            history={props.history}/>
+            pubnub={props.pubnub}/>
       </div>
   )
 };

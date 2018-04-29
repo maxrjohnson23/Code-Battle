@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Route} from "react-router-dom";
+import {Redirect, Route} from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 import LoginPopup from "./components/LoginPopup/LoginPopup";
@@ -10,7 +10,6 @@ import PubNubReact from "pubnub-react";
 
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.pubnub = new PubNubReact({
@@ -22,33 +21,10 @@ class App extends Component {
       loggedIn: false,
       username: null,
       showLogin: false,
-      messages: [],
       pubnubJoined: false,
-      defaultChannel: "Channel-main",
-      presentUsers: []
+      pubnub: this.pubnub
     };
     this.pubnub.init(this);
-  }
-
-  componentWillUnmount() {
-    this.pubnub.unsubscribe({
-      channels: [this.state.defaultChannel]
-    });
-  };
-
-  sendMessage = (message) => {
-    this.pubnub.publish({
-      channel: this.state.defaultChannel,
-      message: message,
-    });
-    console.log(message);
-  };
-
-
-  componentDidMount() {
-    if (!this.state.loggedIn) {
-      this.getUser();
-    }
   }
 
   getUser = () => {
@@ -107,55 +83,23 @@ class App extends Component {
   initPubnub = (username) => {
     console.log(`Subscribing to PubNub with user ${username}`);
     this.pubnub.setUUID(username);
-    this.pubnub.subscribe({
-      channels: [this.state.defaultChannel],
-      withPresence: true,
-    });
-
-    this.pubnub.getMessage(this.state.defaultChannel, (msg) => {
-      const updatedMessages = this.state.messages.concat(msg);
-      this.setState({
-        messages: updatedMessages
-      });
-    });
-
-    this.pubnub.getPresence(this.state.defaultChannel, (event) => this.pubNubPresenceHandler(event));
-
-    // Get current user list
-    this.pubnub.hereNow(
-        {
-          channels: [this.state.defaultChannel],
-          includeUUIDs: true
-        },
-        (status, response) => {
-          if (status.statusCode === 200) {
-            console.log("Channel users: ", response);
-            let channelUsers = response.channels[this.state.defaultChannel].occupants.map(p => p.uuid);
-            this.setState({
-              presentUsers: channelUsers
-            });
-          }
-        }
-    );
 
     this.setState({
       pubnubJoined: true
     });
   };
 
-  pubNubPresenceHandler = (event) => {
-    console.log("Presence change: ", event);
-    let updatedUserList = [...this.state.presentUsers];
-    if (event.action === "join") {
-      updatedUserList.push(event.uuid);
-    } else if (event.action === "leave") {
-      updatedUserList = updatedUserList.filter(u => u !== event.uuid);
-    }
-    this.setState({
-      presentUsers: updatedUserList
+  componentWillUnmount() {
+    this.pubnub.unsubscribe({
+      channels: [this.state.defaultChannel]
     });
   };
 
+  componentDidMount() {
+    if (!this.state.loggedIn) {
+      this.getUser();
+    }
+  }
 
   render() {
 
@@ -169,12 +113,16 @@ class App extends Component {
               loginHandler={this.loginUserHandler}
               showLogin={this.state.showLogin}
               hideLoginHandler={this.hideLoginHandler}/>
+          <Route path="/" exact
+                 render={() => {
+                   return this.state.loggedIn ? <Redirect to="/lobby"/> :
+                       <h1>Main page</h1>
+                 }}/>
           <Route path="/lobby"
                  render={() => <LobbyContainer
                      username={this.state.username}
-                     sendMessage={this.sendMessage}
-                     history={this.state.messages}
-                     users={this.state.presentUsers}/>}/>
+                     users={this.state.presentUsers}
+                     pubnub={this.state.pubnub}/>}/>
           <Route path="/game"
                  render={() => <Game
                      username={this.state.username}
