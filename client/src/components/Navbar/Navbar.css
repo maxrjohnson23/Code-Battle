@@ -1,6 +1,6 @@
 .navbar {
     display: flex;
-    align-items: right;
+    /* align-items: stretch; */
     padding: 0 20px;
     background: #222;
     color: #fff !important;
