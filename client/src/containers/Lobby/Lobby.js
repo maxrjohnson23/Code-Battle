@@ -66,7 +66,7 @@ class Lobby extends Component {
 		}
 		
 		return (
-			<div className="Lobby">
+			<div>
 				{lobbyContent}
 			</div>
 		);
