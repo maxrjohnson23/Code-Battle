@@ -58,7 +58,7 @@ class LobbyContainer extends Component {
     return (
         <div>
           <UserList pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/>
-          <Sidebar/>
+          <Sidebar pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/>
           <Lobby createGame={this.createGameHandler} gameList={this.state.games}/>
           <LiveChat
               defaultChannel={"Channel-main"}

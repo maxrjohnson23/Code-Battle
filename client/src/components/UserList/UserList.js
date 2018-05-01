@@ -57,14 +57,14 @@ class UserList extends Component {
   render() {
     return (
         <div>
-          <ul>
+          <ol>
             <h2>Current Users</h2>
             {
               this.state.presentUsers.map(username => {
                 return <User key={username} username={username}/>
               })
             }
-          </ul>
+          </ol>
         </div>
     );
   }

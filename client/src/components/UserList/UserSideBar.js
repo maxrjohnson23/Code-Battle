@@ -11,12 +11,12 @@ class Sidebar extends React.Component {
   render () {
     return (
       <Menu right noOverlay>
-        {/* <UserList/> */}
-        <h2> Current Users </h2>
+        <UserList pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/>
+        {/* <h2> Current Users </h2>
             <a onClick={ this.showSettings } className="menu-item--small" href="">User 1</a>
             <a onClick={ this.showSettings } className="menu-item--small" href="">User 2</a>
             <a onClick={ this.showSettings } className="menu-item--small" href="">User 3</a>
-            <a onClick={ this.showSettings } className="menu-item--small" href="">User 4</a>
+            <a onClick={ this.showSettings } className="menu-item--small" href="">User 4</a> */}
       </Menu>
     );
   }
