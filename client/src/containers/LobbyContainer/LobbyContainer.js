@@ -47,6 +47,12 @@ class LobbyContainer extends Component {
     );
   }
 
+  componentWillUnmount() {
+    this.props.pubnub.unsubscribe({
+      channels: [GAME_CHANNEL]
+    });
+  }
+
   createGameHandler = (game) => {
 
     // Choose random question for game
@@ -61,7 +67,7 @@ class LobbyContainer extends Component {
 
         let gameDetails = {
           action: "CREATE_GAME",
-          question: res.data.question._id,
+          questionId: res.data.question._id,
           ...game
         };
         // Publish to specific game channel with creation details
