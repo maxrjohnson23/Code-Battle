@@ -1,41 +1,20 @@
 import React, {Component} from "react";
 import sandBoxEval from "../../Util/SandboxEval";
-import axios from "axios";
 import Editor from "../Editor/Editor";
 import CodeTests from "../CodeTests/CodeTests";
 import Output from "../Output/Output";
 
 class CodeSpace extends Component {
   state = {
-    questions: null,
     currentQuestion: null,
     output: ""
   };
 
-  componentDidMount() {
-    this.getQuestionList();
-  }
-
-  getQuestionList = () => {
-    axios.get("/api/question").then(response => {
-      let questions = response.data.questions;
-
-      if (questions) {
-
-        const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
-
-        questions = questions.map(q => {
-          q.result = false;
-          return q;
-        });
-
-        this.setState({
-          questions: questions,
-          currentQuestion: randomQuestion
-        });
-      }
+  componentWillMount() {
+    this.setState({
+      currentQuestion: this.props.questionDetails
     });
-  };
+  }
 
   onChange = (newValue) => {
     let newCode = {...this.state.currentQuestion};
@@ -90,7 +69,7 @@ class CodeSpace extends Component {
   };
 
   render() {
-    return this.state.questions ? (
+    return this.state.currentQuestion ? (
         <div>
           <div className="output">
             <Output message={this.state.output}/>
