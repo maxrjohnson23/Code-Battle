@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import User from "./User/User";
+// import Sidebar from './UserSideBar';
 
 class UserList extends Component {
   state = {

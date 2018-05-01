@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Lobby from "../Lobby/Lobby";
 import UserList from "../../components/UserList/UserList";
 import LiveChat from "../../components/LiveChat/LiveChat";
+import Sidebar from '../../components/UserList/UserSideBar';
 
 const GAME_CHANNEL = "Channel-games";
 
@@ -57,6 +58,7 @@ class LobbyContainer extends Component {
     return (
         <div>
           <UserList pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/>
+          <Sidebar/>
           <Lobby createGame={this.createGameHandler} gameList={this.state.games}/>
           <LiveChat
               defaultChannel={"Channel-main"}

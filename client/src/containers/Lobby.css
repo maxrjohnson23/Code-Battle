@@ -12,7 +12,13 @@
   color: #3E363F;
   font-family: "Roboto Condensed", sans-serif;
   height: 100vh;
+  display: flex;
+  flex-flow: row wrap;
   /* overflow: hidden; */
+}
+
+.App > * {
+  flex: 1 100%;
 }
 
 .Lobby {
