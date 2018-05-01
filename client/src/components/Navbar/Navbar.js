@@ -1,10 +1,14 @@
 import React, {Component} from "react";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import "../../App.css";
 import "./Navbar.css";
 import axios from "axios";
 
 class Navbar extends Component {
+
+  componentDidMount() {
+    console.log(this.props);
+  }
 
   logout = (event) => {
     event.preventDefault();
@@ -16,6 +20,7 @@ class Navbar extends Component {
           loggedIn: false,
           username: null
         });
+        this.props.history.push("/");
       }
     }).catch(error => {
       console.log("Logout error" + error);
@@ -60,4 +65,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default withRouter(Navbar);
