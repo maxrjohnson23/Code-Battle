@@ -64,18 +64,21 @@ class Game extends Component {
         (status, response) => {
           // Get list of historical games and update state
           console.log("Game data", status, response);
-          const createGameMessage = response.messages.filter(m => m.action = "CREATE_GAME")[0];
-          console.log("Create game message", createGameMessage);
-          this.setState({
-            questionId: createGameMessage.entry.questionId
-          });
-          this.getQuestion(createGameMessage.entry.questionId);
+          if (response.messages.length !== 0) {
+            const createGameMessage = response.messages.filter(m => m.action = "CREATE_GAME")[0];
+            console.log("Create game message", createGameMessage);
+            this.setState({
+              questionId: createGameMessage.entry.questionId
+            });
+          }
         }
     );
+    this.getQuestion();
+
   }
 
-  getQuestion = (questionId) => {
-    axios.get("/api/question/" + questionId).then(response => {
+  getQuestion = () => {
+    axios.get("/api/question/" + this.state.questionId).then(response => {
       let question = response.data.question;
 
       if (question) {
