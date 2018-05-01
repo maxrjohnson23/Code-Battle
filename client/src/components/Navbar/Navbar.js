@@ -6,10 +6,6 @@ import axios from "axios";
 
 class Navbar extends Component {
 
-  componentDidMount() {
-    console.log(this.props);
-  }
-
   logout = (event) => {
     event.preventDefault();
     console.log("logging out");
