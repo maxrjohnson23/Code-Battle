@@ -7,6 +7,7 @@ export default class LiveChat extends Component {
   };
 
   componentDidMount() {
+    console.log("Joining chat channel" + this.props.defaultChannel);
     this.props.pubnub.subscribe({
       channels: [this.props.defaultChannel],
       withPresence: true,

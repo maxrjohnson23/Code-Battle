@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import qs from "query-string";
 import Lobby from "../Lobby/Lobby";
 import UserList from "../../components/UserList/UserList";
 import LiveChat from "../../components/LiveChat/LiveChat";
@@ -46,10 +47,23 @@ class LobbyContainer extends Component {
   }
 
   createGameHandler = (game) => {
-    console.log(game);
+    let createMessage = {action: "CREATE_GAME", ...game};
+
+    // Publish to active games channel
     this.props.pubnub.publish({
       message: game,
       channel: GAME_CHANNEL
+    });
+    // Publish to specific game channel with creation details
+    this.props.pubnub.publish({
+      message: createMessage,
+      channel: "Channel-" + game.name
+    });
+    // Navigate to newly created game
+    const queryString = qs.stringify(game);
+    this.props.history.push({
+      pathname: "/game",
+      search: "?" + queryString
     });
   };
 

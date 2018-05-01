@@ -119,15 +119,15 @@ class App extends Component {
                        <h1>Main page</h1>
                  }}/>
           <Route path="/lobby"
-                 render={() => <LobbyContainer
+                 render={(props) => <LobbyContainer
+                     {...props}
                      username={this.state.username}
-                     users={this.state.presentUsers}
                      pubnub={this.state.pubnub}/>}/>
           <Route path="/game"
-                 render={() => <Game
+                 render={(props) => <Game
+                     {...props}
                      username={this.state.username}
-                     sendMessage={this.sendMessage}
-                     history={this.state.messages}/>}/>
+                     pubnub={this.state.pubnub}/>}/>
         </div>
     );
   }
