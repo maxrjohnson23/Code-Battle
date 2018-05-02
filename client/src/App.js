@@ -5,6 +5,7 @@ import "./App.css";
 import LoginPopup from "./components/LoginPopup/LoginPopup";
 import Navbar from "./components/Navbar/Navbar";
 import Game from "./containers/Game/Game";
+import MainImg from "./components/MainImg/MainImg"
 import LobbyContainer from "./containers/LobbyContainer/LobbyContainer";
 import PubNubReact from "pubnub-react";
 
@@ -116,7 +117,7 @@ class App extends Component {
           <Route path="/" exact
                  render={() => {
                    return this.state.loggedIn ? <Redirect to="/lobby"/> :
-                       <h1>Main page</h1>
+                       <MainImg/>
                  }}/>
           <Route path="/lobby"
                  render={(props) => <LobbyContainer
