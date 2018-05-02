@@ -24,7 +24,7 @@
 
 .top-bar {
     color: black;
-    background: #666;
+    background:rgb(218, 231, 241);;
     position: relative;
     overflow: hidden; 
     height: 25px;
@@ -42,24 +42,21 @@
   .top-bar > * {
     position: relative;
   }
-  .top-bar::before {
-    animation: pulse 1s ease alternate infinite;
-  }
-  @keyframes pulse {
-    from { opacity: 0; }
-    to { opacity: 0.5; }
-  }
 
   .collection-item {
     display: flex;
   }
 
   .messageContainer{
-    background: white;
+    background: rgb(218, 231, 241);
+    color: rgba(64, 70, 86, 0.98);
     padding: 8px;
     border-radius: 2px;
     box-shadow: 0 1px 2px rgba(black, 0.2);
     margin-right: 5px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
   }
 
   .avatar {
@@ -72,6 +69,25 @@
 
   .chatHeader{
     font-family: Comic Sans MS;
+    color: rgba(64, 70, 86, 0.98);
     font-size: 20px;
     float: left;
   }
+
+  .messageText{
+    margin-bottom: 3px;
+  }
+
+  .chatInput {
+    border-width: 2px;
+    border-color:rgba(151, 105, 245, 0.98);
+    margin-left: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    width: 500px;
+  }
+
+  .chatInput:focus {
+    outline-width: 0;
+}

@@ -63,7 +63,7 @@ export default class LiveChat extends Component {
     return (
     <section className="chatEntry">
       <header className="top-bar">
-        <h1 className="chatHeader">Channel Chat</h1>
+        <h1 className="chatHeader">Chat</h1>
       </header>
 
         <ol className="collection">
@@ -92,7 +92,7 @@ export default class LiveChat extends Component {
       <form className="container" onSubmit={onSubmit}>
         <img className="avatar" src={imgURL}/>
           <input className="chatInput" ref="txtMessage" type="text"
-                   placeholder="Type your message"/>
+                   placeholder="Let's play a game!"/>
       </form>
     </section>);
   }
