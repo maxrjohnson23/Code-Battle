@@ -26,7 +26,7 @@
   height: 500px;
   display: flex;
   flex-direction: row;
-  box-shadow: 0 6px 10px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 6px 10px 0px rgba(0, 0, 0, 0.5);
   flex-grow: 5;
 }
 
@@ -139,6 +139,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: scroll;
   transition: flex-grow .5s ease-out;
   -moz-transition: flex-grow .2s ease-out;
   -webkit-transition: flex-grow .5s ease-out;

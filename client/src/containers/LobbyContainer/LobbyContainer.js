@@ -100,7 +100,7 @@ class LobbyContainer extends Component {
   render() {
     return (
         <div>
-          <UserList pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/>
+          {/* <UserList pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/> */}
           <Sidebar pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/>
           <Lobby createGame={this.createGameHandler}
                  joinGame={this.joinGameHandler}
