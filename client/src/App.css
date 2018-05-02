@@ -83,6 +83,7 @@
 
   .bm-menu-wrap {
       height: auto;
+      box-shadow: 1px 10px 10px 0px rgba(0, 0, 0, 0.5);
   }
   
   /* Morph shape necessary with bubble or elastic */

@@ -81,10 +81,10 @@ class SignExpanded extends Component {
 										{this.props.type === 'create' ? (
 											<div>
 												<Input name="game-name" type="text" placeholder="Enter Name of Game" value={this.state.newGameName} change={this.inputHandler}/>
-												<Input name="players" type="text" placeholder="Enter number of players" value={this.state.newGamePlayers} change={this.inputHandler}/>
+												<Input name="players" type="number" placeholder="Enter number of players" value={this.state.newGamePlayers} change={this.inputHandler}/>
 											</div>
 										) : (
-											<ol>List of Games
+											<ol className='game-list'>List of Games
 												 {this.props.gameList.map(game => <li key={game.name}>{game.name} - Players: {game.players}</li>)}
 											</ol>
 										)}
