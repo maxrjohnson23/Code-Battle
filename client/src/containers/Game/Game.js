@@ -7,6 +7,8 @@ import LiveChat from "../../components/LiveChat/LiveChat";
 import CodeSpace from "../../components/CodeSpace/CodeSpace";
 import UserList from "../../components/UserList/UserList";
 
+const DEFAULT_TIME = 300000;
+
 // Renderer callback with condition
 const renderer = ({minutes, seconds, completed}) => {
   if (completed) {
@@ -20,11 +22,15 @@ const renderer = ({minutes, seconds, completed}) => {
 
 class Game extends Component {
   state = {
-    gameTimeMillis: 300000,
+    gameTimeMillis: DEFAULT_TIME,
     gameChannel: null,
     numPlayers: null,
     questionId: null,
     questionDetails: null
+  };
+
+  countdown = (e) => {
+    this.setState({gameTimeMillis: e.total})
   };
 
   componentWillMount() {
@@ -109,7 +115,9 @@ class Game extends Component {
           <div className="countdown">
             <Countdown
                 date={Date.now() + this.state.gameTimeMillis}
-                renderer={renderer}/>
+                renderer={renderer}
+            controller
+            onTick={this.countdown}/>
           </div>
           <UserList pubnub={this.props.pubnub}
                     defaultChannel={this.state.gameChannel}/>
