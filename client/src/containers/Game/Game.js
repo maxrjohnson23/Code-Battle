@@ -79,7 +79,8 @@ class Game extends Component {
         const updatedLeaderboard = [...this.state.leaderBoard];
         const submissionDetails = {
           username: msg.message.publisher,
-          userCode: msg.message.code
+          userCode: msg.message.code,
+          time: msg.message.time
         };
         updatedLeaderboard.push(submissionDetails);
         this.setState({
