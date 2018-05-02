@@ -30,23 +30,6 @@
   flex-grow: 5;
 }
 
-.NavigationPanel {
-  background-color: rgba(244, 246, 248, 0.98);
-  width: 80px;
-  color: rgb(64, 70, 86);
-  font-size: 30px;
-  order: 1;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.back {
-  flex: 2;
-}
-
 .create {
   background-color: rgba(151, 105, 245, 0.98);
   color: rgb(218, 231, 241);
@@ -155,6 +138,28 @@
   align-items: center;
   justify-content: center;
 }
+
+.open-games {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.open-game {
+  flex: 1 0 25%;
+  box-sizing: border-box;
+  background: rgba(151, 105, 245, 0.98);
+  color: rgb(218, 231, 241);
+  padding: 10px;
+  margin: inherit;
+  list-style-type: none;
+  box-shadow: 1px 8px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.open-game:hover {
+  box-shadow: 2px 18px 20px 4px rgba(0, 0, 0, 0.5);
+  flex-grow: 1.1;
+}
+
 .icons {
   font-size: 75px;
 }
