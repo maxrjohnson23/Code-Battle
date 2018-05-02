@@ -124,7 +124,7 @@ class Game extends Component {
           {codeSpace}
           <div className="game-chat">
             <LiveChat
-                defaultChannel={this.state.gameChannel}
+                defaultChannel={this.state.gameChannel + "-chat"}
                 username={this.props.username}
                 pubnub={this.props.pubnub}/>
           </div>
