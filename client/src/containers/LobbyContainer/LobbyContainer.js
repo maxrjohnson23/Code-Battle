@@ -88,12 +88,22 @@ class LobbyContainer extends Component {
 
   };
 
+  joinGameHandler = (game) => {
+    // Navigate to existing game
+    const queryString = qs.stringify(game);
+    this.props.history.push({
+      pathname: "/game",
+      search: "?" + queryString
+    });
+  };
+
   render() {
     return (
         <div>
           <UserList pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/>
           <Sidebar pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/>
           <Lobby createGame={this.createGameHandler}
+                 joinGame={this.joinGameHandler}
                  gameList={this.state.games}/>
           <LiveChat
               defaultChannel={"Channel-main"}
