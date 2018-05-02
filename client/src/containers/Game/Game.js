@@ -6,6 +6,7 @@ import "./Game.css";
 import LiveChat from "../../components/LiveChat/LiveChat";
 import CodeSpace from "../../components/CodeSpace/CodeSpace";
 import UserList from "../../components/UserList/UserList";
+import Wrapper from "../../hoc/Wrapper/Wrapper";
 
 const DEFAULT_TIME = 300000;
 
@@ -23,6 +24,7 @@ const renderer = ({minutes, seconds, completed}) => {
 class Game extends Component {
   state = {
     gameTimeMillis: DEFAULT_TIME,
+    gameStarted: false,
     gameChannel: null,
     numPlayers: null,
     questionId: null,
@@ -30,7 +32,7 @@ class Game extends Component {
   };
 
   countdown = (e) => {
-    this.setState({gameTimeMillis: e.total})
+    this.setState({gameTimeMillis: e.total});
   };
 
   componentWillMount() {
@@ -41,7 +43,8 @@ class Game extends Component {
     this.setState({
       gameChannel: channelName,
       numPlayers: game.players,
-      questionId: game.questionId
+      questionId: game.questionId,
+      isGameCreator: game.created
     });
 
     // Subscribe to game channel
@@ -52,6 +55,11 @@ class Game extends Component {
     // Listen for game updates
     this.props.pubnub.getMessage(channelName, (msg) => {
       console.log("Message from game channel:", msg);
+      if(msg.message.action === "GAME_START") {
+        this.setState({
+          gameStarted: true
+        });
+      }
     });
   }
 
@@ -79,6 +87,7 @@ class Game extends Component {
           }
         }
     );
+    // Retrieve question details from the server
     this.getQuestion();
 
   }
@@ -101,33 +110,70 @@ class Game extends Component {
     });
   };
 
+  publishGameWin = (userCode) => {
+    const message = {
+      action: "GAME_WIN",
+      username: this.props.username,
+      code: userCode
+    };
+    this.props.pubnub.publish({
+      channel: this.state.gameChannel,
+      message: message,
+    });
+  };
+
+  startGame = () => {
+
+    this.props.pubnub.publish({
+      channel: this.state.gameChannel,
+      message: {action: "GAME_START"},
+    });
+    this.setState({
+      gameStarted : true
+    });
+  };
+
 
   render() {
     let codeSpace = (<h1>Loading</h1>);
     if (this.state.questionDetails) {
       codeSpace =
           <CodeSpace className="codespace"
-                     questionDetails={this.state.questionDetails}/>;
-
+                     questionDetails={this.state.questionDetails}
+                     publishWin={this.publishGameWin}/>;
     }
+
+    let game = (<div>
+          <h1>Waiting for game to start</h1>
+          {this.state.isGameCreator ? <button onClick={this.startGame}>Start Game</button> : null}
+        </div>
+    );
+    if (this.state.gameStarted) {
+      game = (
+          <Wrapper>
+            <div className="countdown">
+              <Countdown
+                  date={Date.now() + this.state.gameTimeMillis}
+                  renderer={renderer}
+                  controller
+                  onTick={this.countdown}/>
+            </div>
+            <UserList pubnub={this.props.pubnub}
+                      defaultChannel={this.state.gameChannel}/>
+            {codeSpace}
+            <div className="game-chat">
+              <LiveChat
+                  defaultChannel={this.state.gameChannel + "-chat"}
+                  username={this.props.username}
+                  pubnub={this.props.pubnub}/>
+            </div>
+          </Wrapper>
+      );
+    }
+
     return (
         <main className="game-container">
-          <div className="countdown">
-            <Countdown
-                date={Date.now() + this.state.gameTimeMillis}
-                renderer={renderer}
-            controller
-            onTick={this.countdown}/>
-          </div>
-          <UserList pubnub={this.props.pubnub}
-                    defaultChannel={this.state.gameChannel}/>
-          {codeSpace}
-          <div className="game-chat">
-            <LiveChat
-                defaultChannel={this.state.gameChannel + "-chat"}
-                username={this.props.username}
-                pubnub={this.props.pubnub}/>
-          </div>
+          {game}
         </main>
     );
   }

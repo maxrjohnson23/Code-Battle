@@ -60,6 +60,7 @@ class LobbyContainer extends Component {
     axios.get("/api/question/random").then(res => {
       if (res.data) {
         game.questionId = res.data.question._id;
+        game.created = true;
 
         // Publish to active games channel
         this.props.pubnub.publish({
