@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import qs from "query-string";
+import qs from "qs";
 import Countdown from "react-countdown-now";
 import axios from "axios";
 import "./Game.css";

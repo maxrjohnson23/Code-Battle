@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import qs from "query-string";
+import qs from "qs";
 import axios from "axios";
 import Lobby from "../Lobby/Lobby";
 import LiveChat from "../../components/LiveChat/LiveChat";
