@@ -11,7 +11,7 @@ class Sidebar extends React.Component {
   render () {
     return (
       <Menu right noOverlay>
-        <UserList pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/>
+        <UserList pubnub={this.props.pubnub} defaultChannel={this.props.defaultChannel}/>
         {/* <h2> Current Users </h2>
             <a onClick={ this.showSettings } className="menu-item--small" href="">User 1</a>
             <a onClick={ this.showSettings } className="menu-item--small" href="">User 2</a>

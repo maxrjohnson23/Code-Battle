@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import qs from "query-string";
 import axios from "axios";
 import Lobby from "../Lobby/Lobby";
-import UserList from "../../components/UserList/UserList";
 import LiveChat from "../../components/LiveChat/LiveChat";
 import Sidebar from "../../components/UserList/UserSideBar";
 
@@ -101,7 +100,6 @@ class LobbyContainer extends Component {
   render() {
     return (
         <div>
-          {/* <UserList pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/> */}
           <Sidebar pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/>
           <Lobby createGame={this.createGameHandler}
                  joinGame={this.joinGameHandler}

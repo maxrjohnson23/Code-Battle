@@ -5,7 +5,7 @@ import axios from "axios";
 import "./Game.css";
 import LiveChat from "../../components/LiveChat/LiveChat";
 import CodeSpace from "../../components/CodeSpace/CodeSpace";
-import UserList from "../../components/UserList/UserList";
+import Sidebar from "../../components/UserList/UserSideBar";
 import Wrapper from "../../hoc/Wrapper/Wrapper";
 
 const DEFAULT_TIME = 300000;
@@ -158,8 +158,7 @@ class Game extends Component {
                   controller
                   onTick={this.countdown}/>
             </div>
-            <UserList pubnub={this.props.pubnub}
-                      defaultChannel={this.state.gameChannel}/>
+
             {codeSpace}
             <div className="game-chat">
               <LiveChat
@@ -173,6 +172,8 @@ class Game extends Component {
 
     return (
         <main className="game-container">
+          <Sidebar pubnub={this.props.pubnub} defaultChannel={this.state.gameChannel}/>
+
           {game}
         </main>
     );

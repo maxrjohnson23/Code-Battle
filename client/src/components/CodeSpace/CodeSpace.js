@@ -54,7 +54,7 @@ class CodeSpace extends Component {
           });
 
           // Notify users of win
-          if(allPassed) {
+          if (allPassed) {
             this.props.publishWin(userCode);
           }
 
