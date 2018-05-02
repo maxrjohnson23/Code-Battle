@@ -6,6 +6,7 @@ import "./Game.css";
 import LiveChat from "../../components/LiveChat/LiveChat";
 import CodeSpace from "../../components/CodeSpace/CodeSpace";
 import Sidebar from "../../components/UserList/UserSideBar";
+import Spinner from "../../components/UI/Spinner/Spinner"
 import Wrapper from "../../hoc/Wrapper/Wrapper";
 
 const DEFAULT_TIME = 300000;
@@ -135,7 +136,7 @@ class Game extends Component {
 
 
   render() {
-    let codeSpace = (<h1>Loading</h1>);
+    let codeSpace = (<Spinner/>);
     if (this.state.questionDetails) {
       codeSpace =
           <CodeSpace className="codespace"
@@ -145,6 +146,7 @@ class Game extends Component {
 
     let game = (<div>
           <h1>Waiting for game to start</h1>
+          <Spinner/>
           {this.state.isGameCreator ? <button onClick={this.startGame}>Start Game</button> : null}
         </div>
     );
