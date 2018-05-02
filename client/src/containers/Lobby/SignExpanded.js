@@ -102,22 +102,26 @@ class SignExpanded extends Component {
                                        placeholder="Enter Name of Game"
                                        value={this.state.newGameName}
                                        change={this.inputHandler}/>
-                                <Input name="players" type="text"
+                                <Input name="players" type="number"
                                        placeholder="Enter number of players"
                                        value={this.state.newGamePlayers}
                                        change={this.inputHandler}/>
                               </div>
                           ) : (
-                              <ol>List of Games
+							<div>  
+							<h3>List of Games</h3>
+                              <ul className='open-games'>
                                 {this.props.gameList.map(game => (
                                     <li
-                                        key={game.name} data-name={game.name}
+										key={game.name} data-name={game.name}
+										className='open-game'
                                         data-players={game.players}
                                         data-questionid={game.questionId}
                                         onClick={this.joinGame}>
                                       {game.name} -
                                       Players: {game.players}</li>))}
-                              </ol>
+                              </ul>
+							  </div>
                           )}
                         </div>
                         <SubmitButton type={this.props.type}
