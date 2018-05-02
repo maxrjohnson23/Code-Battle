@@ -6,16 +6,18 @@ import "./Game.css";
 import LiveChat from "../../components/LiveChat/LiveChat";
 import CodeSpace from "../../components/CodeSpace/CodeSpace";
 import Sidebar from "../../components/UserList/UserSideBar";
+import GameSummaryPopup
+  from "../../components/GameSummaryPopup/GameSummaryPopup";
 import Spinner from "../../components/UI/Spinner/Spinner"
 import Wrapper from "../../hoc/Wrapper/Wrapper";
 
-const DEFAULT_TIME = 300000;
+const DEFAULT_TIME = 30000;
 
 // Renderer callback with condition
 const renderer = ({minutes, seconds, completed}) => {
   if (completed) {
     // Render a completed state
-    return <h4>done</h4>;
+    return <h4>Time's up!</h4>;
   } else {
     // Render a countdown
     return <span>{minutes}:{seconds}</span>;
@@ -26,6 +28,7 @@ class Game extends Component {
   state = {
     gameTimeMillis: DEFAULT_TIME,
     gameStarted: false,
+    gameEnded: false,
     gameChannel: null,
     numPlayers: null,
     questionId: null,
@@ -36,6 +39,13 @@ class Game extends Component {
 
   countdown = (e) => {
     this.setState({gameTimeMillis: e.total});
+  };
+
+  timeFinishedHandler = () => {
+    console.log('Time up');
+    this.setState({
+      gameEnded: true
+    });
   };
 
   componentWillMount() {
@@ -97,17 +107,11 @@ class Game extends Component {
           if (response.messages.length !== 0) {
             const gameCreatedMessage = response.messages.filter(m => m.entry.action === "GAME_CREATED")[0];
             const gameStartedMessage = response.messages.filter(m => m.entry.action === "GAME_START")[0];
+            const gameWinMessages = response.messages.filter(m => m.entry.action === "GAME_WIN");
 
             // Joining an in-progress game - need to sync up the clock
             if (gameStartedMessage) {
-
-              let currentTimeMillis = Date.now();
-              let timeSinceGameStarted = Math.floor(currentTimeMillis - gameStartedMessage.timetoken / 10000);
-
-              this.setState({
-                gameStarted: true,
-                gameTimeMillis: DEFAULT_TIME - timeSinceGameStarted,
-              })
+              this.syncGameProgress(gameStartedMessage, gameWinMessages);
             }
           }
         }
@@ -115,6 +119,39 @@ class Game extends Component {
     // Retrieve question details from the server
     this.getQuestion();
 
+  }
+
+  syncGameProgress(gameStartedMessage, gameWinMessages) {
+    // Sync game time
+    const currentTimeMillis = Date.now();
+    const timeSinceGameStarted = Math.floor(currentTimeMillis - gameStartedMessage.timetoken / 10000);
+    const timeRemaining = DEFAULT_TIME - timeSinceGameStarted;
+
+    // Sync leaderboard details
+    if (gameWinMessages.length > 0) {
+      console.log('Game wins', gameWinMessages);
+      const updatedLeaderboard = [...this.state.leaderBoard];
+      gameWinMessages.forEach(submission => {
+        console.log(submission);
+        const winData = {
+          username: submission.entry.username,
+          userCode: submission.entry.code,
+          time: submission.entry.time
+        };
+        updatedLeaderboard.push(winData);
+
+      });
+      this.setState({
+        leaderBoard: updatedLeaderboard
+      });
+
+    }
+
+    this.setState({
+      gameStarted: true,
+      gameTimeMillis: timeRemaining,
+      gameEnded: timeRemaining <= 0,
+    });
   }
 
   getQuestion = () => {
@@ -184,7 +221,8 @@ class Game extends Component {
                   date={Date.now() + this.state.gameTimeMillis}
                   renderer={renderer}
                   controller
-                  onTick={this.countdown}/>
+                  onTick={this.countdown}
+                  onComplete={this.timeFinishedHandler}/>
             </div>
 
             {codeSpace}
@@ -200,6 +238,8 @@ class Game extends Component {
 
     return (
         <main className="game-container">
+          <GameSummaryPopup showSummary={this.state.gameEnded}
+                            gameResults={this.state.leaderBoard}/>
           <Sidebar pubnub={this.props.pubnub}
                    defaultChannel={this.state.gameChannel}/>
 
