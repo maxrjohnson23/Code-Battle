@@ -1,0 +1,10 @@
+.userList {
+    position: absolute;
+    right: 0px;
+    width: 200px;
+    height: 600px;
+    border: 3px solid green;
+    list-style-type: none;
+    background: white;
+    z-index: 2;
+}

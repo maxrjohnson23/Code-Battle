@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import User from "./User/User";
+import "./UserList.css";
 
 class UserList extends Component {
   state = {
@@ -54,13 +55,15 @@ class UserList extends Component {
   };
 
   render() {
+
     return (
         <div>
-          <ul>
-            <h2>Current Users</h2>
+          <ul className="userList">
             {
               this.state.presentUsers.map(username => {
-                return <User key={username} username={username}/>
+                return (
+                <User key={username} username={username}/>
+                )
               })
             }
           </ul>
