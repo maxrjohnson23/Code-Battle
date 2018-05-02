@@ -36,17 +36,6 @@ class Game extends Component {
 
   countdown = (e) => {
     this.setState({gameTimeMillis: e.total});
-    if (this.state.isGameCreator) {
-      const message = {
-        action: "GAME_SYNC_CLOCK",
-        username: this.props.username,
-        timeMillis: e.total
-      };
-      this.props.pubnub.publish({
-        channel: this.state.gameChannel,
-        message: message,
-      });
-    }
   };
 
   componentWillMount() {
@@ -106,10 +95,19 @@ class Game extends Component {
           // Get list of historical game messages and update state
           console.log("Game channel data", status, response);
           if (response.messages.length !== 0) {
-            const gameAlreadyStarted = response.messages.filter(m => m.entry.action === "GAME_START");
+            const gameCreatedMessage = response.messages.filter(m => m.entry.action === "GAME_CREATED")[0];
+            const gameStartedMessage = response.messages.filter(m => m.entry.action === "GAME_START")[0];
 
-            if (gameAlreadyStarted.length !== 0) {
-              this.syncWithInProgressGame(response.messages);
+            // Joining an in-progress game - need to sync up the clock
+            if (gameStartedMessage) {
+
+              let currentTimeMillis = Date.now();
+              let timeSinceGameStarted = Math.floor(currentTimeMillis - gameStartedMessage.timetoken / 10000);
+
+              this.setState({
+                gameStarted: true,
+                gameTimeMillis: DEFAULT_TIME - timeSinceGameStarted,
+              })
             }
           }
         }
@@ -118,16 +116,6 @@ class Game extends Component {
     this.getQuestion();
 
   }
-
-  syncWithInProgressGame = (messages) => {
-    const clockSyncMessages = messages.filter(m => m.entry.action === "GAME_SYNC_CLOCK");
-    const latestClockTime = clockSyncMessages[clockSyncMessages.length - 1].entry.timeMillis;
-
-    this.setState({
-      gameStarted: true,
-      gameTimeMillis: latestClockTime,
-    });
-  };
 
   getQuestion = () => {
     axios.get("/api/question/" + this.state.questionId).then(response => {
