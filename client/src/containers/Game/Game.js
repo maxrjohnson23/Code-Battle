@@ -7,6 +7,8 @@ import LiveChat from "../../components/LiveChat/LiveChat";
 import CodeSpace from "../../components/CodeSpace/CodeSpace";
 import UserList from "../../components/UserList/UserList";
 
+const DEFAULT_TIME = 300000;
+
 // Renderer callback with condition
 const renderer = ({minutes, seconds, completed}) => {
   if (completed) {
@@ -20,11 +22,15 @@ const renderer = ({minutes, seconds, completed}) => {
 
 class Game extends Component {
   state = {
-    gameTimeMillis: 300000,
+    gameTimeMillis: DEFAULT_TIME,
     gameChannel: null,
     numPlayers: null,
     questionId: null,
     questionDetails: null
+  };
+
+  countdown = (e) => {
+    this.setState({gameTimeMillis: e.total})
   };
 
   componentWillMount() {
@@ -64,18 +70,21 @@ class Game extends Component {
         (status, response) => {
           // Get list of historical games and update state
           console.log("Game data", status, response);
-          const createGameMessage = response.messages.filter(m => m.action = "CREATE_GAME")[0];
-          console.log("Create game message", createGameMessage);
-          this.setState({
-            questionId: createGameMessage.entry.questionId
-          });
-          this.getQuestion(createGameMessage.entry.questionId);
+          if (response.messages.length !== 0) {
+            const createGameMessage = response.messages.filter(m => m.action = "CREATE_GAME")[0];
+            console.log("Create game message", createGameMessage);
+            this.setState({
+              questionId: createGameMessage.entry.questionId
+            });
+          }
         }
     );
+    this.getQuestion();
+
   }
 
-  getQuestion = (questionId) => {
-    axios.get("/api/question/" + questionId).then(response => {
+  getQuestion = () => {
+    axios.get("/api/question/" + this.state.questionId).then(response => {
       let question = response.data.question;
 
       if (question) {
@@ -106,7 +115,9 @@ class Game extends Component {
           <div className="countdown">
             <Countdown
                 date={Date.now() + this.state.gameTimeMillis}
-                renderer={renderer}/>
+                renderer={renderer}
+            controller
+            onTick={this.countdown}/>
           </div>
           <UserList pubnub={this.props.pubnub}
                     defaultChannel={this.state.gameChannel}/>

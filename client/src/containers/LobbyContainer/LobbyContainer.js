@@ -4,7 +4,7 @@ import axios from "axios";
 import Lobby from "../Lobby/Lobby";
 import UserList from "../../components/UserList/UserList";
 import LiveChat from "../../components/LiveChat/LiveChat";
-import Sidebar from '../../components/UserList/UserSideBar';
+import Sidebar from "../../components/UserList/UserSideBar";
 
 const GAME_CHANNEL = "Channel-games";
 
@@ -59,6 +59,7 @@ class LobbyContainer extends Component {
     // Choose random question for game
     axios.get("/api/question/random").then(res => {
       if (res.data) {
+        game.questionId = res.data.question._id;
 
         // Publish to active games channel
         this.props.pubnub.publish({
@@ -74,8 +75,7 @@ class LobbyContainer extends Component {
         // Publish to specific game channel with creation details
         this.props.pubnub.publish({
           message: gameDetails,
-          channel: "Channel-" + game.name,
-
+          channel: "Channel-" + game.name
         });
         // Navigate to newly created game
         const queryString = qs.stringify(game);
@@ -88,12 +88,22 @@ class LobbyContainer extends Component {
 
   };
 
+  joinGameHandler = (game) => {
+    // Navigate to existing game
+    const queryString = qs.stringify(game);
+    this.props.history.push({
+      pathname: "/game",
+      search: "?" + queryString
+    });
+  };
+
   render() {
     return (
         <div>
           {/* <UserList pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/> */}
           <Sidebar pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/>
           <Lobby createGame={this.createGameHandler}
+                 joinGame={this.joinGameHandler}
                  gameList={this.state.games}/>
           <LiveChat
               defaultChannel={"Channel-main"}
