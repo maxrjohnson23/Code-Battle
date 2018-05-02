@@ -29,16 +29,29 @@ class Game extends Component {
     gameChannel: null,
     numPlayers: null,
     questionId: null,
-    questionDetails: null
+    questionDetails: null,
+    isGameCreator: false,
+    leaderBoard: []
   };
 
   countdown = (e) => {
     this.setState({gameTimeMillis: e.total});
+    if (this.state.isGameCreator) {
+      const message = {
+        action: "GAME_SYNC_CLOCK",
+        username: this.props.username,
+        timeMillis: e.total
+      };
+      this.props.pubnub.publish({
+        channel: this.state.gameChannel,
+        message: message,
+      });
+    }
   };
 
   componentWillMount() {
     // Get game details from url query string
-    const game = qs.parse(this.props.location.search);
+    const game = qs.parse(this.props.location.search.slice(1));
     const channelName = "Channel-" + game.name;
 
     this.setState({
@@ -56,10 +69,22 @@ class Game extends Component {
     // Listen for game updates
     this.props.pubnub.getMessage(channelName, (msg) => {
       console.log("Message from game channel:", msg);
-      if(msg.message.action === "GAME_START") {
+      if (msg.message.action === "GAME_START") {
         this.setState({
           gameStarted: true
         });
+      }
+      if (msg.message.action === "GAME_WIN") {
+        console.log("Game created:", msg);
+        const updatedLeaderboard = [...this.state.leaderBoard];
+        const submissionDetails = {
+          username: msg.message.publisher,
+          userCode: msg.message.code
+        };
+        updatedLeaderboard.push(submissionDetails);
+        this.setState({
+          leaderBoard: updatedLeaderboard
+        })
       }
     });
   }
@@ -74,17 +99,17 @@ class Game extends Component {
     this.props.pubnub.history(
         {
           channel: this.state.gameChannel,
-          count: 10,
+          count: 10000,
         },
         (status, response) => {
-          // Get list of historical games and update state
-          console.log("Game data", status, response);
+          // Get list of historical game messages and update state
+          console.log("Game channel data", status, response);
           if (response.messages.length !== 0) {
-            const createGameMessage = response.messages.filter(m => m.action = "CREATE_GAME")[0];
-            console.log("Create game message", createGameMessage);
-            this.setState({
-              questionId: createGameMessage.entry.questionId
-            });
+            const gameAlreadyStarted = response.messages.filter(m => m.entry.action === "GAME_START");
+
+            if (gameAlreadyStarted.length !== 0) {
+              this.syncWithInProgressGame(response.messages);
+            }
           }
         }
     );
@@ -92,6 +117,16 @@ class Game extends Component {
     this.getQuestion();
 
   }
+
+  syncWithInProgressGame = (messages) => {
+    const clockSyncMessages = messages.filter(m => m.entry.action === "GAME_SYNC_CLOCK");
+    const latestClockTime = clockSyncMessages[clockSyncMessages.length - 1].entry.timeMillis;
+
+    this.setState({
+      gameStarted: true,
+      gameTimeMillis: latestClockTime,
+    });
+  };
 
   getQuestion = () => {
     axios.get("/api/question/" + this.state.questionId).then(response => {
@@ -115,7 +150,8 @@ class Game extends Component {
     const message = {
       action: "GAME_WIN",
       username: this.props.username,
-      code: userCode
+      code: userCode,
+      time: DEFAULT_TIME - this.state.gameTimeMillis
     };
     this.props.pubnub.publish({
       channel: this.state.gameChannel,
@@ -124,13 +160,12 @@ class Game extends Component {
   };
 
   startGame = () => {
-
     this.props.pubnub.publish({
       channel: this.state.gameChannel,
       message: {action: "GAME_START"},
     });
     this.setState({
-      gameStarted : true
+      gameStarted: true
     });
   };
 
@@ -147,9 +182,11 @@ class Game extends Component {
     let game = (<div>
           <h1>Waiting for game to start</h1>
           <Spinner/>
-          {this.state.isGameCreator ? <button onClick={this.startGame}>Start Game</button> : null}
+          {this.state.isGameCreator ?
+              <button onClick={this.startGame}>Start Game</button> : null}
         </div>
     );
+
     if (this.state.gameStarted) {
       game = (
           <Wrapper>
@@ -174,7 +211,8 @@ class Game extends Component {
 
     return (
         <main className="game-container">
-          <Sidebar pubnub={this.props.pubnub} defaultChannel={this.state.gameChannel}/>
+          <Sidebar pubnub={this.props.pubnub}
+                   defaultChannel={this.state.gameChannel}/>
 
           {game}
         </main>
