@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Link} from 'react-router-dom';
 import Modal from "../UI/Modal/Modal";
 import AceEditor from "react-ace";
+import "./GameSummaryPopup.css";
 
 
 class GameSummaryPopup extends Component {
@@ -39,8 +40,8 @@ class GameSummaryPopup extends Component {
               showPrintMargin={true}
               showGutter={true}
               highlightActiveLine={true}
-              width="500px"
-              height="600px"
+              width="450px"
+              height="400px"
               value={this.state.currentCode}
               setOptions={{
                 enableBasicAutocompletion: true,
@@ -55,15 +56,15 @@ class GameSummaryPopup extends Component {
     return (
         <Modal show={this.props.showSummary}>
           <h1>Game Summary</h1>
-          <Link to="/lobby">
-            <button>Back to Lobby</button>
-          </Link>
           {
             this.props.gameResults.map((result, index) => (
-                <h4 onClick={() => this.showCodeHandler(index)}>{index + 1}.) {result.username} | {result.time / 1000}sec</h4>
+                <h4 className="rankings" onClick={() => this.showCodeHandler(index)}>{index + 1}. {result.username} | {result.time / 1000}sec</h4>
             ))
           }
           {displayCode}
+          <Link to="/lobby">
+            <button className="lobby">Back to Lobby</button>
+          </Link>
         </Modal>
     );
   }
