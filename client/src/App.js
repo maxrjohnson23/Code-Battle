@@ -6,6 +6,8 @@ import LoginPopup from "./components/LoginPopup/LoginPopup";
 import Navbar from "./components/Navbar/Navbar";
 import Game from "./containers/Game/Game";
 import LobbyContainer from "./containers/LobbyContainer/LobbyContainer";
+import CreateQuestion from "./components/CreateQuestion/CreateQuestion";
+import { Input, TextArea, FormBtn } from "./components/Form";
 import PubNubReact from "pubnub-react";
 
 
@@ -125,6 +127,11 @@ class App extends Component {
                      pubnub={this.state.pubnub}/>}/>
           <Route path="/game"
                  render={(props) => <Game
+                     {...props}
+                     username={this.state.username}
+                     pubnub={this.state.pubnub}/>}/>
+          <Route path="/create-question"
+                 render={(props) => <CreateQuestion
                      {...props}
                      username={this.state.username}
                      pubnub={this.state.pubnub}/>}/>
