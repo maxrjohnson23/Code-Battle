@@ -1,17 +1,23 @@
 import React, {Component} from "react";
-import qs from "query-string";
+import qs from "qs";
 import Countdown from "react-countdown-now";
 import axios from "axios";
 import "./Game.css";
 import LiveChat from "../../components/LiveChat/LiveChat";
 import CodeSpace from "../../components/CodeSpace/CodeSpace";
-import UserList from "../../components/UserList/UserList";
+import Sidebar from "../../components/UserList/UserSideBar";
+import GameSummaryPopup
+  from "../../components/GameSummaryPopup/GameSummaryPopup";
+import Spinner from "../../components/UI/Spinner/Spinner"
+import Wrapper from "../../hoc/Wrapper/Wrapper";
+
+const DEFAULT_TIME = 30000;
 
 // Renderer callback with condition
 const renderer = ({minutes, seconds, completed}) => {
   if (completed) {
     // Render a completed state
-    return <h4>done</h4>;
+    return <h4>Time's up!</h4>;
   } else {
     // Render a countdown
     return <span>{minutes}:{seconds}</span>;
@@ -20,22 +26,38 @@ const renderer = ({minutes, seconds, completed}) => {
 
 class Game extends Component {
   state = {
-    gameTimeMillis: 300000,
+    gameTimeMillis: DEFAULT_TIME,
+    gameStarted: false,
+    gameEnded: false,
     gameChannel: null,
     numPlayers: null,
     questionId: null,
-    questionDetails: null
+    questionDetails: null,
+    isGameCreator: false,
+    leaderBoard: []
+  };
+
+  countdown = (e) => {
+    this.setState({gameTimeMillis: e.total});
+  };
+
+  timeFinishedHandler = () => {
+    console.log('Time up');
+    this.setState({
+      gameEnded: true
+    });
   };
 
   componentWillMount() {
     // Get game details from url query string
-    const game = qs.parse(this.props.location.search);
+    const game = qs.parse(this.props.location.search.slice(1));
     const channelName = "Channel-" + game.name;
 
     this.setState({
       gameChannel: channelName,
       numPlayers: game.players,
-      questionId: game.questionId
+      questionId: game.questionId,
+      isGameCreator: game.created
     });
 
     // Subscribe to game channel
@@ -46,6 +68,24 @@ class Game extends Component {
     // Listen for game updates
     this.props.pubnub.getMessage(channelName, (msg) => {
       console.log("Message from game channel:", msg);
+      if (msg.message.action === "GAME_START") {
+        this.setState({
+          gameStarted: true
+        });
+      }
+      if (msg.message.action === "GAME_WIN") {
+        console.log("Game created:", msg);
+        const updatedLeaderboard = [...this.state.leaderBoard];
+        const submissionDetails = {
+          username: msg.message.publisher,
+          userCode: msg.message.code,
+          time: msg.message.time
+        };
+        updatedLeaderboard.push(submissionDetails);
+        this.setState({
+          leaderBoard: updatedLeaderboard
+        })
+      }
     });
   }
 
@@ -59,22 +99,59 @@ class Game extends Component {
     this.props.pubnub.history(
         {
           channel: this.state.gameChannel,
-          count: 10,
+          count: 10000,
         },
         (status, response) => {
-          // Get list of historical games and update state
-          console.log("Game data", status, response);
+          // Get list of historical game messages and update state
+          console.log("Game channel data", status, response);
           if (response.messages.length !== 0) {
-            const createGameMessage = response.messages.filter(m => m.action = "CREATE_GAME")[0];
-            console.log("Create game message", createGameMessage);
-            this.setState({
-              questionId: createGameMessage.entry.questionId
-            });
+            const gameCreatedMessage = response.messages.filter(m => m.entry.action === "GAME_CREATED")[0];
+            const gameStartedMessage = response.messages.filter(m => m.entry.action === "GAME_START")[0];
+            const gameWinMessages = response.messages.filter(m => m.entry.action === "GAME_WIN");
+
+            // Joining an in-progress game - need to sync up the clock
+            if (gameStartedMessage) {
+              this.syncGameProgress(gameStartedMessage, gameWinMessages);
+            }
           }
         }
     );
+    // Retrieve question details from the server
     this.getQuestion();
 
+  }
+
+  syncGameProgress(gameStartedMessage, gameWinMessages) {
+    // Sync game time
+    const currentTimeMillis = Date.now();
+    const timeSinceGameStarted = Math.floor(currentTimeMillis - gameStartedMessage.timetoken / 10000);
+    const timeRemaining = DEFAULT_TIME - timeSinceGameStarted;
+
+    // Sync leaderboard details
+    if (gameWinMessages.length > 0) {
+      console.log('Game wins', gameWinMessages);
+      const updatedLeaderboard = [...this.state.leaderBoard];
+      gameWinMessages.forEach(submission => {
+        console.log(submission);
+        const winData = {
+          username: submission.entry.username,
+          userCode: submission.entry.code,
+          time: submission.entry.time
+        };
+        updatedLeaderboard.push(winData);
+
+      });
+      this.setState({
+        leaderBoard: updatedLeaderboard
+      });
+
+    }
+
+    this.setState({
+      gameStarted: true,
+      gameTimeMillis: timeRemaining,
+      gameEnded: timeRemaining <= 0,
+    });
   }
 
   getQuestion = () => {
@@ -95,31 +172,78 @@ class Game extends Component {
     });
   };
 
+  publishGameWin = (userCode) => {
+    const message = {
+      action: "GAME_WIN",
+      username: this.props.username,
+      code: userCode,
+      time: DEFAULT_TIME - this.state.gameTimeMillis
+    };
+    this.props.pubnub.publish({
+      channel: this.state.gameChannel,
+      message: message,
+    });
+  };
+
+  startGame = () => {
+    this.props.pubnub.publish({
+      channel: this.state.gameChannel,
+      message: {action: "GAME_START"},
+    });
+    this.setState({
+      gameStarted: true
+    });
+  };
+
 
   render() {
-    let codeSpace = (<h1>Loading</h1>);
+    let codeSpace = (<Spinner/>);
     if (this.state.questionDetails) {
       codeSpace =
           <CodeSpace className="codespace"
-                     questionDetails={this.state.questionDetails}/>;
-
+                     questionDetails={this.state.questionDetails}
+                     publishWin={this.publishGameWin}/>;
     }
+
+    let game = (<div>
+          <h1>Waiting for game to start</h1>
+          <Spinner/>
+          {this.state.isGameCreator ?
+              <button onClick={this.startGame}>Start Game</button> : null}
+        </div>
+    );
+
+    if (this.state.gameStarted) {
+      game = (
+          <Wrapper>
+            <div className="countdown">
+              <Countdown
+                  date={Date.now() + this.state.gameTimeMillis}
+                  renderer={renderer}
+                  controller
+                  onTick={this.countdown}
+                  onComplete={this.timeFinishedHandler}/>
+            </div>
+
+            {codeSpace}
+            <div className="game-chat">
+              <LiveChat
+                  defaultChannel={this.state.gameChannel + "-chat"}
+                  username={this.props.username}
+                  pubnub={this.props.pubnub}/>
+            </div>
+          </Wrapper>
+      );
+    }
+
     return (
         <main className="game-container">
-          <div className="countdown">
-            <Countdown
-                date={Date.now() + this.state.gameTimeMillis}
-                renderer={renderer}/>
-          </div>
-          <UserList pubnub={this.props.pubnub}
-                    defaultChannel={this.state.gameChannel}/>
-          {codeSpace}
-          <div className="game-chat">
-            <LiveChat
-                defaultChannel={this.state.gameChannel}
-                username={this.props.username}
-                pubnub={this.props.pubnub}/>
-          </div>
+          <GameSummaryPopup showSummary={this.state.gameEnded}
+                            gameResults={this.state.leaderBoard}/>
+          <Sidebar pubnub={this.props.pubnub}
+                   defaultChannel={this.state.gameChannel}/>
+
+          {game}
         </main>
     );
   }

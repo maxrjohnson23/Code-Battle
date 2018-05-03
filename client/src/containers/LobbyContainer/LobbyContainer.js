@@ -1,8 +1,7 @@
 import React, {Component} from "react";
-import qs from "query-string";
+import qs from "qs";
 import axios from "axios";
 import Lobby from "../Lobby/Lobby";
-import UserList from "../../components/UserList/UserList";
 import LiveChat from "../../components/LiveChat/LiveChat";
 import Sidebar from "../../components/UserList/UserSideBar";
 
@@ -60,6 +59,7 @@ class LobbyContainer extends Component {
     axios.get("/api/question/random").then(res => {
       if (res.data) {
         game.questionId = res.data.question._id;
+        game.created = true;
 
         // Publish to active games channel
         this.props.pubnub.publish({
@@ -88,12 +88,21 @@ class LobbyContainer extends Component {
 
   };
 
+  joinGameHandler = (game) => {
+    // Navigate to existing game
+    const queryString = qs.stringify(game);
+    this.props.history.push({
+      pathname: "/game",
+      search: "?" + queryString
+    });
+  };
+
   render() {
     return (
         <div>
-          <UserList pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/>
           <Sidebar pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/>
           <Lobby createGame={this.createGameHandler}
+                 joinGame={this.joinGameHandler}
                  gameList={this.state.games}/>
           <LiveChat
               defaultChannel={"Channel-main"}

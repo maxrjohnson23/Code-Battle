@@ -53,6 +53,10 @@ class CodeSpace extends Component {
             }
           });
 
+          // Notify users of win
+          if (allPassed) {
+            this.props.publishWin(userCode);
+          }
 
           this.setState({
             currentQuestion: evaluatedQuestion,
