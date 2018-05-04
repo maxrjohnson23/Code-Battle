@@ -4,6 +4,7 @@ import '../Lobby.css';
 import Sign from './Sign';
 import SignExpanded from './SignExpanded';
 import SignCollapsed from './SignCollapsed';
+import UserPopup from '../../components/UserPopup/UserPopup.js'
 
 class Lobby extends Component {
 
@@ -12,8 +13,14 @@ class Lobby extends Component {
 		this.state = {
 			wasClickedLeft: false,
 			wasClickedRight: false,
+			showUserModal: false,
 		};
 	}
+
+	showUserModal = (event) => {
+		event.preventDefault();
+		this.state.showUserModal = true;
+	  }
 
 	onReset = () => {
 		this.setState({

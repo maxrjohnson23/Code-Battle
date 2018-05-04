@@ -4,6 +4,7 @@ import "../../App.css";
 import "./Navbar.css";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faStar from "@fortawesome/fontawesome-free-solid/faStar";
+
 import axios from "axios";
 
 class Navbar extends Component {
@@ -35,9 +36,11 @@ class Navbar extends Component {
             </Link>
           </section>
           <section className="navbar-section">
+
             {this.props.loggedIn ? (
                 [
-                  <Link key="username" to="#" className="btn btn-link">
+                  <Link key="username" to="#" className="btn btn-link"
+                        onClick={this.props.showUserModal}>
                     <span
                         className="text-secondary">Welcome {this.props.username}<span
                         style={{padding: "0 10px"}}>|</span>
