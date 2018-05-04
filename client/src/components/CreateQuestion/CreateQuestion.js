@@ -7,50 +7,63 @@ class CreateQuestion extends Component {
     constructor() {
         super();
         this.state = {
+            questionCount: 1,
             questionText: "",
             code: "",
-            tests: [],
-            testOne: "",
-            testTwo: "",
-            testThree: ""
+            tests: []
         }
     }
 
     // Handles updating component state when the user types into the input field
     handleInputChange = event => {
         const { name, value } = event.target;
-        // if (name === 'test') {
-        //     this.setState({ tests: [...this.state.tests, event.target.value]})
-        // } else {
             this.setState({
             [name]: value
             });
-        // }
     };
-    // handleInputChange = event => {
-    //     this.setState({ tests: [...this.state.tests, event.target.value] });
-    // };
+
+    handleTestChange = (event, index) => {
+        console.log(index);
+        let updatedTests = [...this.state.tests];
+        updatedTests[index] = event.target.value;
+        this.setState({ tests: updatedTests });
+    };
 
     // When the form is submitted, use the API.saveBook method to save the book data
     // Then reload books from the database
     handleFormSubmit = event => {
         event.preventDefault();
-        if (this.state.questionText && this.state.code && this.state.testOne) {
+        if (this.state.questionText && this.state.code) {
             const testCriteria = [];
-            // const testingCode = "testCode";
-            // testCriteria.push({'"testCode"': this.state.testOne}, {'"testCode"': this.state.testTwo}, {'"testCode"': this.state.testThree});
             testCriteria.push(this.state.testOne, this.state.testTwo, this.state.testThree);
-            // testCriteria.push({one}, {two}, {three});
+            let objectTests = [...this.state.tests];
+            let mappedTests = objectTests.map(test => {
+                return {
+                    testCode: test
+                }
+            })
+            console.log(mappedTests)
             API.saveQuestion({
             questionText: this.state.questionText,
             code: this.state.code,
-            tests: { testCode: this.state.testOne}
-            // tests: this.state.tests
-
+            tests: mappedTests
             }).catch(err => console.log(err));
         }
     };
+
+    handleTestCountIncrease = event => {
+        event.preventDefault();
+        let questionCountUpdate = this.state.questionCount + 1;
+        this.setState({questionCount: questionCountUpdate})
+    };
+
     render() {
+
+        let testRender = [...Array(this.state.questionCount)].map((e, i) => <TextArea
+        onChange={(event) => this.handleTestChange(event, i)}
+        name={`test-${i}`}
+        placeholder="Test One (required)"
+        />)
         return (
             <form>
                 <Input
@@ -65,33 +78,17 @@ class CreateQuestion extends Component {
                     name="code"
                     placeholder="Code (required)"
                 />
-                <TextArea
-                    // value={this.state.test}
-                    value={this.state.testOne}
-                    onChange={this.handleInputChange}
-                    // name="test"
-                    name="testOne"
-                    placeholder="Test One (required)"
-                />
-                <TextArea
-                    // value={this.state.test}
-                    value={this.state.testTwo}
-                    onChange={this.handleInputChange}
-                    // name="test"
-                    name="testTwo"
-                    placeholder="Test Two (required)"
-                />
-                <TextArea
-                    // value={this.state.test}
-                    value={this.state.testThree}
-                    onChange={this.handleInputChange}
-                    // name="test"
-                    name="testThree"
-                    placeholder="Test Three (required)"
-                />
+                <FormBtn 
+                    onClick={this.handleTestCountIncrease}
+                    style={{ float: "right", marginBottom: 20 }}
+                >
+                +
+                </FormBtn>
+                {testRender}
                 <FormBtn
-                    disabled={!(this.state.questionText && this.state.code && this.state.testOne)}
+                    disabled={!(this.state.questionText && this.state.code)}
                     onClick={this.handleFormSubmit}
+                    style={{ float: "right", marginBottom: 10 }}
                 >
                 Submit Question
                 </FormBtn>
