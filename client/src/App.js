@@ -127,7 +127,7 @@ class App extends Component {
                   showLoginHandler={this.showLoginHandler}
                   loggedIn={this.state.loggedIn}
                   username={this.state.username}
-                  showUserModal={this.showUserHandler}/>
+                  showUserModal={this.showUserHandler}
                   userscore={this.state.userscore}/>
           <LoginPopup
               loginHandler={this.loginUserHandler}
