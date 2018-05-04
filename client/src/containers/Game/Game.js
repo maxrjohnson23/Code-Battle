@@ -8,10 +8,11 @@ import CodeSpace from "../../components/CodeSpace/CodeSpace";
 import Sidebar from "../../components/UserList/UserSideBar";
 import GameSummaryPopup
   from "../../components/GameSummaryPopup/GameSummaryPopup";
-import Spinner from "../../components/UI/Spinner/Spinner"
+import Spinner from "../../components/UI/Spinner/Spinner";
 import Wrapper from "../../hoc/Wrapper/Wrapper";
 
-const DEFAULT_TIME = 30000;
+const DEFAULT_TIME = 300000;
+const DEFAULT_POINTS = 100;
 
 // Renderer callback with condition
 const renderer = ({minutes, seconds, completed}) => {
@@ -77,7 +78,7 @@ class Game extends Component {
         console.log("Game created:", msg);
         const updatedLeaderboard = [...this.state.leaderBoard];
         const submissionDetails = {
-          username: msg.message.publisher,
+          username: msg.message.username,
           userCode: msg.message.code,
           time: msg.message.time
         };
@@ -173,6 +174,7 @@ class Game extends Component {
   };
 
   publishGameWin = (userCode) => {
+    this.persistUserScore();
     const message = {
       action: "GAME_WIN",
       username: this.props.username,
@@ -193,6 +195,39 @@ class Game extends Component {
     this.setState({
       gameStarted: true
     });
+  };
+
+  persistUserScore = () => {
+    let myUsername = this.props.username;
+    let userRanking = this.state.leaderBoard.findIndex(rank => {
+      return rank.username === myUsername;
+    });
+    if (userRanking === -1) {
+      // message hasn't reached yet, set last
+      userRanking = this.state.leaderBoard.length;
+    }
+    console.log("userRanking", userRanking);
+    let pointsAwarded = DEFAULT_POINTS;
+
+    // increment for 1st, 2nd, 3rd place
+    switch (userRanking) {
+      case 0: {
+        pointsAwarded += 400;
+        break;
+      }
+      case 1: {
+        pointsAwarded += 300;
+        break;
+      }
+      case 2: {
+        pointsAwarded += 200;
+      }
+      default:
+        break;
+    }
+
+    // Update user on server
+    axios.patch(`/user/${myUsername}`, {score: pointsAwarded});
   };
 
 

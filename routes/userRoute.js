@@ -49,7 +49,12 @@ router.post(
 
 router.patch("/:id", (req, res) => {
   const score = req.body.score;
-  db.User.findOneAndUpdate({username: req.params.id}, {$set: {score: score}}, {new: true}).then((data) => {
+  db.User.findOneAndUpdate({username: req.params.id}, {
+    $inc: {
+      score: score,
+      gamesplayed: 1
+    }
+  }, {new: true}).then((data) => {
     if (data) {
       res.json(data);
     } else {
