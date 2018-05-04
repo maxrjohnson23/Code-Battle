@@ -43,7 +43,8 @@ class LoginPopup extends Component {
             this.props.loginHandler({
               loggedIn: true,
               username: response.data.username,
-              userscore: response.data.score
+              userscore: response.data.score,
+              gamesplayed: response.data.gamesplayed
             });
           }
           this.setState({

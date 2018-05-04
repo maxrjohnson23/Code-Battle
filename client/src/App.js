@@ -8,9 +8,8 @@ import Game from "./containers/Game/Game";
 import MainImg from "./components/MainImg/MainImg";
 import LobbyContainer from "./containers/LobbyContainer/LobbyContainer";
 import CreateQuestion from "./components/CreateQuestion/CreateQuestion";
-import { Input, TextArea, FormBtn } from "./components/Form";
 import PubNubReact from "pubnub-react";
-import UserPopup from "./components/UserPopup/UserPopup"
+import UserPopup from "./components/UserPopup/UserPopup";
 
 
 class App extends Component {
@@ -25,6 +24,7 @@ class App extends Component {
       loggedIn: false,
       username: null,
       userscore: 0,
+      gamesplayed: 0,
       showLogin: false,
       pubnubJoined: false,
       showUserModal: false,
@@ -39,7 +39,8 @@ class App extends Component {
         this.setState({
           loggedIn: true,
           username: response.data.user.username,
-          userscore: response.data.user.score
+          userscore: response.data.user.score,
+          gamesplayed: response.data.user.gamesplayed
         });
         // Connect to PubNub with existing user session
         this.initPubnub(response.data.user.username);
