@@ -4,10 +4,9 @@ const db = require("../models");
 const passport = require("../passport");
 
 router.post("/", (req, res) => {
-  console.log("user signup");
 
   const {username, password} = req.body;
-  // ADD VALIDATION
+
   db.User.findOne({username: username}, (err, user) => {
     if (err) {
       console.log("UserRoute.js post error: ", err);
@@ -19,7 +18,8 @@ router.post("/", (req, res) => {
     else {
       const newUser = new db.User({
         username: username,
-        password: password
+        password: password,
+        score: 0
       });
       newUser.save((err, savedUser) => {
         if (err) return res.json(err);
@@ -40,17 +40,30 @@ router.post(
     (req, res) => {
       console.log("logged in", req.user);
       var userInfo = {
-        username: req.user.username
+        username: req.user.username,
+        score: req.user.score
       };
       res.send(userInfo);
     }
 );
 
-router.get("/", (req, res, next) => {
-  console.log("===== user!!======");
-  console.log(req.user);
+router.patch("/:id", (req, res) => {
+  const score = req.body.score;
+  db.User.findOneAndUpdate({username: req.params.id}, {$set: {score: score}}, {new: true}).then((data) => {
+    if (data) {
+      res.json(data);
+    } else {
+      res.status(404).send({error: "No user found for this id"});
+    }
+  }).catch(err => {
+    res.status(500).send(err);
+  });
+});
+
+router.get("/", (req, res) => {
+  console.log("Getting user: ", req.user);
   if (req.user) {
-    res.json({user: req.user});
+    res.json({user: req.user, score: req.score});
   } else {
     res.json({user: null});
   }

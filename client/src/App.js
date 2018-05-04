@@ -5,7 +5,7 @@ import "./App.css";
 import LoginPopup from "./components/LoginPopup/LoginPopup";
 import Navbar from "./components/Navbar/Navbar";
 import Game from "./containers/Game/Game";
-import MainImg from "./components/MainImg/MainImg"
+import MainImg from "./components/MainImg/MainImg";
 import LobbyContainer from "./containers/LobbyContainer/LobbyContainer";
 import PubNubReact from "pubnub-react";
 
@@ -21,6 +21,7 @@ class App extends Component {
     this.state = {
       loggedIn: false,
       username: null,
+      userscore: 0,
       showLogin: false,
       pubnubJoined: false,
       pubnub: this.pubnub
@@ -33,7 +34,8 @@ class App extends Component {
       if (response.data.user) {
         this.setState({
           loggedIn: true,
-          username: response.data.user.username
+          username: response.data.user.username,
+          userscore: response.data.user.score
         });
         // Connect to PubNub with existing user session
         this.initPubnub(response.data.user.username);
@@ -109,7 +111,8 @@ class App extends Component {
           <Navbar loginHandler={this.loginUserHandler}
                   showLoginHandler={this.showLoginHandler}
                   loggedIn={this.state.loggedIn}
-                  username={this.state.username}/>
+                  username={this.state.username}
+                  userscore={this.state.userscore}/>
           <LoginPopup
               loginHandler={this.loginUserHandler}
               showLogin={this.state.showLogin}

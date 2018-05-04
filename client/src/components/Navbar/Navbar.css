@@ -7,10 +7,11 @@
     border-radius: 0 !important;
     font-size: 0.9em;
     margin-bottom: 50px;
+    max-height: 100px;
 }
 
 .navbar a:hover:not(.logo) {
-    background-color: #1eaa90;
+    background-color: #8D71EB;
     color: #fff;
 }
 
