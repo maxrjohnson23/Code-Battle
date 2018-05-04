@@ -92,7 +92,7 @@ export default class LiveChat extends Component {
         </ol>
 
       <form className="container" id='currentChat' onSubmit={onSubmit}>
-        <img className="avatar" src={imgURL}/>
+        <img className="avatar" src={imgURL} alt="avatar"/>
           <input className="chatInput" ref="txtMessage" type="text"
                    placeholder="Let's play a game!"/>
       </form>

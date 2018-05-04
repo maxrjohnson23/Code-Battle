@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import User from "./User/User";
+
 // import Sidebar from './UserSideBar';
 
 class UserList extends Component {
@@ -36,8 +37,9 @@ class UserList extends Component {
   }
 
   componentWillUnmount() {
+    console.log("Unsubscribing: ", this.props.defaultChannel);
     this.props.pubnub.unsubscribe({
-      channels: [this.props.defaultChannel]
+      channels: [this.props.defaultChannel, this.props.defaultChannel + "-pnpres"]
     });
   };
 

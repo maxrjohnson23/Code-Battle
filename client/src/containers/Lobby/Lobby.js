@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import '../Lobby.css';
-import Sign from './Sign';
-import SignExpanded from './SignExpanded';
-import SignCollapsed from './SignCollapsed';
-import UserPopup from '../../components/UserPopup/UserPopup.js'
+import React, {Component} from "react";
+import PropTypes from "prop-types";
+import "../Lobby.css";
+import Sign from "./Sign";
+import SignExpanded from "./SignExpanded";
+import SignCollapsed from "./SignCollapsed";
 
 class Lobby extends Component {
 
@@ -19,8 +18,10 @@ class Lobby extends Component {
 
 	showUserModal = (event) => {
 		event.preventDefault();
-		this.state.showUserModal = true;
-	  }
+    this.setState({
+      showUserModal: true
+    });
+  };
 
 	onReset = () => {
 		this.setState({
