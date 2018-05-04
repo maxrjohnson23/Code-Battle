@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import qs from "qs";
 import axios from "axios";
 import Lobby from "../Lobby/Lobby";
-import LiveChat from "../../components/LiveChat/LiveChat";
 import Sidebar from "../../components/UserList/UserSideBar";
 
 const GAME_CHANNEL = "Channel-games";
@@ -37,7 +36,6 @@ class LobbyContainer extends Component {
           console.log("Current Games", status, response);
           const updatedGames = [...this.state.games];
           response.messages.forEach(game => {
-            console.log(game);
             updatedGames.push(game.entry);
           });
           this.setState({
