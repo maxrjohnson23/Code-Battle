@@ -99,15 +99,15 @@ class LobbyContainer extends Component {
 
   render() {
     return (
-        <div>
+        <div id='main-container'>
           <Sidebar pubnub={this.props.pubnub} defaultChannel={"Channel-main"}/>
           <Lobby createGame={this.createGameHandler}
                  joinGame={this.joinGameHandler}
                  gameList={this.state.games}/>
-          <LiveChat
+          {/* <LiveChat
               defaultChannel={"Channel-main"}
               username={this.props.username}
-              pubnub={this.props.pubnub}/>
+              pubnub={this.props.pubnub}/> */}
         </div>
     );
   }

@@ -5,8 +5,10 @@ import "./App.css";
 import LoginPopup from "./components/LoginPopup/LoginPopup";
 import Navbar from "./components/Navbar/Navbar";
 import Game from "./containers/Game/Game";
-import MainImg from "./components/MainImg/MainImg"
+import MainImg from "./components/MainImg/MainImg";
 import LobbyContainer from "./containers/LobbyContainer/LobbyContainer";
+import CreateQuestion from "./components/CreateQuestion/CreateQuestion";
+import { Input, TextArea, FormBtn } from "./components/Form";
 import PubNubReact from "pubnub-react";
 import UserPopup from "./components/UserPopup/UserPopup"
 
@@ -22,6 +24,7 @@ class App extends Component {
     this.state = {
       loggedIn: false,
       username: null,
+      userscore: 0,
       showLogin: false,
       pubnubJoined: false,
       showUserModal: false,
@@ -35,7 +38,8 @@ class App extends Component {
       if (response.data.user) {
         this.setState({
           loggedIn: true,
-          username: response.data.user.username
+          username: response.data.user.username,
+          userscore: response.data.user.score
         });
         // Connect to PubNub with existing user session
         this.initPubnub(response.data.user.username);
@@ -124,6 +128,7 @@ class App extends Component {
                   loggedIn={this.state.loggedIn}
                   username={this.state.username}
                   showUserModal={this.showUserHandler}/>
+                  userscore={this.state.userscore}/>
           <LoginPopup
               loginHandler={this.loginUserHandler}
               showLogin={this.state.showLogin}
@@ -146,6 +151,11 @@ class App extends Component {
                      pubnub={this.state.pubnub}/>}/>
           <Route path="/game"
                  render={(props) => <Game
+                     {...props}
+                     username={this.state.username}
+                     pubnub={this.state.pubnub}/>}/>
+          <Route path="/create-question"
+                 render={(props) => <CreateQuestion
                      {...props}
                      username={this.state.username}
                      pubnub={this.state.pubnub}/>}/>

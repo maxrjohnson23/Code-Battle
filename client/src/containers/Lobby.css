@@ -11,10 +11,8 @@
   background-size: cover;
   color: #3E363F;
   font-family: "Roboto Condensed", sans-serif;
-  height: 100vh;
   display: flex;
   flex-flow: row wrap;
-  /* overflow: hidden; */
 }
 
 .App > * {
@@ -28,6 +26,10 @@
   flex-direction: row;
   box-shadow: 1px 6px 10px 0px rgba(0, 0, 0, 0.5);
   flex-grow: 5;
+  margin: auto;
+  margin-top: -25px;
+  margin-bottom: 20px;
+  
 }
 
 .create {
@@ -328,4 +330,8 @@ background: #cd5c5c;
   margin-top: -30px;
   opacity: .01;
   transition: opacity .3s ease, margin .5s ease;
+}
+
+#main-container {
+  justify-content: center;
 }

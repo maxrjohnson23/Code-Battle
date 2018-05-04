@@ -18,6 +18,8 @@ export default class LiveChat extends Component {
       this.setState({
         messages: updatedMessages
       });
+      const chatBox = document.getElementById("collection");
+      chatBox.scrollTop = chatBox.scrollHeight;
     });
   }
 
@@ -61,12 +63,12 @@ export default class LiveChat extends Component {
     const imgURL = "//robohash.org/" + props.userID + "?set=set2&bgset=bg2&size=70x70";
 
     return (
-    <section className="chatEntry">
+    <section className="chatEntry" id='chatEntry'>
       <header className="top-bar">
         <h1 className="chatHeader">Chat</h1>
       </header>
 
-        <ol className="collection">
+        <ol className="collection" id ='collection'>
           {this.state.messages.map((messageObj) => {
 
             const imgURL = "//robohash.org/" + messageObj.message.Who + "?set=set2&bgset=bg2&size=70x70";
@@ -89,7 +91,7 @@ export default class LiveChat extends Component {
           })}
         </ol>
 
-      <form className="container" onSubmit={onSubmit}>
+      <form className="container" id='currentChat' onSubmit={onSubmit}>
         <img className="avatar" src={imgURL}/>
           <input className="chatInput" ref="txtMessage" type="text"
                    placeholder="Let's play a game!"/>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { stack as Menu } from 'react-burger-menu';
 import UserList from './UserList';
+import LiveChat from '../LiveChat';
 
 
 class Sidebar extends React.Component {
@@ -12,11 +13,10 @@ class Sidebar extends React.Component {
     return (
       <Menu right noOverlay>
         <UserList pubnub={this.props.pubnub} defaultChannel={this.props.defaultChannel}/>
-        {/* <h2> Current Users </h2>
-            <a onClick={ this.showSettings } className="menu-item--small" href="">User 1</a>
-            <a onClick={ this.showSettings } className="menu-item--small" href="">User 2</a>
-            <a onClick={ this.showSettings } className="menu-item--small" href="">User 3</a>
-            <a onClick={ this.showSettings } className="menu-item--small" href="">User 4</a> */}
+        <LiveChat
+              defaultChannel={"Channel-main"}
+              username={this.props.username}
+              pubnub={this.props.pubnub}/>
       </Menu>
     );
   }
