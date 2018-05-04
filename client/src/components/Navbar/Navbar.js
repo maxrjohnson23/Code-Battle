@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import {Link, withRouter} from "react-router-dom";
 import "../../App.css";
 import "./Navbar.css";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faStar from "@fortawesome/fontawesome-free-solid/faStar";
 import axios from "axios";
 
 class Navbar extends Component {
@@ -14,7 +16,8 @@ class Navbar extends Component {
       if (response.status === 200) {
         this.props.loginHandler({
           loggedIn: false,
-          username: null
+          username: null,
+          userscore: 0
         });
         this.props.history.push("/");
       }
@@ -36,7 +39,10 @@ class Navbar extends Component {
                 [
                   <Link key="username" to="#" className="btn btn-link">
                     <span
-                        className="text-secondary">Welcome {this.props.username}</span>
+                        className="text-secondary">Welcome {this.props.username}<span
+                        style={{padding: "0 10px"}}>|</span>
+                      <FontAwesomeIcon icon={faStar}
+                                       color="yellow"/> {this.props.userscore}</span>
                   </Link>,
                   <Link key="logout" to="#" className="btn btn-link"
                         onClick={this.logout}>

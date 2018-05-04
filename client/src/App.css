@@ -1,3 +1,7 @@
+body {
+    background-color: gray;
+}
+
 .App {
     text-align: center;
 }
@@ -77,13 +81,16 @@
   .bm-menu {
     /* background: rgba(151, 105, 245, 0.98); */
     background: rgba(64, 70, 86, 0.98);
-    padding: 2.5em 1.5em 0;
+    padding: 0px;
     font-size: 1.15em;
   }
 
   .bm-menu-wrap {
       height: auto;
+      width: 325px;
       box-shadow: 1px 10px 10px 0px rgba(0, 0, 0, 0.5);
+      bottom: 2%;
+      top: 15%;
   }
   
   /* Morph shape necessary with bubble or elastic */
