@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import "../Lobby.css";
 import {Motion, spring} from "react-motion";
 import Input from "./Input";
+import customQuestion from './CustomQuestion';
 import Checkbox from './Checkbox';
 import SubmitButton from "./SubmitButton";
+import CustomQuestion from "./CustomQuestion";
 
 class SignExpanded extends Component {
   constructor(props) {
@@ -42,9 +44,16 @@ class SignExpanded extends Component {
     }
   };
 
-  toggle(event) {
+  toggle = (event) => {
     this.setState({createQuestion: this.state.createQuestion});
  };
+
+  newQuestion = (event) => {
+    event.preventDefault();
+    const customQuestion = {
+
+    }
+  }
 
   createGame = (event) => {
     event.preventDefault();
@@ -117,12 +126,13 @@ class SignExpanded extends Component {
                                        placeholder="Enter game time"
                                        value={this.state.newGameTime}
                                        change={this.inputHandler}
-                                       required/>                                
-                                  <Checkbox 
+                                       required/>
+                                {/* <CustomQuestion  />                               */}
+                                  {/* <Checkbox 
                                         name="createQuestion"
                                         type="checkbox"
                                         checked={this.state.createQuestion}
-                                        onChange={this.handleInputChange} />        
+                                        onChange={this.handleInputChange} />         */}
                               </div>
                           ) : (
 							<div>  
@@ -141,8 +151,16 @@ class SignExpanded extends Component {
 							  </div>
                           )}
                         </div>
+                        <div>
+                        {this.props.type === "create" ? (
+                          <div id='button-section'>
+                        <CustomQuestion/> 
                         <SubmitButton type={this.props.type}
                                       createGame={this.createGame}/>
+                          </div>
+                        ) : (null)
+                      }
+                        </div>
                       </form>
                   )}
                 </Motion>
