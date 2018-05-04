@@ -66,6 +66,10 @@
     width: 100%;
     display: block;
   }
+  
+  #currentChat{
+    padding: 0px;
+  }
 
   .chatHeader{
     font-family: Comic Sans MS;
@@ -81,11 +85,10 @@
   .chatInput {
     border-width: 2px;
     border-color:rgba(151, 105, 245, 0.98);
-    margin-left: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    width: 500px;
+    width: auto;
   }
 
   .chatInput:focus {
