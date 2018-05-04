@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "../Lobby.css";
 import {Motion, spring} from "react-motion";
 import Input from "./Input";
+import Checkbox from './Checkbox';
 import SubmitButton from "./SubmitButton";
 
 class SignExpanded extends Component {
@@ -12,7 +13,8 @@ class SignExpanded extends Component {
       flexState: false,
       animIsFinished: false,
       newGameName: "",
-      newGameTime: ""
+      newGameTime: "",
+      createQuestion: false
     };
   }
 
@@ -33,8 +35,16 @@ class SignExpanded extends Component {
       this.setState({
         newGameTime: event.target.value
       });
+    } else if (event.target.name === "createQuestion") {
+      this.setState({
+        createQuestion: event.target.value
+      });
     }
   };
+
+  toggle(event) {
+    this.setState({createQuestion: this.state.createQuestion});
+ };
 
   createGame = (event) => {
     event.preventDefault();
@@ -101,11 +111,18 @@ class SignExpanded extends Component {
                                 <Input name="game-name" type="text"
                                        placeholder="Enter Name of Game"
                                        value={this.state.newGameName}
-                                       change={this.inputHandler}/>
+                                       change={this.inputHandler}
+                                       required/>
                                 <Input name="game-time" type="number"
                                        placeholder="Enter game time"
                                        value={this.state.newGameTime}
-                                       change={this.inputHandler}/>
+                                       change={this.inputHandler}
+                                       required/>                                
+                                  <Checkbox 
+                                        name="createQuestion"
+                                        type="checkbox"
+                                        checked={this.state.createQuestion}
+                                        onChange={this.handleInputChange} />        
                               </div>
                           ) : (
 							<div>  

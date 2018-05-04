@@ -11,7 +11,7 @@ const SubmitButton = (props) => {
 			<button 
 			className={props.type==='create' ? 'gray' : 'slateblue'}
 			name="create-game"
-			onClick={props.createGame}
+			onClick={this.state.createQuestion ? props.newQuestion : props.createGame}
 			type=''><MdArrowForward/></button>
 		</div>
 	);

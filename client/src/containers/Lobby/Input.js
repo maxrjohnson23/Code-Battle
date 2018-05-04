@@ -12,7 +12,7 @@ const Input = (props) => {
 				id={props.name}
 				name={props.name}
 				autoComplete="false"
-				required
+				required="true"
 				type={props.type}
 				placeholder={props.placeholder}
 				value={props.value}
