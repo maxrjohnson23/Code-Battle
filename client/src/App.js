@@ -8,6 +8,7 @@ import Game from "./containers/Game/Game";
 import MainImg from "./components/MainImg/MainImg"
 import LobbyContainer from "./containers/LobbyContainer/LobbyContainer";
 import PubNubReact from "pubnub-react";
+import UserPopup from "./components/UserPopup/UserPopup"
 
 
 class App extends Component {
@@ -23,6 +24,7 @@ class App extends Component {
       username: null,
       showLogin: false,
       pubnubJoined: false,
+      showUserModal: false,
       pubnub: this.pubnub
     };
     this.pubnub.init(this);
@@ -81,6 +83,17 @@ class App extends Component {
     });
   };
 
+  showUserHandler = () => {
+    this.setState({
+      showUserModal: true
+    });
+  };
+  hideUserHandler = () => {
+    this.setState({
+      showUserModal: false
+    });
+  };
+
   initPubnub = (username) => {
     console.log(`Subscribing to PubNub with user ${username}`);
     this.pubnub.setUUID(username);
@@ -109,11 +122,18 @@ class App extends Component {
           <Navbar loginHandler={this.loginUserHandler}
                   showLoginHandler={this.showLoginHandler}
                   loggedIn={this.state.loggedIn}
-                  username={this.state.username}/>
+                  username={this.state.username}
+                  showUserModal={this.showUserHandler}/>
           <LoginPopup
               loginHandler={this.loginUserHandler}
               showLogin={this.state.showLogin}
               hideLoginHandler={this.hideLoginHandler}/>
+          <UserPopup
+              showUserModal={this.state.showUserModal}
+              hideUserModal={this.hideUserHandler}
+              username={this.state.username}
+              userScore={this.state.userscore}/>
+          
           <Route path="/" exact
                  render={() => {
                    return this.state.loggedIn ? <Redirect to="/lobby"/> :

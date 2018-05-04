@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Link, withRouter} from "react-router-dom";
 import "../../App.css";
 import "./Navbar.css";
+import UserPopup from "../UserPopup/UserPopup.js"
 import axios from "axios";
 
 class Navbar extends Component {
@@ -32,11 +33,12 @@ class Navbar extends Component {
             </Link>
           </section>
           <section className="navbar-section">
+
             {this.props.loggedIn ? (
                 [
-                  <Link key="username" to="#" className="btn btn-link">
-                    <span
-                        className="text-secondary">Welcome {this.props.username}</span>
+                  <Link key="username" to="#" className="btn btn-link"
+                        onClick={this.props.showUserModal}>
+                    <span className="text-secondary">Welcome {this.props.username}</span>
                   </Link>,
                   <Link key="logout" to="#" className="btn btn-link"
                         onClick={this.logout}>
