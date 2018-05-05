@@ -60,7 +60,7 @@ export default class LiveChat extends Component {
 
     const {props, onSubmit} = this;
 
-    const imgURL = "//robohash.org/" + props.userID + "?set=set2&bgset=bg2&size=70x70";
+    const imgURL = "//robohash.org/" + this.props.username + "?set=set2&bgset=bg2&size=70x70";
 
     return (
     <section className="chatEntry" id='chatEntry'>
@@ -74,20 +74,37 @@ export default class LiveChat extends Component {
             const imgURL = "//robohash.org/" + messageObj.message.Who + "?set=set2&bgset=bg2&size=70x70";
             const messageDate = new Date(messageObj.message.When);
             const messageDateTime = /*messageDate.toLocaleDateString() + " at " +*/ messageDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            const messageWho = messageObj.message.Who;
 
+            if(messageWho === this.props.username){
             return (
+                <li className="collection-item collection-item-self" key={messageObj.message.When}>
+                <div className="avatar">
+                  <img src={imgURL} alt={messageObj.Who}/>
+                </div>
+                  <div className="messageContainer-self">
+                    <p className="messageText">
+                      {messageObj.message.What}
+                    </p>
+                    <span className="title">{messageWho} {messageDateTime}</span>
+                    </div>
+                </li>
+            );
+            }else{
+              return (
                 <li className="collection-item" key={messageObj.message.When}>
                 <div className="avatar">
                   <img src={imgURL} alt={messageObj.Who}/>
                 </div>
-                  <div className="messageContainer">
+                  <div className="messageContainer-other">
                     <p className="messageText">
                       {messageObj.message.What}
                     </p>
-                    <span className="title">{messageObj.message.Who} {messageDateTime}</span>
+                    <span className="title">{messageWho} {messageDateTime}</span>
                     </div>
                 </li>
-            );
+              );
+            }
           })}
         </ol>
 
