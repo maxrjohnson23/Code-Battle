@@ -79,9 +79,14 @@ class CodeSpace extends Component {
           <div className="output">
             <Output message={this.state.output}/>
           </div>
-          <div className="hcontainer">
-            <div className="code-tests">
-              <CodeTests tests={this.state.currentQuestion.tests}/>
+          <div className="code-container">
+            <div className="code-sidebar">
+              <div className="objective">Objective:</div>
+              <div className="code-tests">
+                <p className="question-text">{this.state.currentQuestion.questionText}</p>
+                <hr/>
+                <CodeTests tests={this.state.currentQuestion.tests}/>
+              </div>
             </div>
             <div className="editor">
               <Editor code={this.state.currentQuestion.code}

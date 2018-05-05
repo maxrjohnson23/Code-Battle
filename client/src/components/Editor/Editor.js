@@ -25,6 +25,7 @@ const Editor = (props) => (
           setOptions={{
             enableBasicAutocompletion: true,
             enableLiveAutocompletion: false,
+            showPrintMargin: false,
             enableSnippets: false,
             showLineNumbers: true,
             tabSize: 2,
