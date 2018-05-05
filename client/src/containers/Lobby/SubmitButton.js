@@ -18,7 +18,7 @@ const SubmitButton = (props) => {
 };
 
 SubmitButton.propTypes = {
-  type: PropTypes.String,
+  type: PropTypes.string,
   createGame: PropTypes.func
 };
 
