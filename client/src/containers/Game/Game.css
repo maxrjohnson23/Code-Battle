@@ -4,6 +4,7 @@
     flex-direction: column;
     margin: auto;
     width: 80%;
+    margin-top: -30px;
 }
 
 
@@ -11,8 +12,15 @@
     width: 100%
 }
 
-.game-chat {
-    align-self: end;
-    width: 80%;
+.countdown {
+    color: white;
+    font-size: 34px;
+    background-color: #6950B3;
+    -webkit-box-shadow: 0 0 2px 10px;
+    box-shadow: 0 0 2px 4px #414141;
+    padding: 0 8px;
+    margin: auto;
+    margin-bottom: 5px;
+    border-radius: 10px;
 }
 

@@ -81,7 +81,7 @@ class CodeSpace extends Component {
           </div>
           <div className="code-container">
             <div className="code-sidebar">
-              <div className="objective">Objective:</div>
+              <div className="objective">{"<  Objective  >"}</div>
               <div className="code-tests">
                 <p className="question-text">{this.state.currentQuestion.questionText}</p>
                 <hr/>

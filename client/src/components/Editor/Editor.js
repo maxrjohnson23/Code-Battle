@@ -20,7 +20,7 @@ const Editor = (props) => (
           showGutter={true}
           highlightActiveLine={true}
           width="100%"
-          height="400px"
+          height="100%"
           value={props.code}
           setOptions={{
             enableBasicAutocompletion: true,

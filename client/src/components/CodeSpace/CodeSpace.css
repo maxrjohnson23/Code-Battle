@@ -6,8 +6,7 @@
     order:1;
     display: flex;
     flex-flow: column;
-    flex-grow: 1;
-    width: 30%;
+    max-width: 35%;
     margin-right: 20px;
 }
 
@@ -22,19 +21,18 @@
     display: block;
     background-color: #714ab9;
     font-weight: bold;
-    text-decoration: underline;
     padding: 10px;
     color: white;
+    font-size: 22px;
 }
 
 .question-text {
-    font-size: 24px;
+    font-size: 22px;
 }
 
 .editor {
     order:2;
     flex-grow: 1;
-    width: 70%;
     border: 3px solid #8282cb;
 
 }
@@ -44,4 +42,5 @@
     flex-direction: row;
     align-items: stretch;
     border-radius: 8px;
+    height: 500px;
 }
