@@ -9,8 +9,7 @@ export default class LiveChat extends Component {
   componentDidMount() {
     console.log("Joining chat channel" + this.props.defaultChannel);
     this.props.pubnub.subscribe({
-      channels: [this.props.defaultChannel],
-      withPresence: true,
+      channels: [this.props.defaultChannel]
     });
 
     this.props.pubnub.getMessage(this.props.defaultChannel, (msg) => {
@@ -24,6 +23,7 @@ export default class LiveChat extends Component {
   }
 
   componentWillUnmount() {
+    console.log("Unsubscribing chat channel " + this.props.defaultChannel);
     this.props.pubnub.unsubscribe({
       channels: [this.props.defaultChannel]
     });

@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Redirect, Route} from "react-router-dom";
+import PubNubReact from "pubnub-react";
 import axios from "axios";
 import "./App.css";
 import LoginPopup from "./components/LoginPopup/LoginPopup";
@@ -8,7 +9,6 @@ import Game from "./containers/Game/Game";
 import MainImg from "./components/MainImg/MainImg";
 import LobbyContainer from "./containers/LobbyContainer/LobbyContainer";
 import CreateQuestion from "./components/CreateQuestion/CreateQuestion";
-import PubNubReact from "pubnub-react";
 import UserPopup from "./components/UserPopup/UserPopup";
 
 
@@ -63,9 +63,8 @@ class App extends Component {
         showLogin: false
       });
     } else {
-      console.log("Unsubscribing");
       this.pubnub.unsubscribe({
-        channels: [this.state.defaultChannel]
+        channels: ["Channel-main"]
       });
       this.setState({
         pubnubJoined: false,
@@ -100,7 +99,7 @@ class App extends Component {
   };
 
   initPubnub = (username) => {
-    console.log(`Subscribing to PubNub with user ${username}`);
+    console.log(`Initializing PubNub with user ${username}`);
     this.pubnub.setUUID(username);
 
     this.setState({
@@ -108,11 +107,11 @@ class App extends Component {
     });
   };
 
-  componentWillUnmount() {
-    this.pubnub.unsubscribe({
-      channels: [this.state.defaultChannel]
-    });
-  };
+  // componentWillUnmount() {
+  //   this.pubnub.unsubscribe({
+  //     channels: [this.state.defaultChannel]
+  //   });
+  // };
 
   componentDidMount() {
     if (!this.state.loggedIn) {
