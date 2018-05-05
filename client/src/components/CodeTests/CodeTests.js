@@ -20,7 +20,6 @@ const CodeTests = (props) => (
         }
         </tbody>
       </table>
-
     </div>
 );
 
