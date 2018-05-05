@@ -1,16 +1,30 @@
 .error {
-    color: red;
+    color: #ff4646;
 }
 
 .success {
-    color: green;
+    color: #4aff4a;
+}
+
+.arrow {
+    color: #cfb5ff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 10px;
+    font-size: 30px;
+    display: inline;
 }
 
 .outputArea {
-    margin: 0;
+    position: relative;
     height: 50px;
     line-height: 50px;
-    font-size: 16px;
-    font-weight: bold;
-    background-color: #EEE
+    font-size: 20px;
+    background-color: #2a2222;
+    border: 2px solid #35263d;
+    border-radius: 8px;
+    box-shadow: 2px 4px 10px;
+    margin-bottom: 10px;
+
 }

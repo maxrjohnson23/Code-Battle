@@ -3,6 +3,7 @@ import sandBoxEval from "../../Util/SandboxEval";
 import Editor from "../Editor/Editor";
 import CodeTests from "../CodeTests/CodeTests";
 import Output from "../Output/Output";
+import "./CodeSpace.css";
 
 class CodeSpace extends Component {
   state = {
