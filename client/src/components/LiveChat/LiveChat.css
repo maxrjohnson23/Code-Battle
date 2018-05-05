@@ -1,6 +1,8 @@
 .chatEntry {
     background: radial-gradient(circle, #666, #999);
-    width: 100%;
+    width: 90%;
+    position: absolute;
+    bottom: 130px;
 }
 
 .collection{
@@ -23,8 +25,8 @@
 }
 
 .top-bar {
-    color: black;
-    background:rgb(218, 231, 241);;
+    color: white;
+    background:rgba(151, 105, 245, 0.98);
     position: relative;
     overflow: hidden; 
     height: 25px;
@@ -90,10 +92,9 @@
   }
 
   .chatHeader{
-    font-family: Comic Sans MS;
     color: rgba(64, 70, 86, 0.98);
     font-size: 20px;
-    float: left;
+    text-align: center;
   }
 
   .messageText{
