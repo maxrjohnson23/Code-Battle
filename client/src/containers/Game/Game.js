@@ -152,6 +152,9 @@ class Game extends Component {
           }
         }
     );
+    if (this.state.isGameCreator) {
+      this.getQuestion(this.state.questionId);
+    }
 
   }
 
@@ -322,15 +325,15 @@ class Game extends Component {
     }
 
     return (
-        <main className="game-container">
+        <main>
           <GameSummaryPopup showSummary={this.state.gameEnded}
                             gameResults={this.state.leaderBoard}/>
           <Sidebar pubnub={this.props.pubnub}
                    defaultChannel={this.state.gameChannel + "-users"}
-                   gameChannel={this.state.gameChannel + "-chat"}
-                   username={this.props.username}/>
-
-          {game}
+                   gameChannel={this.state.gameChannel + "-chat"}/>
+          <div className="game-container">
+            {game}
+          </div>
         </main>
     );
   }

@@ -19,8 +19,8 @@ const Editor = (props) => (
           showPrintMargin={true}
           showGutter={true}
           highlightActiveLine={true}
-          width="1000px"
-          height="300px"
+          width="100%"
+          height="400px"
           value={props.code}
           setOptions={{
             enableBasicAutocompletion: true,
