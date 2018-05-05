@@ -233,6 +233,11 @@
   cursor: pointer;
 }
 
+#button-section{
+  display: flex;
+  justify-content: center;
+}
+
 .slateblue, .gray {
   position: relative;
     display:block;
@@ -244,7 +249,7 @@
     font-size:15px;
     text-decoration:none;
     text-transform:uppercase;
-    margin:40px auto;
+    margin:40px;
     border: none;
 }
 

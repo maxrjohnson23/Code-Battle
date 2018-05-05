@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 import "../Lobby.css";
 import {Motion, spring} from "react-motion";
 import Input from "./Input";
+import CustomQuestion from './CustomQuestion';
+import CreateQuestion from '../../components/CreateQuestion/CreateQuestion';
+import Checkbox from './Checkbox';
 import SubmitButton from "./SubmitButton";
+// import CustomQuestion from "./CustomQuestion";
 
 class SignExpanded extends Component {
   constructor(props) {
@@ -12,8 +16,10 @@ class SignExpanded extends Component {
       flexState: false,
       animIsFinished: false,
       newGameName: "",
-      newGameTime: ""
+      newGameTime: "",
+      createNewQuestion: false
     };
+    this.customQuestion = this.customQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -33,8 +39,17 @@ class SignExpanded extends Component {
       this.setState({
         newGameTime: event.target.value
       });
-    }
+    } 
   };
+
+  customQuestion = (event) => {
+    event.preventDefault();
+    console.log('custom question pressed')
+    this.setState({ 
+      createNewQuestion: true
+    }
+  );
+};
 
   createGame = (event) => {
     event.preventDefault();
@@ -97,15 +112,26 @@ class SignExpanded extends Component {
 
                         <div>
                           {this.props.type === "create" ? (
-                              <div>
+                            <div>
+                            {this.state.createNewQuestion ? (
+                              <div id='create-question-container'>
+                                <CreateQuestion />
+                              </div>
+                                ) : (
+                                <div id='create-game-container'>
                                 <Input name="game-name" type="text"
                                        placeholder="Enter Name of Game"
                                        value={this.state.newGameName}
-                                       change={this.inputHandler}/>
+                                       change={this.inputHandler}
+                                       required/>
                                 <Input name="game-time" type="number"
                                        placeholder="Enter game time"
                                        value={this.state.newGameTime}
-                                       change={this.inputHandler}/>
+                                       change={this.inputHandler}
+                                       required/>
+                                </div>
+                                )
+                              }
                               </div>
                           ) : (
 							<div>  
@@ -122,8 +148,18 @@ class SignExpanded extends Component {
 							  </div>
                           )}
                         </div>
+                        <div>
+                        {this.props.type === "create" ? (
+                          <div id='button-section'>
+                        <CustomQuestion 
+                          onClick={this.customQuestion}
+                          /> 
                         <SubmitButton type={this.props.type}
                                       createGame={this.createGame}/>
+                          </div>
+                        ) : (null)
+                      }
+                        </div>
                       </form>
                   )}
                 </Motion>
