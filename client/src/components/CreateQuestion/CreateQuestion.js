@@ -62,36 +62,44 @@ class CreateQuestion extends Component {
         let testRender = [...Array(this.state.questionCount)].map((e, i) => <TextArea
         onChange={(event) => this.handleTestChange(event, i)}
         name={`test-${i}`}
+        rows='5'
+        className='test-area'
         placeholder="Test One (required)"
         />)
         return (
-            <form>
+            <form id='create-question-form'>
                 <Input
                     value={this.state.questionText}
                     onChange={this.handleInputChange}
                     name="questionText"
+                    id='question-text'
                     placeholder="Question Text (required)"
                 />
                 <Input
                     value={this.state.code}
                     onChange={this.handleInputChange}
                     name="code"
+                    id='code-text'
                     placeholder="Code (required)"
                 />
-                <FormBtn 
+                    {testRender}
+                <div className='button-section-child' id='button-section-two'>
+                <FormBtn
+                    id='add-test' 
                     onClick={this.handleTestCountIncrease}
                     style={{ float: "right", marginBottom: 20 }}
                 >
-                +
+                Add test
                 </FormBtn>
-                {testRender}
                 <FormBtn
                     disabled={!(this.state.questionText && this.state.code)}
                     onClick={this.handleFormSubmit}
-                    style={{ float: "right", marginBottom: 10 }}
+                    className='gray'
+                    // style={{ float: "right", marginBottom: 10 }}
                 >
                 Submit Question
                 </FormBtn>
+                </div>
             </form>
 
         )

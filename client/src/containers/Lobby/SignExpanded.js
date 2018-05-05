@@ -110,9 +110,9 @@ class SignExpanded extends Component {
                       >
                         <h2>{this.props.type === "create" ? "CREATE GAME" : "JOIN GAME"}</h2>
 
-                        <div>
+                        <div id='create-main'>
                           {this.props.type === "create" ? (
-                            <div>
+                            <div id='create-main-child'>
                             {this.state.createNewQuestion ? (
                               <div id='create-question-container'>
                                 <CreateQuestion />
@@ -150,12 +150,17 @@ class SignExpanded extends Component {
                         </div>
                         <div>
                         {this.props.type === "create" ? (
+                          
                           <div id='button-section'>
-                        <CustomQuestion 
-                          onClick={this.customQuestion}
-                          /> 
-                        <SubmitButton type={this.props.type}
-                                      createGame={this.createGame}/>
+                          {!this.state.createNewQuestion ? (
+                            <div className='button-section-child'>
+                            <CustomQuestion 
+                              onClick={this.customQuestion}
+                              />
+                          <SubmitButton type={this.props.type}
+                                        createGame={this.createGame}/>
+                            </div>
+                          ) : (null)}
                           </div>
                         ) : (null)
                       }
