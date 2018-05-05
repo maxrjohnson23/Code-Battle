@@ -12,7 +12,7 @@ class SignExpanded extends Component {
       flexState: false,
       animIsFinished: false,
       newGameName: "",
-      newGamePlayers: ""
+      newGameTime: ""
     };
   }
 
@@ -29,9 +29,9 @@ class SignExpanded extends Component {
       this.setState({
         newGameName: event.target.value
       });
-    } else if (event.target.name === "players") {
+    } else if (event.target.name === "game-time") {
       this.setState({
-        newGamePlayers: event.target.value
+        newGameTime: event.target.value
       });
     }
   };
@@ -40,7 +40,7 @@ class SignExpanded extends Component {
     event.preventDefault();
     const game = {
       name: this.state.newGameName,
-      players: this.state.newGamePlayers
+      time: this.state.newGameTime
     };
     this.props.createGame(game);
   };
@@ -50,7 +50,7 @@ class SignExpanded extends Component {
     event.preventDefault();
     const game = {
       name: event.target.dataset.name,
-      players: event.target.dataset.players,
+      time: event.target.dataset.time,
       questionId: event.target.dataset.questionid
     };
     console.log('Joining game:', game);
@@ -102,9 +102,9 @@ class SignExpanded extends Component {
                                        placeholder="Enter Name of Game"
                                        value={this.state.newGameName}
                                        change={this.inputHandler}/>
-                                <Input name="players" type="number"
-                                       placeholder="Enter number of players"
-                                       value={this.state.newGamePlayers}
+                                <Input name="game-time" type="number"
+                                       placeholder="Enter game time"
+                                       value={this.state.newGameTime}
                                        change={this.inputHandler}/>
                               </div>
                           ) : (
@@ -113,9 +113,9 @@ class SignExpanded extends Component {
                               <ul className='open-games'>
                                 {this.props.gameList.map(game => (
                                     <li
-										key={game.name} data-name={game.name}
-										className='open-game'
-                                        data-players={game.players}
+                                        key={game.name} data-name={game.name}
+                                        className='open-game'
+                                        data-time={game.time}
                                         data-questionid={game.questionId}
                                         onClick={this.joinGame}>
                                       {game.name} -
@@ -136,8 +136,10 @@ class SignExpanded extends Component {
   }
 }
 
-SignExpanded.PropTypes = {
+SignExpanded.propTypes = {
   type: PropTypes.string,
+  gameList: PropTypes.array,
+  joinGame: PropTypes.func
 };
 
 export default SignExpanded;

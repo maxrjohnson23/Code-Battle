@@ -3,7 +3,6 @@ import qs from "qs";
 import Countdown from "react-countdown-now";
 import axios from "axios";
 import "./Game.css";
-import LiveChat from "../../components/LiveChat/LiveChat";
 import CodeSpace from "../../components/CodeSpace/CodeSpace";
 import Sidebar from "../../components/UserList/UserSideBar";
 import GameSummaryPopup
@@ -11,7 +10,6 @@ import GameSummaryPopup
 import Spinner from "../../components/UI/Spinner/Spinner";
 import Wrapper from "../../hoc/Wrapper/Wrapper";
 
-const DEFAULT_TIME = 300000;
 const DEFAULT_POINTS = 100;
 
 // Renderer callback with condition
@@ -27,11 +25,11 @@ const renderer = ({minutes, seconds, completed}) => {
 
 class Game extends Component {
   state = {
-    gameTimeMillis: DEFAULT_TIME,
+    gameTimeMillis: 0,
     gameStarted: false,
     gameEnded: false,
     gameChannel: null,
-    numPlayers: null,
+    startTimeMillis: null,
     questionId: null,
     questionDetails: null,
     isGameCreator: false,
@@ -56,7 +54,8 @@ class Game extends Component {
 
     this.setState({
       gameChannel: channelName,
-      numPlayers: game.players,
+      startTimeMillis: parseInt(game.time, 10),
+      gameTimeMillis: parseInt(game.time, 10),
       questionId: game.questionId,
       isGameCreator: game.created
     });
@@ -71,7 +70,7 @@ class Game extends Component {
       console.log("Message from game channel:", msg);
       if (msg.message.action === "GAME_START") {
         this.setState({
-          gameStarted: true
+          gameStarted: true,
         });
       }
       if (msg.message.action === "GAME_WIN") {
@@ -126,7 +125,7 @@ class Game extends Component {
     // Sync game time
     const currentTimeMillis = Date.now();
     const timeSinceGameStarted = Math.floor(currentTimeMillis - gameStartedMessage.timetoken / 10000);
-    const timeRemaining = DEFAULT_TIME - timeSinceGameStarted;
+    const timeRemaining = gameStartedMessage.entry.time - timeSinceGameStarted;
 
     // Sync leaderboard details
     if (gameWinMessages.length > 0) {
@@ -179,7 +178,7 @@ class Game extends Component {
       action: "GAME_WIN",
       username: this.props.username,
       code: userCode,
-      time: DEFAULT_TIME - this.state.gameTimeMillis
+      time: this.state.startTimeMillis - this.state.gameTimeMillis
     };
     this.props.pubnub.publish({
       channel: this.state.gameChannel,
@@ -190,7 +189,7 @@ class Game extends Component {
   startGame = () => {
     this.props.pubnub.publish({
       channel: this.state.gameChannel,
-      message: {action: "GAME_START"},
+      message: {action: "GAME_START", time: this.state.startTimeMillis},
     });
     this.setState({
       gameStarted: true
@@ -221,6 +220,7 @@ class Game extends Component {
       }
       case 2: {
         pointsAwarded += 200;
+        break;
       }
       default:
         break;
@@ -261,12 +261,6 @@ class Game extends Component {
             </div>
 
             {codeSpace}
-            <div className="game-chat">
-              <LiveChat
-                  defaultChannel={this.state.gameChannel + "-chat"}
-                  username={this.props.username}
-                  pubnub={this.props.pubnub}/>
-            </div>
           </Wrapper>
       );
     }
@@ -276,7 +270,8 @@ class Game extends Component {
           <GameSummaryPopup showSummary={this.state.gameEnded}
                             gameResults={this.state.leaderBoard}/>
           <Sidebar pubnub={this.props.pubnub}
-                   defaultChannel={this.state.gameChannel}/>
+                   defaultChannel={this.state.gameChannel}
+                   gameChannel={this.state.gameChannel + "-chat"}/>
 
           {game}
         </main>

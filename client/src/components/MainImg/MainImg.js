@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import "./MainImg.css";
-import image from "./MainImage/main-img.jpg"
+import image from "./MainImage/main-img.jpg";
 
 export default class MainImg extends Component {
     render() {
@@ -8,10 +8,10 @@ export default class MainImg extends Component {
             <div className="frontImage">
                 {/* <img className="frontImage" src={image} /> */}
                 <div className="instructionsBox-one">
-                    This is what to do.
+                    <p>This will be a gif of game play.</p>
                 </div>
                 <div className="instructionsBox-two">
-                    This is what to do.
+                    This will be instruction text that goes along side the gif.
                 </div>
             </div>
         );
