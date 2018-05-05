@@ -8,8 +8,8 @@ import Game from "./containers/Game/Game";
 import MainImg from "./components/MainImg/MainImg";
 import LobbyContainer from "./containers/LobbyContainer/LobbyContainer";
 import CreateQuestion from "./components/CreateQuestion/CreateQuestion";
+import { Input, TextArea, FormBtn } from "./components/Form";
 import PubNubReact from "pubnub-react";
-import UserPopup from "./components/UserPopup/UserPopup";
 
 
 class App extends Component {
@@ -24,10 +24,8 @@ class App extends Component {
       loggedIn: false,
       username: null,
       userscore: 0,
-      gamesplayed: 0,
       showLogin: false,
       pubnubJoined: false,
-      showUserModal: false,
       pubnub: this.pubnub
     };
     this.pubnub.init(this);
@@ -39,12 +37,10 @@ class App extends Component {
         this.setState({
           loggedIn: true,
           username: response.data.user.username,
-          userscore: response.data.user.score,
-          gamesplayed: response.data.user.gamesplayed
+          userscore: response.data.user.score
         });
         // Connect to PubNub with existing user session
         this.initPubnub(response.data.user.username);
-
       } else {
         this.setState({
           loggedIn: false,
@@ -88,17 +84,6 @@ class App extends Component {
     });
   };
 
-  showUserHandler = () => {
-    this.setState({
-      showUserModal: true
-    });
-  };
-  hideUserHandler = () => {
-    this.setState({
-      showUserModal: false
-    });
-  };
-
   initPubnub = (username) => {
     console.log(`Subscribing to PubNub with user ${username}`);
     this.pubnub.setUUID(username);
@@ -128,18 +113,11 @@ class App extends Component {
                   showLoginHandler={this.showLoginHandler}
                   loggedIn={this.state.loggedIn}
                   username={this.state.username}
-                  showUserModal={this.showUserHandler}
                   userscore={this.state.userscore}/>
           <LoginPopup
               loginHandler={this.loginUserHandler}
               showLogin={this.state.showLogin}
               hideLoginHandler={this.hideLoginHandler}/>
-          <UserPopup
-              showUserModal={this.state.showUserModal}
-              hideUserModal={this.hideUserHandler}
-              username={this.state.username}
-              userScore={this.state.userscore}/>
-          
           <Route path="/" exact
                  render={() => {
                    return this.state.loggedIn ? <Redirect to="/lobby"/> :
