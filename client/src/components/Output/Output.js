@@ -6,6 +6,7 @@ const Output = (props) => {
 
   return (
       <div className="outputArea">
+        <p className="arrow">></p>
         <p className={messageClass}> {props.message}</p>
       </div>
   );

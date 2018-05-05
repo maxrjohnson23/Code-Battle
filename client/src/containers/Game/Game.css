@@ -5,8 +5,9 @@
     flex-direction: column;
 }
 
-.game-container * {
+.game-container {
     margin: auto;
+    width: 80%;
 }
 
 .codespace {
