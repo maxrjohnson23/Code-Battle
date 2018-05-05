@@ -47,12 +47,13 @@ class UserList extends Component {
     console.log("Presence change: ", event);
     let updatedUserList = [...this.state.presentUsers];
     if (event.action === "join") {
-      if (updatedUserList.some(user => user.name === event.uuid).length === 0) {
+      if (!updatedUserList.includes(event.uuid)) {
         updatedUserList.push(event.uuid);
       }
     } else if (event.action === "leave" || event.action === "timeout") {
       updatedUserList = updatedUserList.filter(u => u !== event.uuid);
     }
+    console.log("Updated user list: ", updatedUserList);
     this.setState({
       presentUsers: updatedUserList
     });
