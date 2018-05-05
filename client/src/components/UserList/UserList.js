@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import User from "./User/User";
+import "./UserList.css"
 
 // import Sidebar from './UserSideBar';
 
@@ -61,9 +62,10 @@ class UserList extends Component {
 
   render() {
     return (
-        <div>
+      <div>
+        <h2>Current Users</h2>
+        <div className="userListStyle">
           <ol>
-            <h2>Current Users</h2>
             {
               this.state.presentUsers.map(username => {
                 return <User key={username} username={username}/>;
@@ -71,6 +73,7 @@ class UserList extends Component {
             }
           </ol>
         </div>
+      </div>
     );
   }
 }

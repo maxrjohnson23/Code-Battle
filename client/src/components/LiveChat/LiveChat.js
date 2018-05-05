@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 import "./LiveChat.css";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faComment from "@fortawesome/fontawesome-free-solid/faComment";
 
 export default class LiveChat extends Component {
   state = {
@@ -65,7 +67,8 @@ export default class LiveChat extends Component {
     return (
     <section className="chatEntry" id='chatEntry'>
       <header className="top-bar">
-        <h1 className="chatHeader">Chat</h1>
+        <h1 className="chatHeader"><FontAwesomeIcon icon={faComment}
+                                       color="white"/></h1>
       </header>
 
         <ol className="collection" id ='collection'>

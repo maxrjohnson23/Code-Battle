@@ -25,7 +25,9 @@ class App extends Component {
       loggedIn: false,
       username: null,
       userscore: 0,
+      gamesplayed: 0,
       showLogin: false,
+      showUserModal: false,
       pubnubJoined: false,
       pubnub: this.pubnub
     };
@@ -38,7 +40,8 @@ class App extends Component {
         this.setState({
           loggedIn: true,
           username: response.data.user.username,
-          userscore: response.data.user.score
+          userscore: response.data.user.score,
+          gamesplayed: response.data.user.gamesplayed,
         });
         // Connect to PubNub with existing user session
         this.initPubnub(response.data.user.username);
@@ -93,6 +96,17 @@ class App extends Component {
     });
   };
 
+  showUserHandler = () => {
+        this.setState({
+          showUserModal: true
+        });
+      };
+      hideUserHandler = () => {
+        this.setState({
+          showUserModal: false
+        });
+      };
+
   // componentWillUnmount() {
   //   this.pubnub.unsubscribe({
   //     channels: [this.state.defaultChannel]
@@ -113,11 +127,18 @@ class App extends Component {
                   showLoginHandler={this.showLoginHandler}
                   loggedIn={this.state.loggedIn}
                   username={this.state.username}
+                  showUserModal={this.showUserHandler}
                   userscore={this.state.userscore}/>
           <LoginPopup
               loginHandler={this.loginUserHandler}
               showLogin={this.state.showLogin}
               hideLoginHandler={this.hideLoginHandler}/>
+          <UserPopup
+              showUserModal={this.state.showUserModal}
+              hideUserModal={this.hideUserHandler}
+              username={this.state.username}
+              userScore={this.state.userscore}
+              userGames={this.state.gamesplayed}/>
           <Route path="/" exact
                  render={() => {
                    return this.state.loggedIn ? <Redirect to="/lobby"/> :
