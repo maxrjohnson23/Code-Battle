@@ -47,7 +47,9 @@ class UserList extends Component {
     console.log("Presence change: ", event);
     let updatedUserList = [...this.state.presentUsers];
     if (event.action === "join") {
-      updatedUserList.push(event.uuid);
+      if (updatedUserList.some(user => user.name === event.uuid).length === 0) {
+        updatedUserList.push(event.uuid);
+      }
     } else if (event.action === "leave" || event.action === "timeout") {
       updatedUserList = updatedUserList.filter(u => u !== event.uuid);
     }
@@ -63,7 +65,7 @@ class UserList extends Component {
             <h2>Current Users</h2>
             {
               this.state.presentUsers.map(username => {
-                return <User key={username} username={username}/>
+                return <User key={username} username={username}/>;
               })
             }
           </ol>
