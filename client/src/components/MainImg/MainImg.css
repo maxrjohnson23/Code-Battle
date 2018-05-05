@@ -1,4 +1,64 @@
 .frontImage{
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    background-image: url("./MainImage/main-img.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height:100vh;
+    max-height: 100vh;
+    /* max-width: 100vw; */
+    min-width: 100vw;
+    z-index: -100;
+    /* left: 50vw; */
+    /* transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%); */
+}
+
+.instructionsBox-one {
+    position:absolute;
+    float: left;
+    color: white;
+    font-size: .5in;
+    padding: 20vh 0;
+    background-color: rgba(128, 0, 128,.75);
+    height: 50vh;
+    width: 35vw;
+    margin-right: 1em;
+    margin-left: 1em;
+    top: 30vh;
+    /* transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%); */
+
+    z-index: -99;
+}
+.instructionsBox-two {
+    position: absolute;
+    right: 0;
+    color: white;
+    padding: 20vh 0;
+    font-size: .5in;
+    background-color: rgba(128, 0, 128,.75);
+    height: 50vh;
+    width: calc(60% - 1em);
+    margin-right: 1em;
+    top: 30vh;
+    left: calc(50%+calc(var(width)/2));
+    /* transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%); */
+
+    z-index: -99;
 }
