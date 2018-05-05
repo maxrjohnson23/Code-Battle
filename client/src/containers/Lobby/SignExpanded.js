@@ -115,11 +115,9 @@ class SignExpanded extends Component {
                                     <li
                                         key={game.name} data-name={game.name}
                                         className='open-game'
-                                        data-time={game.time}
-                                        data-questionid={game.questionId}
                                         onClick={this.joinGame}>
-                                      {game.name} -
-                                      Players: {game.players}</li>))}
+                                      {game.name} - {game.status}
+                                    </li>))}
                               </ul>
 							  </div>
                           )}

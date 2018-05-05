@@ -17,15 +17,51 @@ class LobbyContainer extends Component {
     });
 
     this.props.pubnub.getMessage(GAME_CHANNEL, (game) => {
-      console.log("New game", game);
-      const updatedGames = this.state.games.concat(game.message);
-      this.setState({
-        games: updatedGames
-      });
+      console.log("Game channel message", game);
+
+
+      if (game.message.action === "GAME_CREATED") {
+        game.message.status = "NEW";
+        const updatedGames = this.state.games.concat(game.message);
+        this.setState({
+          games: updatedGames
+        });
+      }
+      if (game.message.action === "GAME_STARTED") {
+        const updatedGames = [...this.state.games];
+        updatedGames.forEach((existingGame, index) => {
+          if (existingGame.name === game.message.name) {
+            let updatedGame = {...existingGame};
+            updatedGame.status = "INPROGRESS";
+            updatedGames[index] = updatedGame;
+          }
+        });
+
+        this.setState({
+          games: updatedGames
+        });
+      }
+      if (game.message.action === "GAME_COMPLETED") {
+        const updatedGames = [...this.state.games];
+        updatedGames.forEach((existingGame, index) => {
+          if (existingGame.name === game.message.name) {
+            let updatedGame = {...existingGame};
+            updatedGame.status = "COMPLETED";
+            updatedGames[index] = updatedGame;
+          }
+        });
+        this.setState({
+          games: updatedGames
+        });
+      }
     });
   }
 
   componentDidMount() {
+    const statusMap = new Map();
+    statusMap.set("GAME_CREATED", "new");
+    statusMap.set("GAME_STARTED", "in-progress");
+    statusMap.set("GAME_COMPLETED", "completed");
     this.props.pubnub.history(
         {
           channel: GAME_CHANNEL,
@@ -35,8 +71,16 @@ class LobbyContainer extends Component {
           // Get list of historical games and update state
           console.log("Current Games", status, response);
           const updatedGames = [...this.state.games];
+
+          let gameStatusMap = new Map();
           response.messages.forEach(game => {
-            updatedGames.push(game.entry);
+            gameStatusMap.set(game.entry.name, statusMap.get(game.entry.action));
+          });
+
+          console.log("Status map", gameStatusMap);
+
+          gameStatusMap.forEach((value, key) => {
+            updatedGames.push({name: key, status: value});
           });
           this.setState({
             games: updatedGames
@@ -58,10 +102,15 @@ class LobbyContainer extends Component {
       if (res.data) {
         game.questionId = res.data.question._id;
         game.created = true;
+        game.action = "GAME_CREATED";
 
+        const gameChannelMessage = {
+          action: "GAME_CREATED",
+          ...game
+        };
         // Publish to active games channel
         this.props.pubnub.publish({
-          message: game,
+          message: gameChannelMessage,
           channel: GAME_CHANNEL
         });
 
@@ -102,10 +151,6 @@ class LobbyContainer extends Component {
           <Lobby createGame={this.createGameHandler}
                  joinGame={this.joinGameHandler}
                  gameList={this.state.games}/>
-          {/* <LiveChat
-              defaultChannel={"Channel-main"}
-              username={this.props.username}
-              pubnub={this.props.pubnub}/> */}
         </div>
     );
   }

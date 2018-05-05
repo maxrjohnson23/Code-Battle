@@ -11,6 +11,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import Wrapper from "../../hoc/Wrapper/Wrapper";
 
 const DEFAULT_POINTS = 100;
+const MAIN_GAME_CHANNEL = "Channel-games";
 
 // Renderer callback with condition
 const renderer = ({minutes, seconds, completed}) => {
@@ -25,6 +26,7 @@ const renderer = ({minutes, seconds, completed}) => {
 
 class Game extends Component {
   state = {
+    gameName: "",
     gameTimeMillis: 0,
     gameStarted: false,
     gameEnded: false,
@@ -33,6 +35,7 @@ class Game extends Component {
     questionId: null,
     questionDetails: null,
     isGameCreator: false,
+    gameDetailsLoaded: false,
     leaderBoard: []
   };
 
@@ -45,6 +48,16 @@ class Game extends Component {
     this.setState({
       gameEnded: true
     });
+    if (this.state.isGameCreator) {
+      this.props.pubnub.publish({
+        channel: MAIN_GAME_CHANNEL,
+        message: {
+          action: "GAME_COMPLETED",
+          name: this.state.gameName,
+          time: Date.now()
+        },
+      });
+    }
   };
 
   componentWillMount() {
@@ -52,17 +65,32 @@ class Game extends Component {
     const game = qs.parse(this.props.location.search.slice(1));
     const channelName = "Channel-" + game.name;
 
-    this.setState({
-      gameChannel: channelName,
-      startTimeMillis: parseInt(game.time, 10),
-      gameTimeMillis: parseInt(game.time, 10),
-      questionId: game.questionId,
-      isGameCreator: game.created
-    });
+    // Navigating to game as game creator
+    if (game.questionId) {
+      console.log("Game creator joining");
+      this.setState({
+        gameName: game.name,
+        gameChannel: channelName,
+        startTimeMillis: parseInt(game.time, 10),
+        gameTimeMillis: parseInt(game.time, 10),
+        questionId: game.questionId,
+        isGameCreator: true,
+        gameDetailsLoaded: true
+      });
+    } else {
+      console.log("Other player joining");
+      this.setState({
+        gameName: game.name,
+        gameChannel: channelName,
+        isGameCreator: false,
+        gameDetailsLoaded: false
+      });
+    }
+
 
     // Subscribe to game channel
     this.props.pubnub.subscribe({
-      channels: [channelName],
+      channels: [channelName, MAIN_GAME_CHANNEL],
     });
 
     // Listen for game updates
@@ -91,7 +119,7 @@ class Game extends Component {
 
   componentWillUnmount() {
     this.props.pubnub.unsubscribe({
-      channels: [this.state.gameChannel]
+      channels: [this.state.gameChannel, MAIN_GAME_CHANNEL]
     });
   }
 
@@ -109,6 +137,14 @@ class Game extends Component {
             const gameStartedMessage = response.messages.filter(m => m.entry.action === "GAME_START")[0];
             const gameWinMessages = response.messages.filter(m => m.entry.action === "GAME_WIN");
 
+            console.log("Game created message", gameCreatedMessage);
+
+            // Retrieve game details (question, timer, etc..)
+            if (gameCreatedMessage) {
+              this.retrieveGameDetails(gameCreatedMessage.entry);
+            }
+
+
             // Joining an in-progress game - need to sync up the clock
             if (gameStartedMessage) {
               this.syncGameProgress(gameStartedMessage, gameWinMessages);
@@ -116,8 +152,6 @@ class Game extends Component {
           }
         }
     );
-    // Retrieve question details from the server
-    this.getQuestion();
 
   }
 
@@ -152,10 +186,22 @@ class Game extends Component {
       gameTimeMillis: timeRemaining,
       gameEnded: timeRemaining <= 0,
     });
+  };
+
+  retrieveGameDetails(gameMsg) {
+    console.log("Create game msg:", gameMsg);
+    this.setState({
+      questionId: gameMsg.questionId,
+      startTimeMillis: parseInt(gameMsg.time, 10),
+      gameTimeMillis: parseInt(gameMsg.time, 10)
+    });
+
+    this.getQuestion(gameMsg.questionId);
+
   }
 
-  getQuestion = () => {
-    axios.get("/api/question/" + this.state.questionId).then(response => {
+  getQuestion = (questionId) => {
+    axios.get("/api/question/" + questionId).then(response => {
       let question = response.data.question;
 
       if (question) {
@@ -187,9 +233,19 @@ class Game extends Component {
   };
 
   startGame = () => {
+    // Publish to current game channel
     this.props.pubnub.publish({
       channel: this.state.gameChannel,
       message: {action: "GAME_START", time: this.state.startTimeMillis},
+    });
+    // Publish to lobby game channel for in progress update
+    this.props.pubnub.publish({
+      channel: MAIN_GAME_CHANNEL,
+      message: {
+        action: "GAME_STARTED",
+        name: this.state.gameName,
+        time: this.state.startTimeMillis
+      },
     });
     this.setState({
       gameStarted: true
@@ -270,7 +326,7 @@ class Game extends Component {
           <GameSummaryPopup showSummary={this.state.gameEnded}
                             gameResults={this.state.leaderBoard}/>
           <Sidebar pubnub={this.props.pubnub}
-                   defaultChannel={this.state.gameChannel}
+                   defaultChannel={this.state.gameChannel + "-users"}
                    gameChannel={this.state.gameChannel + "-chat"}/>
 
           {game}

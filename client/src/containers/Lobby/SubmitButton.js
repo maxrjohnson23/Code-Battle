@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import '../Lobby.css';
-import {MdArrowForward} from 'react-icons/lib/md';
+import React from "react";
+import PropTypes from "prop-types";
+import "../Lobby.css";
+import {MdArrowForward} from "react-icons/lib/md";
 
 const SubmitButton = (props) => {
 
@@ -17,8 +17,9 @@ const SubmitButton = (props) => {
 	);
 };
 
-SubmitButton.PropTypes = {
-	type: PropTypes.String
+SubmitButton.propTypes = {
+  type: PropTypes.String,
+  createGame: PropTypes.func
 };
 
 export default SubmitButton;

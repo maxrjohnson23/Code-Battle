@@ -1,6 +1,7 @@
 import React, {Component} from "react";
-import {Link} from 'react-router-dom';
+import {Link} from "react-router-dom";
 import Modal from "../UI/Modal/Modal";
+import Wrapper from "../../hoc/Wrapper/Wrapper";
 import AceEditor from "react-ace";
 import "./GameSummaryPopup.css";
 
@@ -15,7 +16,7 @@ class GameSummaryPopup extends Component {
       if (this.state.currentCode === null) {
         this.setState({
           currentCode: this.props.gameResults[0].userCode
-        })
+        });
       }
     }
   };
@@ -24,7 +25,7 @@ class GameSummaryPopup extends Component {
     console.log(index);
     this.setState({
       currentCode: this.props.gameResults[index].userCode
-    })
+    });
   };
 
   render() {
@@ -50,18 +51,32 @@ class GameSummaryPopup extends Component {
                 showLineNumbers: true,
                 tabSize: 2,
               }}/>
-      )
+      );
+    }
+
+    let gameSummary = null;
+    if (this.props.gameResults.length !== 0) {
+      gameSummary = (
+          <Wrapper>
+            <h1>Game Summary</h1>
+            {
+              this.props.gameResults.map((result, index) => (
+                  <h4 className="rankings"
+                      onClick={() => this.showCodeHandler(index)}>{index + 1}. {result.username} | {result.time / 1000}sec</h4>
+              ))
+            }
+            {displayCode}
+          </Wrapper>
+      );
+    } else {
+      gameSummary = (
+          <h1>No winners!</h1>
+      );
     }
 
     return (
         <Modal show={this.props.showSummary}>
-          <h1>Game Summary</h1>
-          {
-            this.props.gameResults.map((result, index) => (
-                <h4 className="rankings" onClick={() => this.showCodeHandler(index)}>{index + 1}. {result.username} | {result.time / 1000}sec</h4>
-            ))
-          }
-          {displayCode}
+          {gameSummary}
           <Link to="/lobby">
             <button className="lobby">Back to Lobby</button>
           </Link>
