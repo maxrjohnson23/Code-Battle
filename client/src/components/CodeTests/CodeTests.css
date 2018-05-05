@@ -1,6 +1,8 @@
-.codeTests {
-    float: left;
-    text-align: left;
+.codeTests th {
+    text-decoration: underline;
+    text-align: center;
+    font-size: 20px;
+
 }
 
 .codeTests td,th {

@@ -2,21 +2,45 @@
 
 }
 
-.code-tests {
+.code-sidebar {
     order:1;
-    flex-grow: 1;
-    margin: 0;
+    display: flex;
+    flex-flow: column;
+    max-width: 35%;
+    margin-right: 20px;
+}
+
+.code-tests {
     text-align: left;
-    background-color: white;
+    background-color: #faf4ff94;
+    padding: 10px;
+    flex-grow: 1
+}
+
+.objective {
+    display: block;
+    background-color: #714ab9;
+    font-weight: bold;
+    padding: 10px;
+    color: white;
+    font-size: 22px;
+}
+
+.question-text {
+    font-size: 22px;
 }
 
 .editor {
     order:2;
     flex-grow: 1;
+    border: 3px solid #8282cb;
+
 }
 
-.hcontainer {
+.code-container {
     display:flex;
     flex-direction: row;
     align-items: stretch;
+    border-radius: 8px;
+    height: 500px;
 }

@@ -1,7 +1,6 @@
 .editorWrapper {
     position: relative;
-    float: right;
-    width: 1000px;
+    height: 100%;
 }
 
 .submitCode {
@@ -9,9 +8,13 @@
     width: 200px;
     margin: auto;
     height: 40px;
-    bottom: 0;
-    left: 50px;
+    bottom: 5px;
+    right: 5px;
     text-align: center;
     color: #fff;
-    background-color: #222;
+    background-color: #37373787;
+    border: 2px solid #a4a4a4;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 10px;
 }
