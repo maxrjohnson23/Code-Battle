@@ -78,11 +78,26 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow-y: auto;
   transition: flex-grow .5s ease-out;
   -moz-transition: flex-grow .5s ease-out;
   -webkit-transition: flex-grow .5s ease-out;
   -o-transition: flex-grow .5s ease-out;
 }
+
+.createExpanded::-webkit-scrollbar {
+  width: 1em;
+}
+
+.createExpanded::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.createExpanded::-webkit-scrollbar-thumb {
+background-color: darkgrey;
+outline: 1px solid slategrey;
+}
+
 .join {
   background-color: rgba(64, 70, 86, 0.98);
   color: rgb(218, 231, 241);
@@ -296,6 +311,16 @@
   transform: perspective(15px) rotateX(-5deg);
 }
 
+
+.button-section-child{
+  display: flex;
+  justify-content: center;
+}
+
+#button-section-two {
+  width: 500px;
+  margin-left: -65px;
+}
 /* Button Hover Style */
 
 .slateblue:hover:before, .slateblue:hover:after, .slateblue:focus:before, .slateblue:focus::after{
