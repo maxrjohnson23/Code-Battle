@@ -11,14 +11,14 @@ const CustomQuestion = (props) => {
 			<button 
 			className='gray'
 			name="custom-question"
-			onClick={props.CustomQuestion}
-			type=''>Create you own Question?</button>
+			onClick={props.onClick}
+			type='button'>Create you own Question?</button>
 		</div>
 	);
 };
 
-CustomQuestion.PropTypes = {
-	type: PropTypes.String
-};
+// CustomQuestion.PropTypes = {
+// 	type: PropTypes.String
+// };
 
 export default CustomQuestion;
