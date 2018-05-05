@@ -330,7 +330,8 @@ class Game extends Component {
                             gameResults={this.state.leaderBoard}/>
           <Sidebar pubnub={this.props.pubnub}
                    defaultChannel={this.state.gameChannel + "-users"}
-                   gameChannel={this.state.gameChannel + "-chat"}/>
+                   gameChannel={this.state.gameChannel + "-chat"}
+                   username={this.props.username}/>
           <div className="game-container">
             {game}
           </div>
