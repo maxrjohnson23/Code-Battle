@@ -47,8 +47,26 @@
     display: flex;
   }
 
-  .messageContainer{
+  .collection-item-self{
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+
+  .messageContainer-self{
     background: rgb(218, 231, 241);
+    color: rgba(64, 70, 86, 0.98);
+    padding: 8px;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(black, 0.2);
+    margin-right: 5px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+  }
+
+  .messageContainer-other{
+    background: rgba(151, 105, 245, 0.98);
     color: rgba(64, 70, 86, 0.98);
     padding: 8px;
     border-radius: 2px;
