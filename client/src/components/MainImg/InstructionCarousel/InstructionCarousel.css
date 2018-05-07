@@ -1,0 +1,28 @@
+.instruction-bg {
+    color: white;
+    /* padding: 20vh 0; */
+    font-size: .5in;
+    font-size: 3vw;
+    /* background-color: rgba(106, 90, 205,.75); */
+    background: none;
+    opacity: 1;
+    height: 50vh;
+    min-height: 300px;
+    width: 35vw;
+    margin-right: 1em;
+    top: 20vh;
+}
+
+.instruction-txt {
+    color: white;
+    padding: 20vh 0;
+    font-size: .5in;
+    font-size: 3vw;
+    background-color: rgba(106, 90, 205,.75);
+    height: 50vh;
+    opacity: 1;
+    min-height: 300px;
+    width: 35vw;
+    margin-right: 1em;
+    top: 20vh;    
+}
