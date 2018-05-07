@@ -1,6 +1,5 @@
 .navbar {
     display: flex;
-    /* align-items: stretch; */
     padding: 0 20px;
     background: #222;
     color: #fff !important;
@@ -8,6 +7,7 @@
     font-size: 0.9em;
     margin-bottom: 50px;
     max-height: 100px;
+    text-transform: capitalize;
 }
 
 .navbar a:hover:not(.logo) {

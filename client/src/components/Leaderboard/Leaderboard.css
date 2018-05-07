@@ -1,0 +1,34 @@
+.leaderboard li {
+    list-style: none;
+}
+
+.leaderboard h2 {
+    color: white;
+}
+
+.leaderboard hr {
+    border-color: #9769f5fa;
+}
+
+.leaderboard .userIndex {
+    color: #9769f5fa;
+}
+
+.userScore {
+    margin-left: 10px;
+    text-transform: capitalize;
+    text-align: right;
+}
+
+.userName {
+    margin-left: 20px;
+    text-transform: capitalize;
+}
+
+.leaderboard {
+    color: #dae7f1;
+    padding: 40px;
+    max-height: 600px;
+    overflow: scroll;
+    box-shadow: 1px 6px 10px 0px rgba(0, 0, 0, 0.5);
+}

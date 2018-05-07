@@ -3,6 +3,7 @@ import qs from "qs";
 import axios from "axios";
 import Lobby from "../Lobby/Lobby";
 import Sidebar from "../../components/UserList/UserSideBar";
+import Leaderboard from "../../components/Leaderboard/Leaderboard";
 
 const GAME_CHANNEL = "Channel-games";
 
@@ -147,6 +148,9 @@ class LobbyContainer extends Component {
   render() {
     return (
         <div id='main-container'>
+          <div className="leaderboard-container">
+            <Leaderboard/>
+          </div>
           <Sidebar pubnub={this.props.pubnub} defaultChannel={"Channel-main"} username={this.props.username}/>
           <Lobby createGame={this.createGameHandler}
                  joinGame={this.joinGameHandler}

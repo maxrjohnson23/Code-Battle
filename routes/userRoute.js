@@ -74,6 +74,17 @@ router.get("/", (req, res) => {
   }
 });
 
+router.get("/leaderboard", (req, res) => {
+  db.User.find({}).select("username score").sort("-score")
+      .then(data => {
+        if (data) {
+          res.json(data);
+        }
+      }).catch(err => {
+    res.status(500).send(err);
+  });
+});
+
 router.post("/logout", (req, res) => {
   if (req.user) {
     req.logout();
