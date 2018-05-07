@@ -20,16 +20,14 @@
 }
 
 .Lobby {
-  width: 700px;
-  height: 500px;
+  width: 900px;
+  height: 600px;
   display: flex;
   flex-direction: row;
   box-shadow: 1px 6px 10px 0px rgba(0, 0, 0, 0.5);
   flex-grow: 5;
   margin: auto;
-  margin-top: -25px;
-  margin-bottom: 20px;
-  
+
 }
 
 .create {
@@ -363,5 +361,15 @@ background: #cd5c5c;
 }
 
 #main-container {
+  position: relative;
   justify-content: center;
+  display: flex
+}
+
+.leaderboard-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  background-color: #404656fa;
 }
