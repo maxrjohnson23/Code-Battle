@@ -372,3 +372,36 @@ background: #cd5c5c;
   width: 300px;
   background-color: #404656fa;
 }
+
+.game-in-progress, .game-new, .game-completed {
+  font-size: 14px;
+  display: block;
+  margin-top: 5px;
+}
+
+.game-in-progress {
+  color: #ffd21c;
+}
+
+.game-new {
+  color: #3fec3f;
+  animation: pulse 1.2s infinite;
+
+}
+
+.game-completed {
+  color: #ff7777;
+}
+
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
