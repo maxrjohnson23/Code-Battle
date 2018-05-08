@@ -30,9 +30,10 @@ class Leaderboard extends React.Component {
           <h2>Leaderboard</h2>
           <hr/>
           <table>
+            <tbody>
             {
               this.state.leaderboard.map((user, index) => (
-                  <tr key="user._id">
+                  <tr key={user._id}>
                     <td><span className="userIndex">{index + 1}.</span> <span
                         className="userScore">{rankings[index] ? rankings[index] :
                         <span
@@ -43,6 +44,7 @@ class Leaderboard extends React.Component {
                   </tr>
               ))
             }
+            </tbody>
           </table>
         </aside>
     );
