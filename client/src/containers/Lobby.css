@@ -12,12 +12,9 @@
   color: #3E363F;
   font-family: "Roboto Condensed", sans-serif;
   display: flex;
-  flex-flow: row wrap;
+    flex-flow: column;
 }
 
-.App > * {
-  flex: 1 100%;
-}
 
 .Lobby {
   width: 900px;
@@ -363,7 +360,9 @@ background: #cd5c5c;
 #main-container {
   position: relative;
   justify-content: center;
-  display: flex
+    display: flex;
+    margin: 40px 0;
+    flex-grow: 1;
 }
 
 .leaderboard-container {

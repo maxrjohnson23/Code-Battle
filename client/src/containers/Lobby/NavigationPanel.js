@@ -1,7 +1,6 @@
-import React from 'react';
-import '../Lobby.css';
-import {MdArrowBack} from 'react-icons/lib/md';
-// import {FaCircle} from 'react-icons/lib/fa';
+import React from "react";
+import "../Lobby.css";
+import {MdArrowBack} from "react-icons/lib/md";
 
 const NavigationPanel = (props) => {
 

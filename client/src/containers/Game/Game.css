@@ -4,7 +4,11 @@
     flex-direction: column;
     margin: auto;
     width: 80%;
-    margin-top: -30px;
+}
+
+#game-main {
+    display: flex;
+    flex-grow: 1;
 }
 
 
