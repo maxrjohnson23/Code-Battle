@@ -1,18 +1,42 @@
-.lobby{
+.lobby-button{
     margin-top: 5px;
     background-color:rgba(151, 105, 245, 0.98);
     color: white;
 }
+
+.ranking-list {
+    flex-grow: 1;
+    margin-right: 10px;
+    max-width: 30%;
+    margin-top: 0;
+    list-style: none;
+    overflow: scroll;
+    max-height: 300px;
+}
+
 .rankings{
     background-color: rgba(151, 105, 245, 0.98);
-    margin-bottom: 5px;
     border: 2px solid white;
     border-radius: 25px;
     color: white;
+    margin: 0 auto 15px auto;
+    text-transform: capitalize;
+
 }
-.Modal{
-    background-color: rgba(64, 70, 86, 0.98);
+.game-summary-modal .Modal{
     color: white;
+    width: 60%;
+}
+
+.game-summary-results {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.summary-editor {
+    width: 70%;
 }
 
 .ace_scrollbar::-webkit-scrollbar {

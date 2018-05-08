@@ -1,21 +1,19 @@
 .Modal {
     position: fixed;
     z-index: 500;
-    background-color: white;
-    width: 70%;
+    background-color: rgba(64, 70, 86, 0.98);
+    color: white;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 1px 1px 1px black;
     padding: 16px;
-    left: 15%;
-    top: 20%;
     box-sizing: border-box;
     transition: all 0.5s ease-out;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-@media (min-width: 600px) {
-    .Modal {
-        width: 500px;
-        left: calc(50% - 250px);
-    }
+.login-popup-modal .Modal {
+   width: 300px;
 }
