@@ -1,0 +1,27 @@
+.footer {
+    background-color: #222222;
+    color: #8D71EB;
+    height: 65px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-family: sans-serif;
+    border-top: 4px solid #434855;
+    box-shadow: 0 -5px 5px -5px #333;
+}
+
+.github-icon {
+    text-decoration: none;
+}
+
+.footer p {
+    margin: 0;
+}
+
+.footer a {
+    text-decoration: none;
+
+    margin: 0 3px;
+}
