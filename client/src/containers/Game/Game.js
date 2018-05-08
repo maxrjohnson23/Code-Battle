@@ -325,7 +325,7 @@ class Game extends Component {
     }
 
     return (
-        <main>
+        <main id="game-main">
           <GameSummaryPopup showSummary={this.state.gameEnded}
                             gameResults={this.state.leaderBoard}/>
           <Sidebar pubnub={this.props.pubnub}

@@ -1,3 +1,7 @@
+html, body, .App, #root {
+    height: 100%
+}
+
 body {
     background-color: gray;
 }
@@ -140,14 +144,6 @@ body {
     width: 100%
 }
 
-.test-area {
-    width: 100%;
-}
-/* 
-#add-test {
-    width: fit-content;
-} */
-
- .form-group{
+.form-group{
      color: gray;
  }
