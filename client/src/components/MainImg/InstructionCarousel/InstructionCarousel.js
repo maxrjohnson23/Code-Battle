@@ -48,7 +48,6 @@ export default class InstructionCarousel extends React.Component {
                 <div className="instruction-bg">
                     <div className="instruction-txt">
                         <div className="heading">What is Code Battle?</div>
-                        <br />
                         <div>A Platform to Compete in Multiplayer Coding Challenges Against The Clock</div>
                     </div>
                 </div>
