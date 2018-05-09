@@ -331,7 +331,9 @@ class Game extends Component {
           <Sidebar pubnub={this.props.pubnub}
                    defaultChannel={this.state.gameChannel + "-users"}
                    gameChannel={this.state.gameChannel + "-chat"}
-                   username={this.props.username}/>
+                   username={this.props.username}
+                   presentUsers={this.props.presentUsers}
+                   usersChange={this.props.usersChange}/>
           <div className="game-container">
             {game}
           </div>
