@@ -1,13 +1,14 @@
 import React, {Component} from "react";
 import User from "./User/User";
+import UserSideBar from "./UserSideBar"
 import "./UserList.css"
 
 // import Sidebar from './UserSideBar';
 
 class UserList extends Component {
-  state = {
+  /*state = {
     presentUsers: []
-  };
+  };*/
 
   componentDidMount() {
 
@@ -28,9 +29,10 @@ class UserList extends Component {
           if (status.statusCode === 200) {
             console.log("Channel users: ", response);
             let channelUsers = response.channels[this.props.defaultChannel].occupants.map(p => p.uuid);
-            this.setState({
+            /*this.setState({
               presentUsers: channelUsers
-            });
+            });*/
+            this.props.usersChange(channelUsers);
           }
         }
     );
@@ -46,7 +48,7 @@ class UserList extends Component {
 
   pubNubPresenceHandler = (event) => {
     console.log("Presence change: ", event);
-    let updatedUserList = [...this.state.presentUsers];
+    let updatedUserList = [...this.props.presentUsers];
     if (event.action === "join") {
       if (!updatedUserList.includes(event.uuid)) {
         updatedUserList.push(event.uuid);
@@ -55,19 +57,21 @@ class UserList extends Component {
       updatedUserList = updatedUserList.filter(u => u !== event.uuid);
     }
     console.log("Updated user list: ", updatedUserList);
-    this.setState({
+    this.props.usersChange(updatedUserList);
+    /*this.setState({
       presentUsers: updatedUserList
-    });
+    });*/
   };
 
   render() {
+    const presentUsers = this.props.presentUsers;
     return (
       <div>
         <h2>Current Users</h2>
         <div className="userListStyle">
           <ol>
             {
-              this.state.presentUsers.map(username => {
+              this.props.presentUsers.map(username => {
                 return <User key={username} username={username}/>;
               })
             }
