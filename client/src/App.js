@@ -29,7 +29,8 @@ class App extends Component {
       showLogin: false,
       showUserModal: false,
       pubnubJoined: false,
-      pubnub: this.pubnub
+      pubnub: this.pubnub,
+      presentUsers: [],
     };
     this.pubnub.init(this);
   }
@@ -119,8 +120,11 @@ class App extends Component {
     }
   }
 
-  render() {
+  usersChange = (e) => {
+    this.setState({presentUsers: e});
+  }
 
+  render() {
     return (
         <div className="App">
           <Navbar loginHandler={this.loginUserHandler}
@@ -148,12 +152,16 @@ class App extends Component {
                  render={(props) => <LobbyContainer
                      {...props}
                      username={this.state.username}
-                     pubnub={this.state.pubnub}/>}/>
+                     pubnub={this.state.pubnub}
+                     presentUsers={this.state.presentUsers}
+                     usersChange={this.usersChange}/>}/>
           <Route path="/game"
                  render={(props) => <Game
                      {...props}
                      username={this.state.username}
-                     pubnub={this.state.pubnub}/>}/>
+                     pubnub={this.state.pubnub}
+                     presentUsers={this.state.presentUsers}
+                     usersChange={this.usersChange}/>}/>
           <Route path="/create-question"
                  render={(props) => <CreateQuestion
                      {...props}
