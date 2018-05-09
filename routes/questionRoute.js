@@ -56,8 +56,7 @@ router.post("/", (req, res) => {
   console.log("creating question");
 
 
-  db.Question.create(req.body).then((err, savedQuestion) => {
-    if (err) return res.json(err);
+  db.Question.create(req.body).then((savedQuestion) => {
     res.json(savedQuestion);
   }).catch(() => res.status(500).send({error: "Could not create question"}));
 });

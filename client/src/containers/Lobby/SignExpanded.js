@@ -7,7 +7,6 @@ import CustomQuestion from "./CustomQuestion";
 import CreateQuestion from "../../components/CreateQuestion/CreateQuestion";
 import SubmitButton from "./SubmitButton";
 
-// import CustomQuestion from "./CustomQuestion";
 
 class SignExpanded extends Component {
   constructor(props) {
@@ -36,28 +35,39 @@ class SignExpanded extends Component {
         newGameName: event.target.value
       });
     } else if (event.target.name === "game-time") {
+      let newTime = event.target.value >= 0 ? event.target.value: 0;
+      newTime = (newTime > 60) ? 60 : newTime;
       this.setState({
-        newGameTime: event.target.value
+        newGameTime: newTime
       });
     }
   };
 
-  customQuestion = (event) => {
-    event.preventDefault();
-    console.log('custom question pressed')
+  customQuestion = () => {
     this.setState({
       createNewQuestion: true
     }
   );
-};
+  };
 
   createGame = (event) => {
     event.preventDefault();
     const game = {
       name: this.state.newGameName,
-      time: this.state.newGameTime
+      time: this.state.newGameTime * 1000 * 60
     };
     this.props.createGame(game);
+  };
+
+  createCustomGame = (customGame) => {
+    console.log('Creating custom game');
+    debugger;
+    const game = {
+      name: this.state.newGameName,
+      time: this.state.newGameTime * 1000 * 60,
+      ...customGame
+    };
+    this.props.createCustomGame(game);
   };
 
   joinGame = (event) => {
@@ -115,7 +125,7 @@ class SignExpanded extends Component {
                             <div id='create-main-child'>
                             {this.state.createNewQuestion ? (
                               <div id='create-question-container'>
-                                <CreateQuestion />
+                                <CreateQuestion createGame={this.createCustomGame}/>
                               </div>
                                 ) : (
                                 <div id='create-game-container'>
@@ -125,7 +135,7 @@ class SignExpanded extends Component {
                                        change={this.inputHandler}
                                        required/>
                                 <Input name="game-time" type="number"
-                                       placeholder="Enter game time"
+                                       placeholder="Enter game time (minutes)"
                                        value={this.state.newGameTime}
                                        change={this.inputHandler}
                                        required/>
@@ -134,7 +144,7 @@ class SignExpanded extends Component {
                               }
                               </div>
                           ) : (
-							<div>
+							              <div>
                               <ul className='open-games'>
                                 {this.props.gameList.map(game => {
                                   let statusClass = `game-${game.status}`;
@@ -147,7 +157,7 @@ class SignExpanded extends Component {
                                       </li>)
                                 })}
                               </ul>
-							  </div>
+                            </div>
                           )}
                         </div>
                         <div>
@@ -158,9 +168,10 @@ class SignExpanded extends Component {
                             <div className='button-section-child'>
                             <CustomQuestion
                               onClick={this.customQuestion}
-                              />
+                              disabled={this.state.newGameName === "" || this.state.newGameTime === "" || this.state.newGameTime === "0"}/>
                           <SubmitButton type={this.props.type}
-                                        createGame={this.createGame}/>
+                                        createGame={this.createGame}
+                                        disabled={this.state.newGameName === "" || this.state.newGameTime === "" || this.state.newGameTime === "0"}/>
                             </div>
                           ) : (null)}
                           </div>

@@ -36,7 +36,8 @@ class Game extends Component {
     questionDetails: null,
     isGameCreator: false,
     gameDetailsLoaded: false,
-    leaderBoard: []
+    leaderBoard: [],
+    alreadySubmitted: false
   };
 
   countdown = (e) => {
@@ -222,17 +223,25 @@ class Game extends Component {
   };
 
   publishGameWin = (userCode) => {
-    this.persistUserScore();
-    const message = {
-      action: "GAME_WIN",
-      username: this.props.username,
-      code: userCode,
-      time: this.state.startTimeMillis - this.state.gameTimeMillis
-    };
-    this.props.pubnub.publish({
-      channel: this.state.gameChannel,
-      message: message,
-    });
+    if(!this.state.alreadySubmitted) {
+      this.persistUserScore();
+      const message = {
+        action: "GAME_WIN",
+        username: this.props.username,
+        code: userCode,
+        time: this.state.startTimeMillis - this.state.gameTimeMillis
+      };
+      this.props.pubnub.publish({
+        channel: this.state.gameChannel,
+        message: message,
+      });
+      this.setState({
+        alreadySubmitted: true,
+      });
+      setTimeout(() => {
+        this.setState({gameEnded: true});
+      }, 4000)
+    }
   };
 
   startGame = () => {

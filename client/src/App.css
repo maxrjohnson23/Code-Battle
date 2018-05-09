@@ -115,16 +115,37 @@ body {
   }
 
  #create-question-container {
-     /* display: flex; */
      color: gray;
      margin-top: -80px;
  }
 
- #create-question-form{
-     color: gray;
-     display: flex;
-     flex-direction: column;
+ #create-question-container {
+     text-align: left
  }
+
+#create-question-container label {
+   color: white;
+}
+
+#create-question-container input, textarea {
+    font-size: 16px;
+    border-bottom: 1px solid rgba(255, 252, 232, 0.1);
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 15px;
+    width: 100%
+}
+
+#create-question-container h4 {
+    color: white;
+    margin-top: 10px;
+}
+
+.create-question-test{
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+}
 
  #create-main{
     width: 400px;
@@ -134,15 +155,7 @@ body {
     width: auto;
   }
 
- #question-text{
-    color: gray;
-    width: 100%
-}
 
-#code-text{
-    color: gray;
-    width: 100%
-}
 
 .form-group{
      color: gray;
