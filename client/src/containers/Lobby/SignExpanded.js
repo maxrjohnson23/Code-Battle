@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import "../Lobby.css";
 import {Motion, spring} from "react-motion";
 import Input from "./Input";
-import CustomQuestion from './CustomQuestion';
-import CreateQuestion from '../../components/CreateQuestion/CreateQuestion';
-import Checkbox from './Checkbox';
+import CustomQuestion from "./CustomQuestion";
+import CreateQuestion from "../../components/CreateQuestion/CreateQuestion";
 import SubmitButton from "./SubmitButton";
+
 // import CustomQuestion from "./CustomQuestion";
 
 class SignExpanded extends Component {
@@ -39,13 +39,13 @@ class SignExpanded extends Component {
       this.setState({
         newGameTime: event.target.value
       });
-    } 
+    }
   };
 
   customQuestion = (event) => {
     event.preventDefault();
     console.log('custom question pressed')
-    this.setState({ 
+    this.setState({
       createNewQuestion: true
     }
   );
@@ -110,9 +110,9 @@ class SignExpanded extends Component {
                       >
                         <h2>{this.props.type === "create" ? "CREATE GAME" : "JOIN GAME"}</h2>
 
-                        <div>
+                        <div id='create-main'>
                           {this.props.type === "create" ? (
-                            <div>
+                            <div id='create-main-child'>
                             {this.state.createNewQuestion ? (
                               <div id='create-question-container'>
                                 <CreateQuestion />
@@ -134,28 +134,35 @@ class SignExpanded extends Component {
                               }
                               </div>
                           ) : (
-							<div>  
-							<h3>List of Games</h3>
+							<div>
                               <ul className='open-games'>
-                                {this.props.gameList.map(game => (
-                                    <li
-                                        key={game.name} data-name={game.name}
-                                        className='open-game'
-                                        onClick={this.joinGame}>
-                                      {game.name} - {game.status}
-                                    </li>))}
+                                {this.props.gameList.map(game => {
+                                  let statusClass = `game-${game.status}`;
+                                  return (
+                                      <li
+                                          key={game.name} data-name={game.name}
+                                          className='open-game'
+                                          onClick={this.joinGame}>
+                                        {game.name}<span className={statusClass}>{game.status}</span>
+                                      </li>)
+                                })}
                               </ul>
 							  </div>
                           )}
                         </div>
                         <div>
                         {this.props.type === "create" ? (
+
                           <div id='button-section'>
-                        <CustomQuestion 
-                          onClick={this.customQuestion}
-                          /> 
-                        <SubmitButton type={this.props.type}
-                                      createGame={this.createGame}/>
+                          {!this.state.createNewQuestion ? (
+                            <div className='button-section-child'>
+                            <CustomQuestion
+                              onClick={this.customQuestion}
+                              />
+                          <SubmitButton type={this.props.type}
+                                        createGame={this.createGame}/>
+                            </div>
+                          ) : (null)}
                           </div>
                         ) : (null)
                       }

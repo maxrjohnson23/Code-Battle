@@ -9,8 +9,8 @@ import Game from "./containers/Game/Game";
 import MainImg from "./components/MainImg/MainImg";
 import LobbyContainer from "./containers/LobbyContainer/LobbyContainer";
 import CreateQuestion from "./components/CreateQuestion/CreateQuestion";
+import Footer from "./components/Footer/Footer";
 import UserPopup from "./components/UserPopup/UserPopup";
-import { Input, TextArea, FormBtn } from "./components/Form";
 
 
 class App extends Component {
@@ -167,7 +167,9 @@ class App extends Component {
                      {...props}
                      username={this.state.username}
                      pubnub={this.state.pubnub}/>}/>
+          <Footer/>
         </div>
+
     );
   }
 }

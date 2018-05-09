@@ -93,6 +93,7 @@ class LoginPopup extends Component {
 
   render() {
     return (
+        <div className="login-popup-modal">
         <Modal show={this.props.showLogin}
                modalClosed={this.props.hideLoginHandler}>
 
@@ -100,6 +101,7 @@ class LoginPopup extends Component {
                      handleChange={this.handleChange}
                      message={this.state.message}/>
         </Modal>
+        </div>
     );
   }
 };

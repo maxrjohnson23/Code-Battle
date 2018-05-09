@@ -1,3 +1,7 @@
+html, body, .App, #root {
+    height: 100%
+}
+
 body {
     background-color: gray;
 }
@@ -110,11 +114,36 @@ body {
     list-style-type: none;
   }
 
-  /* .menu-item--small:hover {
-      transform;
-  } */
+ #create-question-container {
+     /* display: flex; */
+     color: gray;
+     margin-top: -80px;
+ }
+
+ #create-question-form{
+     color: gray;
+     display: flex;
+     flex-direction: column;
+ }
+
+ #create-main{
+    width: 400px;
+  }
   
-  /* Styling of overlay */
-  /* .bm-overlay {
-    background: rgba(0, 0, 0, 0.3);
-  } */
+  #create-main-child{
+    width: auto;
+  }
+
+ #question-text{
+    color: gray;
+    width: 100%
+}
+
+#code-text{
+    color: gray;
+    width: 100%
+}
+
+.form-group{
+     color: gray;
+ }

@@ -38,34 +38,49 @@ class GameSummaryPopup extends Component {
               name="editor"
               onLoad={this.onLoad}
               fontSize={18}
-              showPrintMargin={true}
-              showGutter={true}
+              showPrintMargin={false}
+              showGutter={false}
               highlightActiveLine={true}
-              width="450px"
-              height="400px"
+              width="100%"
+              height="300px"
               value={this.state.currentCode}
               setOptions={{
-                enableBasicAutocompletion: true,
+                enableBasicAutocompletion: false,
                 enableLiveAutocompletion: false,
                 enableSnippets: false,
                 showLineNumbers: true,
                 tabSize: 2,
+                readOnly: true,
+                fontSize: 16
               }}/>
       );
     }
 
     let gameSummary = null;
+
     if (this.props.gameResults.length !== 0) {
       gameSummary = (
           <Wrapper>
             <h1>Game Summary</h1>
-            {
-              this.props.gameResults.map((result, index) => (
-                  <h4 className="rankings"
-                      onClick={() => this.showCodeHandler(index)}>{index + 1}. {result.username} | {result.time / 1000}sec</h4>
-              ))
-            }
-            {displayCode}
+            <div className="game-summary-results">
+              <ul className="ranking-list">
+                {
+                  this.props.gameResults.map((result, index) => {
+                    let sec = result.time / 1000;
+                    let minutes = Math.floor(sec / 60);
+                    sec = sec%60;
+                    let time =  minutes.toString().padStart(2, "0") +":" + sec.toString().padStart(2,"0");
+                    return (
+                        <li key={result.username} className="rankings"
+                            onClick={() => this.showCodeHandler(index)}>{index + 1}. {result.username}   -   {time}</li>
+                    )
+                  })
+                }
+              </ul>
+              <div className="summary-editor">
+                {displayCode}
+              </div>
+            </div>
           </Wrapper>
       );
     } else {
@@ -75,12 +90,15 @@ class GameSummaryPopup extends Component {
     }
 
     return (
-        <Modal show={this.props.showSummary}>
-          {gameSummary}
-          <Link to="/lobby">
-            <button className="lobby">Back to Lobby</button>
-          </Link>
-        </Modal>
+        <div className="game-summary-modal">
+          <Modal show={this.props.showSummary}>
+            {gameSummary}
+            <Link to="/lobby">
+              <button className="lobby-button">Back to Lobby</button>
+            </Link>
+          </Modal>
+        </div>
+
     );
   }
 };

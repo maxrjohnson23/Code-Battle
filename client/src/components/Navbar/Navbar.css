@@ -1,13 +1,13 @@
 .navbar {
     display: flex;
-    /* align-items: stretch; */
     padding: 0 20px;
     background: #222;
     color: #fff !important;
     border-radius: 0 !important;
     font-size: 0.9em;
-    margin-bottom: 50px;
     max-height: 100px;
+    text-transform: capitalize;
+    box-shadow: 0 5px 5px -5px #333;
 }
 
 .navbar a:hover:not(.logo) {
