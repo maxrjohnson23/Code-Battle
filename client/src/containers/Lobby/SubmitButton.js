@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "../Lobby.css";
-import {MdArrowForward} from "react-icons/lib/md";
 
 const SubmitButton = (props) => {
 
@@ -12,6 +11,7 @@ const SubmitButton = (props) => {
 			className={props.type==='create' ? 'gray' : 'slateblue'}
 			name="create-game"
 			onClick={props.createGame}
+			disabled={props.disabled}
 			type=''>Start Game</button>
 		</div>
 	);

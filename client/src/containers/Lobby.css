@@ -202,13 +202,12 @@ outline: 1px solid slategrey;
   text-transform: uppercase;
 }
 .Input input {
-  
   border: 0;
   color: #FFFCE8;
   background: transparent;
   font-family: "Roboto Condensed", sans-serif;
   flex: 1 0 auto;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 300;
 }
 .Input input:focus ~ label {
@@ -263,6 +262,10 @@ outline: 1px solid slategrey;
     border: none;
 }
 
+.gray:enabled {
+  color: white;
+}
+
 .slateblue:before, .slateblue:after, .gray:before, .gray:after {
     width:200px;
   left: 0px;
@@ -312,6 +315,10 @@ outline: 1px solid slategrey;
   justify-content: center;
 }
 
+.button-section-child button:disabled {
+  cursor: not-allowed;
+}
+
 #button-section-two {
   width: 500px;
   margin-left: -65px;
@@ -322,7 +329,7 @@ outline: 1px solid slategrey;
     background: #6A5ACD;
 }
 
-.gray:hover:before, .gray:hover:after, .gray:focus:before, .gray:focus::after{
+.gray:enabled:hover:before, .gray:enabled:hover:after, .gray:focus:before, .gray:focus::after{
     background: rgba(64, 70, 86, 0.98);
 }
 
@@ -331,7 +338,7 @@ background: #cd5c5c;
 }
 
 
-.slateblue:hover, .slateblue:focus, .gray:hover, .gray:focus{
+.slateblue:hover, .slateblue:focus, .gray:enabled:hover, .gray:enabled:focus{
     color:#fff;
 }
 
