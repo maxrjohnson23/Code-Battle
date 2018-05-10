@@ -6,8 +6,8 @@ import Input from "./Input";
 import CustomQuestion from "./CustomQuestion";
 import CreateQuestion from "../../components/CreateQuestion/CreateQuestion";
 import SubmitButton from "./SubmitButton";
-
-// import CustomQuestion from "./CustomQuestion";
+import Fade from 'react-reveal/Fade';
+import {MdSearch} from 'react-icons/lib/md/search';
 
 class SignExpanded extends Component {
   constructor(props) {
@@ -17,14 +17,25 @@ class SignExpanded extends Component {
       animIsFinished: false,
       newGameName: "",
       newGameTime: "",
-      createNewQuestion: false
+      createNewQuestion: false,
+      initialList: [],
+      filteredList: []
     };
     this.customQuestion = this.customQuestion.bind(this);
   }
 
+  componentWillMount() {
+    this.setState({initialList: this.props.gameList})
+  };
+
   componentDidMount() {
     this.setState({flexState: !this.state.flexState});
-  }
+    this.setState({filteredList: this.state.initialList.map(game => {
+      let names = '';
+      names = game.name;
+      return names.toLowerCase();
+    })});
+  };
 
   isFinished = () => {
     this.setState({animIsFinished: true});
@@ -39,6 +50,23 @@ class SignExpanded extends Component {
       this.setState({
         newGameTime: event.target.value
       });
+    }
+  };
+
+  filterList = (event) => {
+    let updatedList = this.state.filteredList.filter(item => {
+      return item.search(
+        event.target.value.toLowerCase()
+      ) !== -1
+    });
+    if (event.target.value === ''){
+      this.setState({filteredList: this.state.initialList.map(game => {
+        let names = '';
+        names = game.name;
+        return names.toLowerCase();
+      })});
+    } else{
+    this.setState({filteredList: updatedList})
     }
   };
 
@@ -109,7 +137,6 @@ class SignExpanded extends Component {
                           }}
                       >
                         <h2>{this.props.type === "create" ? "CREATE GAME" : "JOIN GAME"}</h2>
-
                         <div id='create-main'>
                           {this.props.type === "create" ? (
                             <div id='create-main-child'>
@@ -117,6 +144,7 @@ class SignExpanded extends Component {
                               <div id='create-question-container'>
                                 <CreateQuestion />
                               </div>
+                          
                                 ) : (
                                 <div id='create-game-container'>
                                 <Input name="game-name" type="text"
@@ -124,7 +152,7 @@ class SignExpanded extends Component {
                                        value={this.state.newGameName}
                                        change={this.inputHandler}
                                        required/>
-                                <Input name="game-time" type="number"
+                                <Input name="game-time" type="time"
                                        placeholder="Enter game time"
                                        value={this.state.newGameTime}
                                        change={this.inputHandler}
@@ -134,6 +162,16 @@ class SignExpanded extends Component {
                               }
                               </div>
                           ) : (
+              <div id='join-game-section'>
+              <div className='search'>
+                <input
+                  type='text' 
+                  id='game-search'
+                  placeholder='search games'
+                  onChange={this.filterList}
+                  onKeyDown={this.filterList}/>
+              </div>
+              <Fade bottom cascade>
 							<div>
                               <ul className='open-games'>
                                 {this.props.gameList.map(game => {
@@ -148,6 +186,8 @@ class SignExpanded extends Component {
                                 })}
                               </ul>
 							  </div>
+                </Fade>
+                </div>
                           )}
                         </div>
                         <div>

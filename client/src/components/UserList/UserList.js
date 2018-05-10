@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import User from "./User/User";
 import "./UserList.css"
+import Fade from 'react-reveal/Fade';
 
 // import Sidebar from './UserSideBar';
 
@@ -65,6 +66,7 @@ class UserList extends Component {
       <div>
         <h2>Current Users</h2>
         <div className="userListStyle">
+        <Fade bottom cascade>
           <ol>
             {
               this.state.presentUsers.map(username => {
@@ -72,6 +74,7 @@ class UserList extends Component {
               })
             }
           </ol>
+        </Fade>
         </div>
       </div>
     );

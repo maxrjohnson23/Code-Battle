@@ -151,10 +151,12 @@ class LobbyContainer extends Component {
           <div className="leaderboard-container">
             <Leaderboard/>
           </div>
-          <Sidebar pubnub={this.props.pubnub} defaultChannel={"Channel-main"} username={this.props.username}/>
           <Lobby createGame={this.createGameHandler}
                  joinGame={this.joinGameHandler}
                  gameList={this.state.games}/>
+          <div className='sidebar-container'>
+            <Sidebar pubnub={this.props.pubnub} defaultChannel={"Channel-main"} username={this.props.username}/>
+          </div>
         </div>
     );
   }
