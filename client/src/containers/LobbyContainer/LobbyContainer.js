@@ -33,7 +33,7 @@ class LobbyContainer extends Component {
         updatedGames.forEach((existingGame, index) => {
           if (existingGame.name === game.message.name) {
             let updatedGame = {...existingGame};
-            updatedGame.status = "INPROGRESS";
+            updatedGame.status = "IN-PROGRESS";
             updatedGames[index] = updatedGame;
           }
         });
@@ -60,9 +60,9 @@ class LobbyContainer extends Component {
 
   componentDidMount() {
     const statusMap = new Map();
-    statusMap.set("GAME_CREATED", "new");
-    statusMap.set("GAME_STARTED", "in-progress");
-    statusMap.set("GAME_COMPLETED", "completed");
+    statusMap.set("GAME_CREATED", "NEW");
+    statusMap.set("GAME_STARTED", "IN-PROGRESS");
+    statusMap.set("GAME_COMPLETED", "COMPLETED");
     this.props.pubnub.history(
         {
           channel: GAME_CHANNEL,
@@ -136,6 +136,50 @@ class LobbyContainer extends Component {
 
   };
 
+  createCustomGame = (game) => {
+    console.log("Custom game data:", game);
+
+    // Choose random question for game
+    axios.post("/api/question", game).then(res => {
+      if (res.data) {
+        let customGame = {
+          questionId: res.data._id,
+          created: true,
+          action: "GAME_CREATED",
+          name: game.name,
+          time: game.time
+        };
+
+        const gameChannelMessage = {
+          action: "GAME_CREATED",
+          ...customGame
+        };
+        // Publish to active games channel
+        this.props.pubnub.publish({
+          message: gameChannelMessage,
+          channel: GAME_CHANNEL
+        });
+
+        let gameDetails = {
+          action: "CREATE_GAME",
+          questionId: res.data._id,
+          ...customGame
+        };
+        // Publish to specific game channel with creation details
+        this.props.pubnub.publish({
+          message: gameDetails,
+          channel: "Channel-" + customGame.name
+        });
+        // Navigate to newly created game
+        const queryString = qs.stringify(customGame);
+        this.props.history.push({
+          pathname: "/game",
+          search: "?" + queryString
+        });
+      }
+    });
+  };
+
   joinGameHandler = (game) => {
     // Navigate to existing game
     const queryString = qs.stringify(game);
@@ -151,7 +195,12 @@ class LobbyContainer extends Component {
           <div className="leaderboard-container">
             <Leaderboard/>
           </div>
+          <Sidebar pubnub={this.props.pubnub} defaultChannel={"Channel-main"}
+                   username={this.props.username}
+                   presentUsers={this.props.presentUsers}
+                   usersChange={this.props.usersChange}/>
           <Lobby createGame={this.createGameHandler}
+                 createCustomGame={this.createCustomGame}
                  joinGame={this.joinGameHandler}
                  gameList={this.state.games}/>
           <div className='sidebar-container'>

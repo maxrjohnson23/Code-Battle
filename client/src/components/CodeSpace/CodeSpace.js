@@ -61,7 +61,7 @@ class CodeSpace extends Component {
 
           this.setState({
             currentQuestion: evaluatedQuestion,
-            output: allPassed ? "All tests passed!" : "There are test errors, keep trying!"
+            output: allPassed ? "All tests passed!!  Loading game summary..." : "There are test errors, keep trying!"
           });
         }
     ).catch((err) => {

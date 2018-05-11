@@ -1,6 +1,6 @@
-import React, {Component} from "react";
-import { Carousel } from 'react-responsive-carousel';
-import './InstructionCarousel.css'
+import React from "react";
+import {Carousel} from "react-responsive-carousel";
+import "./InstructionCarousel.css";
 
 export default class InstructionCarousel extends React.Component {
     constructor(props){
@@ -10,11 +10,11 @@ export default class InstructionCarousel extends React.Component {
             autoPlay: true,
             interval: 8000,
             transitionTime: 1000,
-            useKeyboardArrows: true
+            useKeyboardArrows: true,
             // showStatus
             // showIndicators
             // thumbWidth
-            // infiniteLoop
+            infiniteLoop:true
             // selectedItem
             // axis
             // verticalSwipe
@@ -41,39 +41,45 @@ export default class InstructionCarousel extends React.Component {
             interval={this.state.interval}
             transitionTime={this.state.transitionTime}
             useKeyboardArrows={this.state.useKeyboardArrows}
+            infiniteLoop={this.state.infiniteLoop}
         >
             <div>
                 <div className="instruction-bg">
                     <div className="instruction-txt">
-                        Instruction 1
+                        <div className="heading">What is Code Battle?</div>
+                        <div>A Platform to Compete in Multiplayer Coding Challenges Against The Clock</div>
                     </div>
                 </div>
             </div>
             <div>
                 <div className="instruction-bg">
                     <div className="instruction-txt">
-                        Instruction 2
+                        <div className="heading">User Stats</div>
+                        <div>Create a Username to Keep Track of Your Game Statistics</div>
                     </div>
                 </div>
             </div>
             <div>
                 <div className="instruction-bg">
                     <div className="instruction-txt">
-                        Instruction 3
+                    <div className="heading">Leaderboard</div>
+                        <div>Win Code Battles and Earn Points to Make it Into the Top 3</div>                        
                     </div>
                 </div>
             </div>
             <div>
                 <div className="instruction-bg">
                     <div className="instruction-txt">
-                        Instruction 4
+                    <div className="heading">User Driven</div>
+                        <div>Create Custom Challenges for The Community</div>
                     </div>
                 </div>
             </div>
             <div>
                 <div className="instruction-bg">
-                    <div className="instruction-txt">
-                        Instruction 5
+                    <div className="instruction-txt-final">
+                        <div className="">Login to Play Now!</div>
+                        <button id="get-started" onClick={this.props.showLoginHandler}>Get Started!</button>
                     </div>
                 </div>
             </div>

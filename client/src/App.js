@@ -29,10 +29,18 @@ class App extends Component {
       showLogin: false,
       showUserModal: false,
       pubnubJoined: false,
-      pubnub: this.pubnub
+      pubnub: this.pubnub,
+      presentUsers: []
     };
     this.pubnub.init(this);
   }
+
+  initPN = () => {
+    this.setState({
+      mainPub: true
+    });
+
+  };
 
   getUser = () => {
     axios.get("/user/").then(response => {
@@ -107,11 +115,6 @@ class App extends Component {
         });
       };
 
-  // componentWillUnmount() {
-  //   this.pubnub.unsubscribe({
-  //     channels: [this.state.defaultChannel]
-  //   });
-  // };
 
   componentDidMount() {
     if (!this.state.loggedIn) {
@@ -119,8 +122,11 @@ class App extends Component {
     }
   }
 
-  render() {
+  usersChange = (e) => {
+    this.setState({presentUsers: e});
+  }
 
+  render() {
     return (
         <div className="App">
           <Navbar loginHandler={this.loginUserHandler}
@@ -142,18 +148,22 @@ class App extends Component {
           <Route path="/" exact
                  render={() => {
                    return this.state.loggedIn ? <Redirect to="/lobby"/> :
-                       <MainImg/>
+                       <MainImg showLoginHandler={this.showLoginHandler}/>
                  }}/>
           <Route path="/lobby"
                  render={(props) => <LobbyContainer
                      {...props}
                      username={this.state.username}
-                     pubnub={this.state.pubnub}/>}/>
+                     pubnub={this.state.pubnub}
+                     presentUsers={this.state.presentUsers}
+                     usersChange={this.usersChange}/>}/>
           <Route path="/game"
                  render={(props) => <Game
                      {...props}
                      username={this.state.username}
-                     pubnub={this.state.pubnub}/>}/>
+                     pubnub={this.state.pubnub}
+                     presentUsers={this.state.presentUsers}
+                     usersChange={this.usersChange}/>}/>
           <Route path="/create-question"
                  render={(props) => <CreateQuestion
                      {...props}

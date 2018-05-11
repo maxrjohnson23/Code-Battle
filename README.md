@@ -1,43 +1,40 @@
-# Create React Express App
+# Code Battle
+### A real-time, multi-player coding challenge platform for increasing your coding abilities 
 
-## About This Boilerplate
+### How to Play
+1. Sign up or log in as a new user or guest
 
-This setup allows for a Node/Express/React app which can be easily deployed to Heroku.
+2. Browse the game lobby to join a new game, or create your own challenge!
 
-The front-end React app will auto-reload as it's updated via webpack dev server, and the backend Express app will auto-reload independently with nodemon.
+3. Use the chat to talk to your opponents while waiting for others to join
 
-## Starting the app locally
+4. Once the game starts, solve the coding challenge and pass all the tests.  The first one to pass all tests wins!
 
-Start by installing front and backend dependencies. While in this directory, run the following commands:
+5. View the game summary to see where you rank and view other code submissions to improve your knowledge
 
-```
-yarn install
-cd client
-yarn install
-cd ..
-``
 
-After both installations complete, run the following command in your terminal:
+## [Play Now!](https://nu-code-battle.herokuapp.com/ "Code Battle")
 
-```
-yarn start
-```
 
-That's it, your app should be running on <http://localhost:3000>. The Express server should intercept any AJAX requests from the client.
+![Code Battle Demo](samples/code-battle-demo.gif?raw=true "Code Battle")
 
-## Deployment (Heroku)
 
-After confirming that you have an up to date git repository and a Heroku app created, complete the following:
+### Technologies Used
+* React
+  * Components
+      * Functional (stateless)
+      * Class (stateful)
+   * State/Props
+   * create-react-app starter
+   * React Router
+* Express / Node 
+  * Passport logins
+* Axios
+* PubNub messaging platform
+  * Publish/subscribe messaging channels for real-time, multi-player interactions
 
-1. Build the React app for production by running the following command:
+![Architecture](samples/architecture.png?raw=true "App architecture")
 
-```
-yarn build
-```
-> Note: A yarn build will be required to register any new Post requests from any front-end JavaScript to to prevent any proxy server errors.
 
-2. Add and commit all changes to git
 
-3. Push to Heroku
-
-If all previous steps were followed correctly, your application should be deployed to Heroku!
+   
