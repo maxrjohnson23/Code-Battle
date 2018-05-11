@@ -18,20 +18,16 @@ class SignExpanded extends Component {
       newGameName: "",
       newGameTime: "",
       createNewQuestion: false,
-      initialList: [],
+      searchList: [],
       filteredList: []
     };
     this.customQuestion = this.customQuestion.bind(this);
   }
 
-  componentWillMount() {
-    this.setState({initialList: this.props.gameList})
-  };
-
   componentDidMount() {
     this.setState({flexState: !this.state.flexState});
     if (this.props.type === 'join'){
-    this.setState({filteredList: this.state.initialList.map(game => {
+    this.setState({filteredList: this.props.gameList.map(game => {
       let names = '';
       names = game.name;
       return names.toLowerCase();
@@ -62,10 +58,11 @@ class SignExpanded extends Component {
       ) !== -1
     });
     if (event.target.value === ''){
-      this.setState({filteredList: this.state.initialList.map(game => {
+      this.setState({filteredList: this.props.gameList.map(game => {
         let names = '';
         names = game.name;
         return names.toLowerCase();
+       
       })});
     } else{
     this.setState({filteredList: updatedList})
@@ -184,7 +181,7 @@ class SignExpanded extends Component {
                                           className='open-game'
                                           onClick={this.joinGame}>
                                         {game.name}<span className={statusClass}>{game.status}</span>
-                                      </li>)
+                                      </li>) 
                                 })}
                               </ul>
 							  </div>

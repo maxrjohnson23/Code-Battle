@@ -382,6 +382,7 @@ background: #cd5c5c;
 .sidebar-container {
   display: flex;
   flex-basis: 20%;
+  height: 80vh;
 }
 
 .game-in-progress, .game-new, .game-completed {
