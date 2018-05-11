@@ -6,6 +6,8 @@ import Input from "./Input";
 import CustomQuestion from "./CustomQuestion";
 import CreateQuestion from "../../components/CreateQuestion/CreateQuestion";
 import SubmitButton from "./SubmitButton";
+import Fade from 'react-reveal/Fade';
+import {MdSearch} from 'react-icons/lib/md/search';
 
 
 class SignExpanded extends Component {
@@ -141,6 +143,7 @@ class SignExpanded extends Component {
                               }
                               </div>
                           ) : (
+                          <Fade bottom cascade>
 							              <div>
                               <ul className='open-games'>
                                 {this.props.gameList.map(game => {
@@ -155,6 +158,7 @@ class SignExpanded extends Component {
                                 })}
                               </ul>
                             </div>
+                          </Fade>
                           )}
                         </div>
                         <div>
