@@ -17,8 +17,8 @@
 
 
 .Lobby {
-  width: 900px;
-  height: 400px;
+  width: 700px;
+  height: 380px;
   display: flex;
   flex-direction: row;
   box-shadow: 1px 6px 10px 0px rgba(0, 0, 0, 0.5);
@@ -367,6 +367,7 @@ background: #cd5c5c;
   justify-content: space-between;
   margin: 40px 0;
   flex-grow: 1;
+  align-items: flex-start;
 }
 
 .leaderboard-container {
@@ -380,6 +381,7 @@ background: #cd5c5c;
 
 .sidebar-container {
   display: flex;
+  flex-basis: 20%;
 }
 
 .game-in-progress, .game-new, .game-completed {

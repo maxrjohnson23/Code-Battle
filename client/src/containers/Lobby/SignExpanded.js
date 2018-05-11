@@ -30,11 +30,13 @@ class SignExpanded extends Component {
 
   componentDidMount() {
     this.setState({flexState: !this.state.flexState});
+    if (this.props.type === 'join'){
     this.setState({filteredList: this.state.initialList.map(game => {
       let names = '';
       names = game.name;
       return names.toLowerCase();
     })});
+  }
   };
 
   isFinished = () => {
