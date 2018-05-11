@@ -1,7 +1,6 @@
-import React, {Component} from "react";
-import { Carousel } from 'react-responsive-carousel';
-import {Link, withRouter} from "react-router-dom";
-import './InstructionCarousel.css'
+import React from "react";
+import {Carousel} from "react-responsive-carousel";
+import "./InstructionCarousel.css";
 
 export default class InstructionCarousel extends React.Component {
     constructor(props){
@@ -79,7 +78,8 @@ export default class InstructionCarousel extends React.Component {
             <div>
                 <div className="instruction-bg">
                     <div className="instruction-txt-final">
-                        <div className="play-now">Click Login to Play Now!</div>
+                        <div className="">Login to Play Now!</div>
+                        <button id="get-started" onClick={this.props.showLoginHandler}>Get Started!</button>
                     </div>
                 </div>
             </div>
