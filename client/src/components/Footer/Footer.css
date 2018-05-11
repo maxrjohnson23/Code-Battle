@@ -2,9 +2,6 @@
     background-color: #222222;
     color: #8D71EB;
     height: 65px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
     display: flex;
     flex-flow: column;
     justify-content: center;

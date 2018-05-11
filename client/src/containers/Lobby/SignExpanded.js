@@ -6,8 +6,6 @@ import Input from "./Input";
 import CustomQuestion from "./CustomQuestion";
 import CreateQuestion from "../../components/CreateQuestion/CreateQuestion";
 import SubmitButton from "./SubmitButton";
-import Fade from 'react-reveal/Fade';
-import {MdSearch} from 'react-icons/lib/md/search';
 
 
 class SignExpanded extends Component {
@@ -18,23 +16,14 @@ class SignExpanded extends Component {
       animIsFinished: false,
       newGameName: "",
       newGameTime: "",
-      createNewQuestion: false,
-      searchList: [],
-      filteredList: []
+      createNewQuestion: false
     };
     this.customQuestion = this.customQuestion.bind(this);
   }
 
   componentDidMount() {
     this.setState({flexState: !this.state.flexState});
-    if (this.props.type === 'join'){
-    this.setState({filteredList: this.props.gameList.map(game => {
-      let names = '';
-      names = game.name;
-      return names.toLowerCase();
-    })});
   }
-  };
 
   isFinished = () => {
     this.setState({animIsFinished: true});
@@ -53,25 +42,6 @@ class SignExpanded extends Component {
       });
     }
   };
-
-  filterList = (event) => {
-    let updatedList = this.state.filteredList.filter(item => {
-      return item.search(
-        event.target.value.toLowerCase()
-      ) !== -1
-    });
-    if (event.target.value === ''){
-      this.setState({filteredList: this.props.gameList.map(game => {
-        let names = '';
-        names = game.name;
-        return names.toLowerCase();
-       
-      })});
-    } else{
-    this.setState({filteredList: updatedList})
-    }
-  };
-
 
   customQuestion = () => {
     this.setState({
@@ -146,6 +116,7 @@ class SignExpanded extends Component {
                           }}
                       >
                         <h2>{this.props.type === "create" ? "CREATE GAME" : "JOIN GAME"}</h2>
+
                         <div id='create-main'>
                           {this.props.type === "create" ? (
                             <div id='create-main-child'>
@@ -153,7 +124,6 @@ class SignExpanded extends Component {
                               <div id='create-question-container'>
                                 <CreateQuestion createGame={this.createCustomGame}/>
                               </div>
-                          
                                 ) : (
                                 <div id='create-game-container'>
                                 <Input name="game-name" type="text"
@@ -161,7 +131,6 @@ class SignExpanded extends Component {
                                        value={this.state.newGameName}
                                        change={this.inputHandler}
                                        required/>
-
                                 <Input name="game-time" type="number"
                                        placeholder="Enter game time (minutes)"
                                        value={this.state.newGameTime}
@@ -172,7 +141,6 @@ class SignExpanded extends Component {
                               }
                               </div>
                           ) : (
-                  <Fade bottom cascade>
 							              <div>
                               <ul className='open-games'>
                                 {this.props.gameList.map(game => {
@@ -183,11 +151,10 @@ class SignExpanded extends Component {
                                           className='open-game'
                                           onClick={this.joinGame}>
                                         {game.name}<span className={statusClass}>{game.status}</span>
-                                      </li>) 
+                                      </li>)
                                 })}
                               </ul>
-							              </div>
-                    </Fade>
+                            </div>
                           )}
                         </div>
                         <div>

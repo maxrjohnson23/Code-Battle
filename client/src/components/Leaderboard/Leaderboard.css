@@ -28,21 +28,7 @@
 .leaderboard {
     color: #dae7f1;
     padding: 40px;
-    max-height: 400px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    max-height: 600px;
+    overflow: scroll;
     box-shadow: 1px 6px 10px 0px rgba(0, 0, 0, 0.5);
 }
-
-.leaderboard::-webkit-scrollbar {
-    width: 1em;
-  }
-  
-.leaderboard::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-  }
-  
-.leaderboard::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid rgba(151, 105, 245, 0.98);
-  }
