@@ -11,7 +11,7 @@ export default class MainImg extends Component {
                     <p>This will be a gif of game play.</p>
                 </div>
                 <div className="instructionsBox-two">
-                    <InstructionCarousel />
+                    <InstructionCarousel showLoginHandler={this.props.showLoginHandler} />
                 </div>
             </div>
         );

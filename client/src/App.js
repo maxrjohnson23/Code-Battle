@@ -30,10 +30,17 @@ class App extends Component {
       showUserModal: false,
       pubnubJoined: false,
       pubnub: this.pubnub,
-      presentUsers: [],
+      presentUsers: []
     };
     this.pubnub.init(this);
   }
+
+  initPN = () => {
+    this.setState({
+      mainPub: true
+    });
+
+  };
 
   getUser = () => {
     axios.get("/user/").then(response => {
@@ -108,11 +115,6 @@ class App extends Component {
         });
       };
 
-  // componentWillUnmount() {
-  //   this.pubnub.unsubscribe({
-  //     channels: [this.state.defaultChannel]
-  //   });
-  // };
 
   componentDidMount() {
     if (!this.state.loggedIn) {
@@ -146,7 +148,7 @@ class App extends Component {
           <Route path="/" exact
                  render={() => {
                    return this.state.loggedIn ? <Redirect to="/lobby"/> :
-                       <MainImg/>
+                       <MainImg showLoginHandler={this.showLoginHandler}/>
                  }}/>
           <Route path="/lobby"
                  render={(props) => <LobbyContainer

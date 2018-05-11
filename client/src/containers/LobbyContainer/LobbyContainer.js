@@ -33,7 +33,7 @@ class LobbyContainer extends Component {
         updatedGames.forEach((existingGame, index) => {
           if (existingGame.name === game.message.name) {
             let updatedGame = {...existingGame};
-            updatedGame.status = "INPROGRESS";
+            updatedGame.status = "IN-PROGRESS";
             updatedGames[index] = updatedGame;
           }
         });
@@ -60,9 +60,9 @@ class LobbyContainer extends Component {
 
   componentDidMount() {
     const statusMap = new Map();
-    statusMap.set("GAME_CREATED", "new");
-    statusMap.set("GAME_STARTED", "in-progress");
-    statusMap.set("GAME_COMPLETED", "completed");
+    statusMap.set("GAME_CREATED", "NEW");
+    statusMap.set("GAME_STARTED", "IN-PROGRESS");
+    statusMap.set("GAME_COMPLETED", "COMPLETED");
     this.props.pubnub.history(
         {
           channel: GAME_CHANNEL,

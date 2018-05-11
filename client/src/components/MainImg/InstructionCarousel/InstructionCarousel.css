@@ -30,7 +30,6 @@
 .instruction-txt-final {
     color: white;
     padding: 12vh 0;
-    font-size: .5in;
     font-size: 3vw;
     background-color: rgba(106, 90, 205,.75);
     height: 50vh;
@@ -49,4 +48,11 @@
 
 .heading {
     text-decoration: underline;
+}
+
+#get-started {
+    background-color: #219821 !important;
+    border-radius: 8px !important;
+    color: white;
+    font-size: 26px;
 }
