@@ -61,7 +61,6 @@ class SignExpanded extends Component {
 
   createCustomGame = (customGame) => {
     console.log('Creating custom game');
-    debugger;
     const game = {
       name: this.state.newGameName,
       time: this.state.newGameTime * 1000 * 60,
@@ -74,9 +73,7 @@ class SignExpanded extends Component {
 
     event.preventDefault();
     const game = {
-      name: event.target.dataset.name,
-      time: event.target.dataset.time,
-      questionId: event.target.dataset.questionid
+      name: event.target.dataset.name
     };
     console.log('Joining game:', game);
     this.props.joinGame(game);

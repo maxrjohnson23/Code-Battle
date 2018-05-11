@@ -12,9 +12,18 @@ class CreateQuestion extends Component {
   // Handles updating component state when the user types into the input field
   handleInputChange = event => {
     const {name, value} = event.target;
-    this.setState({
-      [name]: value
-    });
+    // Code for input during the demo
+    if(name === "questionText" && value === "DEMO") {
+      this.setState({
+        questionText: "Create a function called reverse() that takes a string as an input and returns a reversed string.",
+        code: "reverse(str)",
+        tests: ["reverse('bop bop') === 'pob pob';", "reverse('Code Battle rules!') === '!selur elttaB edoC';","reverse('tacocat') === 'tacocat';"]
+      });
+    } else {
+      this.setState({
+        [name]: value
+      });
+    }
   };
 
   handleTestChange = (event, index) => {
@@ -53,6 +62,7 @@ class CreateQuestion extends Component {
         name={`test-${index}`}
         className='create-question-test'
         placeholder="reverse('abc') === 'cba'"
+        value={test}
     />);
     return (
         <Wrapper id='create-question-form'>
