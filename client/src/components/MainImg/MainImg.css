@@ -6,7 +6,6 @@
     background-repeat: no-repeat;
     min-width: 100vw;
     height: 100%
-
 }
 
 .instructionsBox-one {
@@ -15,7 +14,7 @@
     color: white;
     font-size: .5in;
     font-size: 3vw;
-    padding: 20vh 0;
+    padding: 12vh 2vw 10vh 2vw;
     background-color: rgba(106, 90, 205,.75);
     height: 70vh;
     min-height: 300px;
@@ -24,6 +23,8 @@
     margin-left: 1em;
     top: 20px;
 }
+
+
 .instructionsBox-two {
     position: absolute;
     right: 0;
@@ -36,4 +37,14 @@
     width: 35vw;
     margin-right: 1em;
     top: 20vh;
+}
+
+.gameplay {
+    position: relative;
+    background-image: url("./MainImage/gameplay.gif");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-width: 40vw;
+    min-height: 25vw;
 }
