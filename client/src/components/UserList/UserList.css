@@ -1,7 +1,6 @@
   .userListStyle{
     height: 300px;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: auto;
   }
   
   .userListStyle::-webkit-scrollbar {
