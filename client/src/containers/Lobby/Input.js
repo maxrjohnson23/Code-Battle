@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../Lobby.css';
 
-const Input = (props) => {
-
+const Input = props => {
 	let iconVisibility = null;
 
 	return (
 		<div className="Input">
-			<input 
+			<input
 				id={props.name}
 				name={props.name}
 				autoComplete="false"
@@ -21,13 +20,12 @@ const Input = (props) => {
 			{iconVisibility}
 		</div>
 	);
-}
+};
 
 Input.propTypes = {
 	id: PropTypes.string,
 	type: PropTypes.string,
-	placeholer: PropTypes.string
+	placeholer: PropTypes.string,
 };
-
 
 export default Input;
