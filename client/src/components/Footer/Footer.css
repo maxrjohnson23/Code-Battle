@@ -3,6 +3,9 @@
     color: #8D71EB;
     height: 65px;
     display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     flex-flow: column;
     justify-content: center;
     align-items: center;
