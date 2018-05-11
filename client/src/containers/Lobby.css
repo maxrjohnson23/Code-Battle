@@ -380,24 +380,29 @@ background: #cd5c5c;
   background-color: #404656fa;
 }
 
-.game-in-progress, .game-new, .game-completed {
+.game-IN-PROGRESS, .game-NEW, .game-COMPLETED{
   font-size: 14px;
   display: block;
   margin-top: 5px;
 }
 
-.game-in-progress {
+.game-IN-PROGRESS {
   color: #ffd21c;
+  text-transform: lowercase;
+
 }
 
-.game-new {
+.game-NEW {
   color: #3fec3f;
   animation: pulse 1.2s infinite;
+  text-transform: lowercase;
+
 
 }
 
-.game-completed {
+.game-COMPLETED {
   color: #ff7777;
+  text-transform: lowercase;
 }
 
 
