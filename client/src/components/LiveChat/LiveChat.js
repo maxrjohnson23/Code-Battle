@@ -8,27 +8,29 @@ export default class LiveChat extends Component {
     messages: []
   };
 
-  componentDidMount() {
+  componentWillMount() {
     console.log("Joining chat channel" + this.props.defaultChannel);
     this.props.pubnub.subscribe({
       channels: [this.props.defaultChannel]
     });
 
-    this.props.pubnub.getMessage(this.props.defaultChannel, (msg) => {
-      const updatedMessages = this.state.messages.concat(msg);
-      this.setState({
-        messages: updatedMessages
-      });
+    this.props.pubnub.getMessage(this.props.defaultChannel, () =>{
       const chatBox = document.getElementById("collection");
       chatBox.scrollTop = chatBox.scrollHeight;
     });
   }
 
+
+
   componentWillUnmount() {
     console.log("Unsubscribing chat channel " + this.props.defaultChannel);
+    this.props.pubnub.getMessage(this.props.defaultChannel, (msg) => {
+      return;
+    });
     this.props.pubnub.unsubscribe({
       channels: [this.props.defaultChannel]
     });
+
   };
 
   onSubmit = (e) => {
@@ -63,6 +65,7 @@ export default class LiveChat extends Component {
     const {props, onSubmit} = this;
 
     const imgURL = "//robohash.org/" + this.props.username + "?set=set2&bgset=bg2&size=70x70";
+    const messages = this.props.pubnub.getMessage(this.props.defaultChannel);
 
     return (
     <section className="chatEntry" id='chatEntry'>
@@ -72,7 +75,7 @@ export default class LiveChat extends Component {
       </header>
 
         <ol className="collection" id ='collection'>
-          {this.state.messages.map((messageObj) => {
+          {messages.map((messageObj) => {
 
             const imgURL = "//robohash.org/" + messageObj.message.Who + "?set=set2&bgset=bg2&size=70x70";
             const messageDate = new Date(messageObj.message.When);

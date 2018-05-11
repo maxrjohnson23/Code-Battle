@@ -31,9 +31,17 @@ class App extends Component {
       pubnubJoined: false,
       pubnub: this.pubnub,
       presentUsers: [],
+      mainPub: false
     };
     this.pubnub.init(this);
   }
+
+  initPN = () => {
+    this.setState({
+      mainPub: true
+    });
+
+  };
 
   getUser = () => {
     axios.get("/user/").then(response => {
