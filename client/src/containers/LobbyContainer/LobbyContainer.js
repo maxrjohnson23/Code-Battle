@@ -199,11 +199,13 @@ class LobbyContainer extends Component {
                    username={this.props.username}
                    presentUsers={this.props.presentUsers}
                    usersChange={this.props.usersChange}/>
-
           <Lobby createGame={this.createGameHandler}
                  createCustomGame={this.createCustomGame}
                  joinGame={this.joinGameHandler}
                  gameList={this.state.games}/>
+          <div className='sidebar-container'>
+            <Sidebar pubnub={this.props.pubnub} defaultChannel={"Channel-main"} username={this.props.username}/>
+          </div>
         </div>
     );
   }
