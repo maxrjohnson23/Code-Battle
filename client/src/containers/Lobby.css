@@ -15,9 +15,10 @@
 	flex-flow: column;
 }
 
+
 .Lobby {
-	width: 700px;
-	height: 380px;
+	width: 50vw;
+	height: 60vh;
 	display: flex;
 	flex-direction: row;
 	box-shadow: 1px 6px 10px 0px rgba(0, 0, 0, 0.5);
@@ -188,8 +189,6 @@
 .logForm {
 	display: flex;
 	flex-direction: column;
-	height: 100%;
-	width: 60%;
 }
 
 .logForm h2 {

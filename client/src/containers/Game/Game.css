@@ -2,13 +2,14 @@
     display: flex;
     align-content: center;
     flex-direction: column;
-    margin: auto;
+    margin: 5vh auto 10vh auto;
     width: 80%;
 }
 
 #game-main {
     display: flex;
     flex-grow: 1;
+    align-items: flex-start;
 }
 
 
