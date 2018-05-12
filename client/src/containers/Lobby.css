@@ -80,13 +80,15 @@
 
 .createExpanded::-webkit-scrollbar,
 .joinExpanded::-webkit-scrollbar,
-.leaderboard::-webkit-scrollbar {
+.leaderboard::-webkit-scrollbar,
+.ranking-list::-webkit-scrollbar{
 	width: 1em;
 }
 
 .createExpanded::-webkit-scrollbar-track,
 .joinExpanded::-webkit-scrollbar-track,
-.leaderboard::-webkit-scrollbar-track {
+.leaderboard::-webkit-scrollbar-track,
+.ranking-list::-webkit-scrollbar{
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
