@@ -12,6 +12,7 @@
     list-style: none;
     overflow: scroll;
     max-height: 300px;
+    overflow-x: hidden;
 }
 
 .rankings{
