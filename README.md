@@ -13,8 +13,6 @@
 5. View the game summary to see where you rank and view other code submissions to improve your knowledge
 
 
-## [Play Now!](https://nu-code-battle.herokuapp.com/ "Code Battle")
-
 
 ![Code Battle Demo](samples/code-battle-demo.gif?raw=true "Code Battle")
 
