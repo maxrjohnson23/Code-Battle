@@ -7,7 +7,7 @@
     "@fortawesome/fontawesome": "^1.1.5",
     "@fortawesome/fontawesome-free-solid": "^5.0.10",
     "@fortawesome/react-fontawesome": "0.0.18",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "font-awesome": "^4.7.0",
     "npm": "^5.8.0",
     "prop-types": "^15.6.1",
